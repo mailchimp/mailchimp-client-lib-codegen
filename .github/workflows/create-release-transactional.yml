@@ -6,8 +6,8 @@ on:
     #   - 'spec/transactional.json'
     #   - 'swagger-config/transactional/**.*'
     #   - '.github/workflows/create-release-transactional.yml'
-    # branches:
-    #  - master
+    branches:
+      - master
 
 env:
   PUBLISH_INTERNAL: true # whether or not to push to git repos
@@ -342,7 +342,7 @@ jobs:
       - name: Create Release
         uses: actions/create-release@latest
         env:
-          GITHUB_TOKEN: ${{ secrets.PRESTON_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
         with:
           tag_name: ${{ github.ref }}
@@ -380,12 +380,12 @@ jobs:
           git init
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/postlight/mailchimp-transactional-node.git
+          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-node.git
           git add --force .
           git commit -m "Update mailchimp-transactional-node to v${{ env.SPEC_VERSION }}"
           git push origin master --force
         env:
-          GITHUB_TOKEN: ${{ secrets.PRESTON_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
 
       - name: Publish → npm → transactional-node
@@ -424,12 +424,12 @@ jobs:
           git init
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/postlight/mailchimp-transactional-php.git
+          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-php.git
           git add --force .
           git commit -m "Update mailchimp-transactional-php to v${{ env.SPEC_VERSION }}"
           git push origin master --force
         env:
-          GITHUB_TOKEN: ${{ secrets.PRESTON_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
 
   publish-ruby:
@@ -474,12 +474,12 @@ jobs:
           git init
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/postlight/mailchimp-transactional-ruby.git
+          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-ruby.git
           git add --force .
           git commit -m "Update mailchimp-transactional-ruby to v${{ env.SPEC_VERSION }}"
           git push origin master --force
         env:
-          GITHUB_TOKEN: ${{ secrets.PRESTON_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
 
       - name: Publish → RubyGems → transactional-ruby
@@ -527,12 +527,12 @@ jobs:
           git init
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/postlight/mailchimp-transactional-python.git
+          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-python.git
           git add --force .
           git commit -m "Update mailchimp-transactional-python to v${{ env.SPEC_VERSION }}"
           git push origin master --force
         env:
-          GITHUB_TOKEN: ${{ secrets.PRESTON_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
 
       # Publish Transactional SDKs Externally
@@ -572,12 +572,12 @@ jobs:
           git init
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/postlight/mailchimp-transactional-java.git
+          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-java.git
           git add --force .
           git commit -m "Update mailchimp-transactional-java to v${{ env.SPEC_VERSION }}"
           git push origin master --force
         env:
-          GITHUB_TOKEN: ${{ secrets.PRESTON_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
 
       # Publish Transactional SDKs Externally
@@ -610,11 +610,11 @@ jobs:
           git init
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/postlight/mailchimp-transactional-csharp.git
+          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-csharp.git
           git add --force .
           git commit -m "Update mailchimp-transactional-csharp to v${{ env.SPEC_VERSION }}"
           git push origin master --force
         env:
-          GITHUB_TOKEN: ${{ secrets.PRESTON_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
       # Publish Transactional SDKs Externally
