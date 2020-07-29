@@ -1,0 +1,10 @@
+{
+  "packagePath": "MailchimpMarketing",
+  "invokerPackage": "MailchimpMarketing",
+  "modelPackage": "Model",
+  "apiPackage": "Api",
+  "composerVendorName": "mailchimp",
+  "composerProjectName": "marketing",
+  "gitUserId": "postlight",
+  "gitRepoId": "mailchimp-marketing-php"
+}

@@ -1,0 +1,8 @@
+{
+  "packagePath": "MailchimpTransactional",
+  "invokerPackage": "MailchimpTransactional",
+  "modelPackage": "Model",
+  "apiPackage": "Api",
+  "composerVendorName": "mailchimp",
+  "composerProjectName": "transactional"
+}

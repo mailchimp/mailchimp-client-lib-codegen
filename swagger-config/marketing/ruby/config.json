@@ -1,0 +1,8 @@
+{
+  "gemName": "MailchimpMarketing",
+  "moduleName": "MailchimpMarketing",
+  "gemDescription": "Mailchimp Marketing Ruby SDK",
+  "gemLicense": "Apache-2.0",
+  "gitUserId": "postlight",
+  "gitRepoId": "mailchimp-marketing-ruby"
+}

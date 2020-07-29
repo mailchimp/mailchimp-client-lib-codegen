@@ -1,0 +1,164 @@
+=begin
+{{> api_info}}
+=end
+
+require 'json'
+require 'faraday'
+
+module {{moduleName}}
+  class ApiClient
+    # Defines the headers to be used in HTTP requests of all API calls by default.
+    #
+    # @return [Hash]
+    attr_accessor :default_headers
+
+    # Initializes the ApiClient
+    def initialize()
+      @host = "{{{basePath}}}"
+      @user_agent = "{{#httpUserAgent}}{{{.}}}{{/httpUserAgent}}{{^httpUserAgent}}Swagger-Codegen/#{VERSION}/ruby{{/httpUserAgent}}"
+      @default_headers = {
+        'Content-Type' => 'application/json',
+        'User-Agent' => @user_agent
+      }
+      @format_list = ['json', 'xml', 'php', 'yaml']
+      @content_type = 'application/json'
+      @default_output_format = 'json'
+      @accepts = ['application/json', 'application/xml', 'application/x-php', 'application/x-yaml; charset=utf-8']
+    end
+
+    def self.default
+      @@default ||= ApiClient.new
+    end
+
+    def set_default_output_format(output_format)
+      if @format_list.include? output_format
+        @default_output_format = output_format
+      end
+    end
+
+    def call_api(http_method, path, opts = {})
+      header_params = @default_headers.merge(opts[:header_params] || {})
+      url = @host + path
+
+      use_default_output_format = true
+
+      body = opts[:body]
+
+      if body && body[:outputFormat]
+        format = body[:outputFormat].downcase
+        if @format_list.include? format
+          url += ".#{format}"
+          body.delete(:outputFormat)
+          use_default_output_format = false
+        end
+      end
+
+      if use_default_output_format && @format_list.include?(@default_output_format)
+        url += '.%s' % @default_output_format
+      end
+
+      res = request(http_method, url, body, header_params)
+
+      data = nil
+      if res.headers['content-type'] && res.headers['content-type'].include?('application/json')
+        data = JSON.parse(res.body)
+      else
+        data = res.body
+      end
+
+      if data
+        if res.status <= 200
+          data
+        else
+          fail ApiError.new(res.body)
+        end
+      end
+    end
+
+    def request(http_method, url, body = nil, headers = nil)
+      if http_method.to_sym.downcase == :post
+        Faraday.post(url, body.to_json, headers)
+      else
+        fail ApiError.new('http_method must be :post')
+      end
+    end
+
+    # Return Accept header based on an array of accepts provided.
+    # @param [Array] accepts array for Accept
+    # @return [String] the Accept header (e.g. application/json)
+    def select_header_accept(accepts)
+      return nil if accepts.nil? || accepts.empty?
+      # use JSON when present, otherwise use all of the provided
+      json_accept = accepts.find { |s| json_mime?(s) }
+      json_accept || accepts.join(',')
+    end
+
+    # Return Content-Type header based on an array of content types provided.
+    # @param [Array] content_types array for Content-Type
+    # @return [String] the Content-Type header  (e.g. application/json)
+    def select_header_content_type(content_types)
+      # use application/json by default
+      return 'application/json' if content_types.nil? || content_types.empty?
+      # use JSON when present, otherwise use the first one
+      json_content_type = content_types.find { |s| json_mime?(s) }
+      json_content_type || content_types.first
+    end
+
+    # Convert object (array, hash, object, etc) to JSON string.
+    # @param [Object] model object to be converted into JSON string
+    # @return [String] JSON string representation of the object
+    def object_to_http_body(model)
+      return model if model.nil? || model.is_a?(String)
+      local_body = nil
+      if model.is_a?(Array)
+        local_body = model.map { |m| object_to_hash(m) }
+      else
+        local_body = object_to_hash(model)
+      end
+      local_body.to_json
+    end
+
+    # Convert object(non-array) to hash.
+    # @param [Object] obj object to be converted into JSON string
+    # @return [String] JSON string representation of the object
+    def object_to_hash(obj)
+      if obj.respond_to?(:to_hash)
+        obj.to_hash
+      else
+        obj
+      end
+    end
+
+    # Build parameter value according to the given collection format.
+    # @param [String] collection_format one of :csv, :ssv, :tsv, :pipes and :multi
+    def build_collection_param(param, collection_format)
+      case collection_format
+      when :csv
+        param.join(',')
+      when :ssv
+        param.join(' ')
+      when :tsv
+        param.join("\t")
+      when :pipes
+        param.join('|')
+      when :multi
+        # return the array directly as typhoeus will handle it as expected
+        param
+      else
+        fail "unknown collection format: #{collection_format.inspect}"
+      end
+    end
+
+    # Check if the given MIME is a JSON MIME.
+    # JSON MIME examples:
+    #   application/json
+    #   application/json; charset=UTF8
+    #   APPLICATION/JSON
+    #   */*
+    # @param [String] mime MIME
+    # @return [Boolean] True if the MIME is application/json
+    def json_mime?(mime)
+      (mime == '*/*') || !(mime =~ /Application\/.*json(?!p)(;.*)?/i).nil?
+    end
+  end
+end

@@ -1,0 +1,9 @@
+{
+  "modelPackage": "com.mailchimp.transactional.models",
+  "apiPackage": "com.mailchimp.transactional.api",
+  "invokerPackage": "com.mailchimp.transactional",
+  "groupId": "com.mailchimp",
+  "artifactId": "transactional",
+  "artifactUrl": "https://github.com/postlight/mailchimp-transactional-java",
+  "artifactDescription": "Mailchimp Transactional Java SDK"
+}

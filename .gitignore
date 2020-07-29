@@ -1,0 +1,20 @@
+.DS_Store
+swagger-out
+.cache
+.env
+node_modules
+utils/example
+
+# PHP
+utils/sdk/php/vendor
+
+# Ruby
+utils/sdk/ruby/env.rb
+
+# Python
+utils/sdk/python/env.py
+__pycache__/
+venv/
+venv*/
+dist/
+*.egg-info/

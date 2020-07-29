@@ -1,0 +1,9 @@
+# Swagger Codegen Ignore
+# mandrill-ruby
+
+docs/**
+spec/**
+lib/**/models/**
+Rakefile
+.rspec
+git_push.sh

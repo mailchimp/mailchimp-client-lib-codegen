@@ -1,0 +1,80 @@
+# Mailchimp Transactional SDK — Node
+
+The official Node.js SDK for the Mailchimp Transactional API (v1)
+
+## Installation
+
+```
+npm install {{{projectName}}}
+```
+
+## Quick Start
+
+```javascript
+const mailchimp = require('@postlight/postlight_md_test')('YOUR_API_KEY');
+
+async function callPing() {
+  const response = await mailchimp.users.ping();
+  console.log(response);
+}
+
+callPing();
+```
+
+## Sending Requests
+All requests are sent via POST and accept a single argument as the request body parameter.
+```javascript
+mailchimp.templates.publish({ name: 'My Template' });
+```
+
+## Output Formats
+Optionally, you can set the default response format for **all requests** to one of the following:
+- `json` *(default)*
+- `xml`
+- `php`
+- `yaml`
+
+```javascript
+mailchimp.setDefaultOutputFormat('xml');
+```
+
+You can also set the response format for a **single request** by passing in a special `outputFormat` param to the request body.
+```javascript
+mailchimp.senders.list({ outputFormat: 'php' });
+```
+
+## API Endpoints
+
+All URIs are relative to *{{basePath}}*
+
+| SDK Method | Endpoint |
+| ---------- | -------- |
+{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}| **{{#tags}}{{{name}}}{{/tags}}.{{vendorExtensions.x-custom-config.methodNameCamel}}** | {{path}} |
+{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
+
+
+## Additional SDKs
+
+Mailchimp Transactional SDKs are available in a number of additional languages.
+
+<div>
+  <a href="https://github.com/postlight/mailchimp-transactional-node">
+  <img src="https://github.com/postlight/mailchimp/blob/master/resources/images/lang_node.png?raw=true" width="44" height="44">
+  </a>
+  <a href="https://github.com/postlight/mailchimp-transactional-php">
+  <img src="https://github.com/postlight/mailchimp/blob/master/resources/images/lang_php.png?raw=true" width="44" height="44">
+  </a>
+  <a href="https://github.com/postlight/mailchimp-transactional-ruby">
+  <img src="https://github.com/postlight/mailchimp/blob/master/resources/images/lang_ruby.png?raw=true" width="44" height="44">
+  </a>
+  <a href="https://github.com/postlight/mailchimp-transactional-python">
+  <img src="https://github.com/postlight/mailchimp/blob/master/resources/images/lang_python.png?raw=true" width="44" height="44">
+  </a>
+  <a href="https://github.com/postlight/mailchimp-transactional-java">
+  <img src="https://github.com/postlight/mailchimp/blob/master/resources/images/lang_java.png?raw=true" width="44" height="44">
+  </a>
+    <a href="https://github.com/postlight/mailchimp-transactional-csharp">
+  <img src="https://github.com/postlight/mailchimp/blob/master/resources/images/lang_csharp.png?raw=true" width="44" height="44">
+  </a>
+</div>
+

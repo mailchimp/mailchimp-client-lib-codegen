@@ -1,0 +1,92 @@
+#!/bin/bash
+
+# adapted from https://github.com/square/connect-api-specification/blob/master/generate-sdks
+
+set -eu
+
+target_language="${1:-}"
+target_product="${2:-}"
+
+generate_for_language() {
+    sdk_name="${2}-${1}"
+    output_dir="./swagger-out/$2-$1"
+    config_dir="./swagger-config/$2/$1"
+    templates_dir="${config_dir}/templates"
+
+    # copy .swagger-codegen-ignore template
+    mkdir -p $output_dir
+    ignore_template="${templates_dir}/.swagger-codegen-ignore"
+
+    if [ -f "${ignore_template}" ]; then
+        cp $ignore_template "${output_dir}/.swagger-codegen-ignore"
+    fi
+
+    # select codegen build for first pass
+    # note — for marketing-javascript, we need to first generate the sdks
+    # on 2.4.7, and subsequently regenerate the APIs only on 2.4.12
+    # to fix an issue w/ parameters not showing up.
+    codegen_build="swagger-codegen-cli-2.4.12.jar"
+
+    if [ "${sdk_name}" == "marketing-javascript" ]; then
+        codegen_build="swagger-codegen-cli-2.4.7.jar"
+    fi
+
+    swagger_cmd="java -jar ./codegen/${codegen_build}"
+
+    # generate SDKs
+    $swagger_cmd generate \
+        --input-spec "./spec/$2.json" \
+        --lang "$1" \
+        --config "${config_dir}/config.json" \
+        --template-dir $templates_dir \
+        --output $output_dir \
+        -DapiTests=false
+
+    # regenerate apis w/ latest verson (if necessary)
+    if [ "${sdk_name}" == "marketing-javascript" ]; then
+        echo "re-generating APIs only on latest version"
+
+        codegen_build="swagger-codegen-cli-2.4.12.jar"
+        swagger_cmd="java -jar ./codegen/${codegen_build}"
+
+        $swagger_cmd generate \
+            --input-spec "./spec/$2.json" \
+            --lang "$1" \
+            --config "${config_dir}/config.json" \
+            --template-dir $templates_dir \
+            --output $output_dir \
+            -DapiTests=false \
+            -Dapis
+    fi
+
+    # clean-up SDK output
+    rm -rf "${output_dir}/.swagger-codegen"
+    rm -rf "${output_dir}/.swagger-codegen-ignore"
+
+    if [ "${sdk_name}" == "marketing-php" ]; then
+        rm -rf "${output_dir}/MailchimpMarketing/lib/Model"
+    fi
+
+    if [ "${sdk_name}" == "transactional-php" ]; then
+        rm -rf "${output_dir}/MailchimpTransactional/lib/Model"
+    fi
+}
+
+if [ -n "$target_language" ] && [ -n "$target_product" ]
+then
+    generate_for_language "$target_language" "$target_product"
+elif [ -n "$target_language" ]
+then
+    generate_for_language "$target_language" "transactional"
+    generate_for_language "$target_language" "marketing"
+else
+    products=$(ls swagger-config)
+    for prod in $products
+    do
+        languages=$(ls "swagger-config/${prod}")
+        for lang in $languages
+        do
+            generate_for_language "$lang" "${prod}"
+        done
+    done
+fi

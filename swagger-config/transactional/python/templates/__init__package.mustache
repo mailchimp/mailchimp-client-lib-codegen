@@ -1,0 +1,29 @@
+# coding: utf-8
+
+# flake8: noqa
+
+{{>partial_header}}
+
+from __future__ import absolute_import
+
+# import apis into sdk package
+{{#apiInfo}}{{#apis}}from {{apiPackage}}.{{classVarName}} import {{classname}}
+{{/apis}}{{/apiInfo}}
+
+from {{packageName}}.api_client import ApiClient
+
+class Client(object):
+  def __init__(self, api_key = ''):
+    self.api_key = api_key
+    self.api_client = ApiClient()
+
+    {{#apiInfo}}{{#apis}}self.{{baseName}} = {{classname}}(self.api_key, self.api_client)
+    {{/apis}}{{/apiInfo}}
+
+  def set_api_key(self, api_key = ''):
+    self.api_key = api_key
+    {{#apiInfo}}{{#apis}}self.{{baseName}} = {{classname}}(self.api_key, self.api_client)
+    {{/apis}}{{/apiInfo}}
+
+  def set_default_output_format(self, output_format):
+    self.api_client.set_default_output_format(output_format)

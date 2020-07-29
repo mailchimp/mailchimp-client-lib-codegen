@@ -1,0 +1,6 @@
+# Swagger Codegen Ignore
+# transactional-php
+
+**/docs/**
+**/lib/Model/**
+**/test/**

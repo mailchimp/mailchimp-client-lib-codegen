@@ -1,0 +1,6 @@
+# Swagger Codegen Ignore
+# mailchimp-marketing-php
+
+**/docs/**
+**/lib/Model/**
+**/test/**

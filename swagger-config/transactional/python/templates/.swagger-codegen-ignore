@@ -1,0 +1,12 @@
+# Swagger Codegen Ignore
+# transactional-python
+
+docs/**
+mailchimp_transactional/models
+mailchimp_transactional/models/**
+mailchimp_transactional/configuration.py
+mailchimp_transactional/rest.py
+test/**
+git_push.sh
+tox.ini
+.travis.yml

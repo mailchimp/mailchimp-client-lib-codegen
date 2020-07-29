@@ -1,0 +1,7 @@
+# Swagger Codegen Ignore
+# transactional-node
+
+docs/**
+src/model/**
+test/**
+*.opts

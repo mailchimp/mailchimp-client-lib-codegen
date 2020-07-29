@@ -1,0 +1,12 @@
+# Swagger Codegen Ignore
+# mailchimp-marketing-python
+
+docs/**
+mailchimp_marketing/models
+mailchimp_marketing/models/**
+# mailchimp_marketing/configuration.py
+# mailchimp_marketing/rest.py
+test/**
+git_push.sh
+tox.ini
+.travis.yml

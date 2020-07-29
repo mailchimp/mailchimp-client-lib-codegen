@@ -1,0 +1,8 @@
+{
+  "projectName": "@postlight/postlight_mc_test",
+  "projectDescription": "Mailchimp Marketing Javascript SDK",
+  "projectLicenseName": "Apache-2.0",
+  "moduleName": "MailchimpMarketing",
+  "usePromises": true,
+  "licenseName": "Apache 2.0"
+}

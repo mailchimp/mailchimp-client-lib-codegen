@@ -1,0 +1,8 @@
+{
+  "gemName": "MailchimpTransactional",
+  "moduleName": "MailchimpTransactional",
+  "gemDescription": "Mailchimp Transactional Ruby SDK",
+  "gemLicense": "Apache-2.0",
+  "gitUserId": "postlight",
+  "gitRepoId": "mailchimp-transactional-ruby"
+}

@@ -1,0 +1,7 @@
+# Swagger Codegen Ignore
+# marketing-node
+
+docs/**
+src/model/**
+test/**
+*.opts

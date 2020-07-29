@@ -1,0 +1,53 @@
+=begin
+{{> api_info}}
+=end
+
+# Common files
+require '{{gemName}}/api_client'
+require '{{gemName}}/api_error'
+require '{{gemName}}/version'
+
+
+# APIs
+{{#apiInfo}}
+{{#apis}}
+require '{{importPath}}'
+{{/apis}}
+{{/apiInfo}}
+
+module {{moduleName}}
+  class Client
+    def initialize(api_key = '')
+      @api_key = api_key
+      @api_client = ApiClient.new()
+
+      {{#apiInfo}}
+      {{#apis}}
+      @{{baseName}} = {{classname}}.new(@api_key, @api_client)
+      {{/apis}}
+      {{/apiInfo}}
+    end
+
+    def set_api_key(api_key = '')
+      @api_key = api_key
+
+      {{#apiInfo}}
+      {{#apis}}
+      @{{baseName}} = {{classname}}.new(@api_key, @api_client)
+      {{/apis}}
+      {{/apiInfo}}
+    end
+
+    def set_default_output_format(output_format)
+      @api_client.set_default_output_format(output_format)
+    end
+
+    {{#apiInfo}}
+      {{#apis}}
+      def {{classVarName}}
+        @{{baseName}}
+      end
+      {{/apis}}
+      {{/apiInfo}}
+  end
+end

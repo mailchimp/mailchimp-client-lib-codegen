@@ -1,0 +1,620 @@
+name: 📦 Create Transactional SDK Release
+
+on:
+  push:
+    # paths:
+    #   - 'spec/transactional.json'
+    #   - 'swagger-config/transactional/**.*'
+    #   - '.github/workflows/create-release-transactional.yml'
+    # branches:
+    #  - master
+
+env:
+  PUBLISH_INTERNAL: true # whether or not to push to git repos
+  PUBLISH_EXTERNAL: true # whether or not to push to package managers
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.set-version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: NPM Install
+        run: npm install
+      - name: Validate Transactional Spec
+        run: npx @apidevtools/swagger-cli validate spec/transactional.json
+      - name: Set Version
+        id: set-version
+        run: node utils/actions/setVersionVar.js --api=transactional
+
+  setup-cache:
+    runs-on: ubuntu-latest
+    needs: [validate]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Initialize Cache
+        id: init-cache-md
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+      - name: Install Codegen CLI
+        if: steps.init-cache-md.outputs.cache-hit != 'true'
+        run: |
+          mkdir .cache
+          wget https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.7/swagger-codegen-cli-2.4.7.jar -O .cache/swagger-codegen-cli.jar
+          java -jar .cache/swagger-codegen-cli.jar help
+
+  generate-node:
+    runs-on: ubuntu-latest
+    needs: [validate, setup-cache]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Initialize Transactional Cache
+        id: init-cache-md
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@postlight'
+
+      - name: Generate → transactional-javascript
+        run: |
+          npm install
+          node utils/actions/updateLangConfig.js --api=transactional --lang=javascript --specVersion=${{ env.SPEC_VERSION }}
+          npm run generate:javascript:transactional
+          node utils/actions/generateTypes.js --api=transactional
+        env:
+          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+
+      - name: Rename transactional-javascript → transactional-node
+        working-directory: swagger-out
+        run: |
+          mv transactional-javascript transactional-node
+
+      - name: Zip build artifact → transactional-node
+        working-directory: swagger-out/transactional-node
+        run: zip -r transactional-node.zip .
+
+      - name: Upload build artifact → transactional-node
+        uses: actions/upload-artifact@v1
+        with:
+          name: transactional-node.zip
+          path: swagger-out/transactional-node/transactional-node.zip
+
+  generate-php:
+    runs-on: ubuntu-latest
+    needs: [validate, setup-cache]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Initialize Transactional Cache
+        id: init-cache-md
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Generate → transactional-php
+        run: |
+          npm install
+          node utils/actions/updateLangConfig.js --api=transactional --lang=php --specVersion=${{ env.SPEC_VERSION }}
+          npm run generate:php:transactional
+        env:
+          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+
+      - name: Zip build artifact → transactional-php
+        working-directory: swagger-out/transactional-php
+        run: zip -r transactional-php.zip .
+
+      - name: Upload build artifact → transactional-php
+        uses: actions/upload-artifact@v1
+        with:
+          name: transactional-php.zip
+          path: swagger-out/transactional-php/transactional-php.zip
+
+  generate-ruby:
+    runs-on: ubuntu-latest
+    needs: [validate, setup-cache]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Initialize Transactional Cache
+        id: init-cache-md
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Generate → transactional-ruby
+        run: |
+          npm install
+          node utils/actions/updateLangConfig.js --api=transactional --lang=ruby --specVersion=${{ env.SPEC_VERSION }}
+          npm run generate:ruby:transactional
+        env:
+          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+
+      - name: Zip build artifact → transactional-ruby
+        working-directory: swagger-out/transactional-ruby
+        run: zip -r transactional-ruby.zip .
+
+      - name: Upload build artifact → transactional-ruby
+        uses: actions/upload-artifact@v1
+        with:
+          name: transactional-ruby.zip
+          path: swagger-out/transactional-ruby/transactional-ruby.zip
+
+  generate-python:
+    runs-on: ubuntu-latest
+    needs: [validate, setup-cache]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Initialize Transactional Cache
+        id: init-cache-md
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Generate → transactional-python
+        run: |
+          npm install
+          node utils/actions/updateLangConfig.js --api=transactional --lang=python --specVersion=${{ env.SPEC_VERSION }}
+          npm run generate:python:transactional
+        env:
+          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+
+      - name: Zip build artifact → transactional-python
+        working-directory: swagger-out/transactional-python
+        run: zip -r transactional-python.zip .
+
+      - name: Upload build artifact → transactional-python
+        uses: actions/upload-artifact@v1
+        with:
+          name: transactional-python.zip
+          path: swagger-out/transactional-python/transactional-python.zip
+
+  generate-java:
+    runs-on: ubuntu-latest
+    needs: [validate, setup-cache]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Initialize Transactional Cache
+        id: init-cache-md
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Generate → transactional-java
+        run: |
+          npm install
+          node utils/actions/updateLangConfig.js --api=transactional --lang=java --specVersion=${{ env.SPEC_VERSION }}
+          npm run generate:java:transactional
+        env:
+          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+
+      - name: Zip build artifact → transactional-java
+        working-directory: swagger-out/transactional-java
+        run: zip -r transactional-java.zip .
+
+      - name: Upload build artifact → transactional-java
+        uses: actions/upload-artifact@v1
+        with:
+          name: transactional-java.zip
+          path: swagger-out/transactional-java/transactional-java.zip
+
+  generate-csharp:
+    runs-on: ubuntu-latest
+    needs: [validate, setup-cache]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Initialize Transactional Cache
+        id: init-cache-md
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Generate → transactional-csharp
+        run: |
+          npm install
+          node utils/actions/updateLangConfig.js --api=transactional --lang=csharp --specVersion=${{ env.SPEC_VERSION }}
+          npm run generate:csharp:transactional
+        env:
+          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+
+      - name: Zip build artifact → transactional-csharp
+        working-directory: swagger-out/transactional-csharp
+        run: zip -r transactional-csharp.zip .
+
+      - name: Upload build artifact → transactional-csharp
+        uses: actions/upload-artifact@v1
+        with:
+          name: transactional-csharp.zip
+          path: swagger-out/transactional-csharp/transactional-csharp.zip
+
+  create-release:
+    runs-on: ubuntu-latest
+    needs:
+      [
+        validate,
+        generate-node,
+        generate-php,
+        generate-ruby,
+        generate-python,
+        generate-java,
+        generate-csharp,
+      ]
+    steps:
+      - name: Create Release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.PRESTON_GITHUB_TOKEN }}
+          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Mailchimp Transactional v${{ env.SPEC_VERSION }}
+          draft: true
+          prerelease: false
+
+  publish-node:
+    runs-on: ubuntu-latest
+    needs: [validate, create-release]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@postlight'
+
+      - name: Prepare Build & Publishing Tools
+        run: npm install
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: transactional-node.zip
+          path: zip
+
+      - name: Unzip build artifact
+        run: |
+          unzip zip/transactional-node.zip -d transactional-node
+
+      - name: Publish → internal → transactional-node
+        if: env.PUBLISH_INTERNAL == 'true'
+        working-directory: transactional-node
+        run: |
+          git init
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/postlight/mailchimp-transactional-node.git
+          git add --force .
+          git commit -m "Update mailchimp-transactional-node to v${{ env.SPEC_VERSION }}"
+          git push origin master --force
+        env:
+          GITHUB_TOKEN: ${{ secrets.PRESTON_GITHUB_TOKEN }}
+          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+
+      - name: Publish → npm → transactional-node
+        if: env.PUBLISH_EXTERNAL == 'true'
+        working-directory: transactional-node
+        run: |
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-php:
+    runs-on: ubuntu-latest
+    needs: [validate, create-release]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Initialize Transactional Cache
+        id: init-cache-md
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: transactional-php.zip
+          path: zip
+
+      - name: Unzip build artifact
+        run: |
+          unzip zip/transactional-php.zip -d transactional-php
+
+      - name: Publish → internal → transactional-php
+        if: env.PUBLISH_INTERNAL == 'true'
+        working-directory: transactional-php/MailchimpTransactional
+        run: |
+          git init
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/postlight/mailchimp-transactional-php.git
+          git add --force .
+          git commit -m "Update mailchimp-transactional-php to v${{ env.SPEC_VERSION }}"
+          git push origin master --force
+        env:
+          GITHUB_TOKEN: ${{ secrets.PRESTON_GITHUB_TOKEN }}
+          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+
+  publish-ruby:
+    runs-on: ubuntu-latest
+    needs: [validate, create-release]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Initialize Transactional Cache
+        id: init-cache-md
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - name: Install Ruby 2.6.x
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.6.x
+
+      - name: Prepare Build & Publishing Tools
+        run: |
+          mkdir -p $HOME/.gem
+          touch $HOME/.gem/credentials
+          chmod 0600 $HOME/.gem/credentials
+          printf -- "---\n:rubygems_api_key: ${RUBYGEMS_TOKEN}\n" > $HOME/.gem/credentials
+        env:
+          RUBYGEMS_TOKEN: ${{ secrets.RUBYGEMS_TOKEN }}
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: transactional-ruby.zip
+          path: zip
+
+      - name: Unzip build artifact
+        run: |
+          unzip zip/transactional-ruby.zip -d transactional-ruby
+
+      - name: Publish → internal → transactional-ruby
+        if: env.PUBLISH_INTERNAL == 'true'
+        working-directory: transactional-ruby
+        run: |
+          git init
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/postlight/mailchimp-transactional-ruby.git
+          git add --force .
+          git commit -m "Update mailchimp-transactional-ruby to v${{ env.SPEC_VERSION }}"
+          git push origin master --force
+        env:
+          GITHUB_TOKEN: ${{ secrets.PRESTON_GITHUB_TOKEN }}
+          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+
+      - name: Publish → RubyGems → transactional-ruby
+        if: env.PUBLISH_EXTERNAL == 'true'
+        run: |
+          gem build transactional-ruby/*.gemspec
+          gem push transactional-ruby/*.gem -k rubygems
+
+  publish-python:
+    runs-on: ubuntu-latest
+    needs: [validate, create-release]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Initialize Transactional Cache
+        id: init-cache-md
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - name: Install Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: transactional-python.zip
+          path: zip
+
+      - name: Unzip build artifact
+        run: |
+          unzip zip/transactional-python.zip -d transactional-python
+
+      - name: Prepare Build & Publishing Tools
+        working-directory: transactional-python
+        run: |
+          python -m pip install --user setuptools wheel --no-warn-script-location
+          python setup.py bdist_wheel
+
+      - name: Publish → internal → transactional-python
+        if: env.PUBLISH_INTERNAL == 'true'
+        working-directory: transactional-python
+        run: |
+          git init
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/postlight/mailchimp-transactional-python.git
+          git add --force .
+          git commit -m "Update mailchimp-transactional-python to v${{ env.SPEC_VERSION }}"
+          git push origin master --force
+        env:
+          GITHUB_TOKEN: ${{ secrets.PRESTON_GITHUB_TOKEN }}
+          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+
+      # Publish Transactional SDKs Externally
+      - name: Publish → PyPI → transactional-python
+        if: env.PUBLISH_EXTERNAL == 'true'
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          password: ${{ secrets.PYPI_TOKEN_TEST }}
+          repository_url: https://test.pypi.org/legacy/
+          packages_dir: transactional-python/dist
+
+  publish-java:
+    runs-on: ubuntu-latest
+    needs: [validate, create-release]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Initialize Transactional Cache
+        id: init-cache-md
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: transactional-java.zip
+          path: zip
+
+      - name: Unzip build artifact
+        run: |
+          unzip zip/transactional-java.zip -d transactional-java
+
+      - name: Publish → internal → transactional-java
+        if: env.PUBLISH_INTERNAL == 'true'
+        working-directory: transactional-java
+        run: |
+          git init
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/postlight/mailchimp-transactional-java.git
+          git add --force .
+          git commit -m "Update mailchimp-transactional-java to v${{ env.SPEC_VERSION }}"
+          git push origin master --force
+        env:
+          GITHUB_TOKEN: ${{ secrets.PRESTON_GITHUB_TOKEN }}
+          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+
+      # Publish Transactional SDKs Externally
+
+  publish-csharp:
+    runs-on: ubuntu-latest
+    needs: [validate, create-release]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Initialize Transactional Cache
+        id: init-cache-md
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: transactional-csharp.zip
+          path: zip
+
+      - name: Unzip build artifact
+        run: |
+          unzip zip/transactional-csharp.zip -d transactional-csharp
+
+      - name: Publish → internal → transactional-csharp
+        if: env.PUBLISH_INTERNAL == 'true'
+        working-directory: transactional-csharp
+        run: |
+          git init
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/postlight/mailchimp-transactional-csharp.git
+          git add --force .
+          git commit -m "Update mailchimp-transactional-csharp to v${{ env.SPEC_VERSION }}"
+          git push origin master --force
+        env:
+          GITHUB_TOKEN: ${{ secrets.PRESTON_GITHUB_TOKEN }}
+          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+      # Publish Transactional SDKs Externally

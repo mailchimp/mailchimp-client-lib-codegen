@@ -1,0 +1,9 @@
+{
+  "modelPackage": "com.mailchimp.marketing.models",
+  "apiPackage": "com.mailchimp.marketing.api",
+  "invokerPackage": "com.mailchimp.marketing",
+  "groupId": "com.mailchimp",
+  "artifactId": "marketing",
+  "artifactUrl": "https://github.com/postlight/mailchimp-marketing-java",
+  "artifactDescription": "Mailchimp Marketing Java SDK"
+}

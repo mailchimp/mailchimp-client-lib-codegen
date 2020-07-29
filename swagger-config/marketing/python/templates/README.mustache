@@ -1,0 +1,95 @@
+# Mailchimp Marketing SDK — Python
+
+The official Python SDK for the Mailchimp Marketing API
+
+## Requirements.
+
+Python 2.7 and 3.4+
+
+## Installation & Usage
+### pip install
+
+If the python package is hosted on GitHub, you can install directly from GitHub
+
+```sh
+pip install git+https://github.com/{{{gitUserId}}}/{{{gitRepoId}}}.git
+```
+(you may need to run `pip` with root permission: `sudo pip install git+https://github.com/{{{gitUserId}}}/{{{gitRepoId}}}.git`)
+
+Then import the package:
+```python
+import {{{packageName}}}
+```
+
+### Setuptools
+
+Install via [Setuptools](http://pypi.python.org/pypi/setuptools).
+
+```sh
+python setup.py install --user
+```
+(or `sudo python setup.py install` to install the package for all users)
+
+Then import the package:
+```python
+import {{{packageName}}}
+```
+
+## Quick Start
+
+Please follow the [installation procedure](#installation--usage) and then run the following:
+
+```python
+import os
+import mailchimp_marketing as MailchimpMarketing
+from mailchimp_marketing.api_client import ApiClientError
+
+try:
+  client = MailchimpMarketing.Client()
+  client.set_config(os.getenv('API_KEY'), os.getenv('API_SERVER'))
+  response = client.ping.get()
+  print('client.ping.get() response: {}'.format(response))
+except ApiClientError as error:
+  print('An exception occurred: {}'.format(error.text))
+```
+
+If your api key contains a server suffix (i.e. '-us19'), passing in the server key may be omitted, like so:
+
+```python
+client.set_config(os.getenv('API_KEY'))
+```
+
+## API Endpoints
+
+All URIs are relative to *{{basePath}}*
+
+| SDK Method | Endpoint |
+| ---------- | -------- |
+{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}| **{{#tags}}{{{name}}}{{/tags}}.{{vendorExtensions.x-custom-config.methodNameSnake}}** | {{path}} |
+{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
+
+## Additional SDKs
+
+Mailchimp Marketing SDKs are available in a number of additional languages.
+
+<div>
+  <a href="https://github.com/postlight/mailchimp-marketing-node">
+  <img src="https://github.com/postlight/mailchimp/blob/master/resources/images/lang_node.png?raw=true" width="44" height="44">
+  </a>
+  <a href="https://github.com/postlight/mailchimp-marketing-php">
+  <img src="https://github.com/postlight/mailchimp/blob/master/resources/images/lang_php.png?raw=true" width="44" height="44">
+  </a>
+  <a href="https://github.com/postlight/mailchimp-marketing-ruby">
+  <img src="https://github.com/postlight/mailchimp/blob/master/resources/images/lang_ruby.png?raw=true" width="44" height="44">
+  </a>
+  <a href="https://github.com/postlight/mailchimp-marketing-python">
+  <img src="https://github.com/postlight/mailchimp/blob/master/resources/images/lang_python.png?raw=true" width="44" height="44">
+  </a>
+  <a href="https://github.com/postlight/mailchimp-marketing-java">
+  <img src="https://github.com/postlight/mailchimp/blob/master/resources/images/lang_java.png?raw=true" width="44" height="44">
+  </a>
+    <a href="https://github.com/postlight/mailchimp-marketing-csharp">
+  <img src="https://github.com/postlight/mailchimp/blob/master/resources/images/lang_csharp.png?raw=true" width="44" height="44">
+  </a>
+</div>
+

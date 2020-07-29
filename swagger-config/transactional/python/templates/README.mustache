@@ -1,0 +1,85 @@
+# Mailchimp Transactional SDK — Python
+
+The official Python SDK for the Mailchimp Transactional API (v1)
+
+## Requirements.
+
+Python 2.7 and 3.4+
+
+## Installation & Usage
+### pip install
+
+If the python package is hosted on GitHub, you can install directly from GitHub
+
+```sh
+pip install git+https://github.com/{{{gitUserId}}}/{{{gitRepoId}}}.git
+```
+(you may need to run `pip` with root permission: `sudo pip install git+https://github.com/{{{gitUserId}}}/{{{gitRepoId}}}.git`)
+
+Then import the package:
+```python
+import {{{packageName}}}
+```
+
+### Setuptools
+
+Install via [Setuptools](http://pypi.python.org/pypi/setuptools).
+
+```sh
+python setup.py install --user
+```
+(or `sudo python setup.py install` to install the package for all users)
+
+Then import the package:
+```python
+import {{{packageName}}}
+```
+
+## Quick Start
+
+Please follow the [installation procedure](#installation--usage) and then run the following:
+
+## Quick Start
+
+```python
+import mailchimp_transactional as MailchimpTransactional
+from mailchimp_transactional.api_client import ApiClientError
+
+try:
+  mailchimp = MailchimpTransactional.Client('YOUR_API_KEY')
+  response = mailchimp.users.ping()
+  print('API called successfully: %s'.format(response))
+except ApiClientError as error:
+  print('An exception occurred: {}'.format(error.text))
+```
+
+## Sending Requests
+All requests are sent via POST and accept a single argument as the request body parameter.
+```python
+mailchimp.templates.publish({ name: 'My Template' });
+```
+
+## Output Formats
+Optionally, you can set the default response format for **all requests** to one of the following:
+- `json` *(default)*
+- `xml`
+- `php`
+- `yaml`
+
+```python
+mailchimp.set_default_output_format('xml');
+```
+
+You can also set the response format for a **single request** by passing in a special `outputFormat` param to the request body.
+```python
+mailchimp.senders.list({ outputFormat: 'php' });
+```
+
+## API Endpoints
+
+All URIs are relative to *{{basePath}}*
+
+| SDK Method | Endpoint |
+| ---------- | -------- |
+{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}| **{{#tags}}{{{name}}}{{/tags}}.{{vendorExtensions.x-custom-config.methodNameSnake}}** | {{path}} |
+{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}

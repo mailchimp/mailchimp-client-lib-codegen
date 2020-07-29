@@ -1,0 +1,54 @@
+{
+  "name": "mailchimp-playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clear": "rm -rf ./swagger-out/*",
+    "generate": "./generate-sdks",
+    "generate:javascript": "./generate-sdks javascript",
+    "generate:javascript:marketing": "./generate-sdks javascript marketing",
+    "generate:javascript:transactional": "./generate-sdks javascript transactional",
+    "generate:php": "./generate-sdks php",
+    "generate:php:marketing": "./generate-sdks php marketing",
+    "generate:php:transactional": "./generate-sdks php transactional",
+    "generate:ruby": "./generate-sdks ruby",
+    "generate:ruby:marketing": "./generate-sdks ruby marketing",
+    "generate:ruby:transactional": "./generate-sdks ruby transactional",
+    "generate:python": "./generate-sdks python",
+    "generate:python:marketing": "./generate-sdks python marketing",
+    "generate:python:transactional": "./generate-sdks python transactional",
+    "generate:java": "./generate-sdks java",
+    "generate:java:marketing": "./generate-sdks java marketing",
+    "generate:java:transactional": "./generate-sdks java transactional",
+    "generate:csharp": "./generate-sdks csharp",
+    "generate:csharp:marketing": "./generate-sdks csharp marketing",
+    "generate:csharp:transactional": "./generate-sdks csharp transactional",
+    "regenerate-and-run:python:transactional": "rm -rf swagger-out/transactional-python && npm run generate:python:transactional && source utils/sdk/python/venv/bin/activate && cd swagger-out/transactional-python/ && python setup.py install --force && pip install python-dotenv && cd ../../utils/sdk/python && python useTransactional.py && deactivate",
+    "regenerate-and-run:python:marketing": "rm -rf swagger-out/marketing-python && npm run generate:python:marketing && source utils/sdk/python/venv/bin/activate && cd swagger-out/marketing-python/ && python setup.py install --force && pip install python-dotenv && cd ../../utils/sdk/python && python useMarketing.py && deactivate",
+    "regenerate-and-run:ruby:transactional": "rm -rf swagger-out/transactional-ruby && npm run generate:ruby:transactional && cd utils/sdk/ruby && gem build ../../../swagger-out/transactional-ruby/MailchimpTransactional.gemspec && sudo gem install ../../../swagger-out/transactional-ruby/MailchimpTransactional-1.0.0.gem && sudo gem install dotenv && ruby useTransactional.rb",
+    "regenerate-and-run:ruby:marketing": "rm -rf swagger-out/marketing-ruby && npm run generate:ruby:marketing && cd utils/sdk/ruby && gem build ../../../swagger-out/marketing-ruby/MailchimpMarketing.gemspec && sudo gem install ../../../swagger-out/marketing-ruby/MailchimpMarketing-1.0.0.gem && sudo gem install dotenv && ruby useMarketing.rb"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/postlight/mailchimp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/postlight/mailchimp/issues"
+  },
+  "homepage": "https://github.com/postlight/mailchimp#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.3",
+    "@actions/github": "^2.1.1",
+    "@apidevtools/swagger-cli": "^4.0.2",
+    "@apidevtools/swagger-parser": "^9.0.1",
+    "yargs": "^15.3.1"
+  },
+  "devDependencies": {
+    "@manifoldco/swagger-to-ts": "^1.7.1",
+    "edit-json-file": "^1.4.0"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "postlight/mailchimp",
+  "description": "",
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../../../swagger-out/marketing-php/MailchimpMarketing"
+    },
+    {
+      "type": "path",
+      "url": "../../../swagger-out/transactional-php/MailchimpTransactional"
+    }
+  ],
+  "require": {
+    "postlight/mailchimp-marketing": "*@dev",
+    "postlight/mailchimp-transactional": "*@dev",
+    "vlucas/phpdotenv": "^4.1"
+  }
+}

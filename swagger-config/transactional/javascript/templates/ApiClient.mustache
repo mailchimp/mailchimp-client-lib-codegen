@@ -1,0 +1,71 @@
+{{>licenseInfo}}
+var axios = require('axios');
+
+{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}{{#-first}}var {{baseName}} = require('./api/{{classname}}');
+{{/-first}}{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
+var exports = function (apiKey = '') {
+  this.basePath = '{{{basePath}}}';
+  this.apiKey = apiKey;{{#apiInfo}}{{#apis}}{{#-first}}{{#operations}}{{#operation}}{{#-first}}
+  this.defaultOutputFormat = '';
+
+  this.formatList = ['json', 'xml', 'php', 'yaml'];
+  this.contentTypes = [{{#consumes}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/consumes}}];
+  this.accepts = [{{#produces}}
+    '{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/produces}}
+  ];{{/-first}}{{/operation}}{{/operations}}{{/-first}}{{/apis}}{{/apiInfo}}
+
+  // API Routes{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}{{#-first}}
+  this.{{#tags}}{{{name}}}{{/tags}} = new {{baseName}}(this);{{/-first}}{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
+};
+
+// HTTP POST request helper
+exports.prototype.post = function post(path, body = {}) {
+  var _this = this;
+  var url = _this.basePath + path;
+
+  // apply API key to the request
+  body.key = _this.apiKey;
+
+  // apply response format modifier
+  var formatList = _this.formatList;
+  var useDefaultOutputFormat = true;
+
+  if (typeof body.outputFormat === 'string') {
+    var format = body.outputFormat.toLowerCase();
+    if (formatList.indexOf(format) !== -1) {
+        url = url + '.' + format;
+        delete body.outputFormat;
+        useDefaultOutputFormat = false;
+    }
+  }
+
+  // or use the default response format
+  var defaultOutputFormat = _this.defaultOutputFormat;
+  if (useDefaultOutputFormat && formatList.indexOf(defaultOutputFormat) !== -1) {
+    url = url + '.' + defaultOutputFormat;
+  }
+
+  return axios
+    .post(url, body)
+    .then(function (response) {
+      return response.data;
+    })
+    .catch(function (error) {
+      return error;
+    })
+};
+
+// Updates the default HTTP request response format (json, xml, php, yaml)
+exports.prototype.setDefaultOutputFormat = function (outputFormat) {
+  var _this = this;
+  if (_this.formatList.indexOf(outputFormat) !== -1) {
+    _this.defaultOutputFormat = outputFormat;
+  }
+};
+
+// The default API client implementation.
+exports.instance = function (apiKey) {
+  return new exports(apiKey);
+};
+
+module.exports = exports;

@@ -1,0 +1,8 @@
+{
+  "projectName": "@postlight/postlight_md_test",
+  "projectDescription": "Mailchimp Transactional Javascript SDK",
+  "projectLicenseName": "Apache-2.0",
+  "moduleName": "MailchimpTransactional",
+  "usePromises": true,
+  "licenseName": "Apache 2.0"
+}

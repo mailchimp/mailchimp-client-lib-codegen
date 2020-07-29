@@ -1,0 +1,85 @@
+# Mailchimp Transactional SDK — Ruby
+
+The official Ruby SDK for the Mailchimp Transactional API (v1)
+
+## Installation
+
+### Build a gem
+
+To build the Ruby code into a gem:
+
+```shell
+gem build {{{gemName}}}.gemspec
+```
+
+Then either install the gem locally:
+
+```shell
+gem install ./{{{gemName}}}-{{{gemVersion}}}.gem
+```
+(for development, run `gem install --dev ./{{{gemName}}}-{{{gemVersion}}}.gem` to install the development dependencies)
+
+or publish the gem to a gem hosting service, e.g. [RubyGems](https://rubygems.org/).
+
+Finally add this to the Gemfile:
+
+    gem '{{{gemName}}}', '~> {{{gemVersion}}}'
+
+### Install from Git
+
+If the Ruby gem is hosted at a git repository: https://github.com/{{#gitUserId}}{{.}}{{/gitUserId}}{{^gitUserId}}YOUR_GIT_USERNAME{{/gitUserId}}/{{#gitRepoId}}{{.}}{{/gitRepoId}}{{^gitRepoId}}YOUR_GIT_REPO{{/gitRepoId}}, then add the following in the Gemfile:
+
+    gem '{{{gemName}}}', :git => 'https://github.com/{{#gitUserId}}{{.}}{{/gitUserId}}{{^gitUserId}}YOUR_GIT_USERNAME{{/gitUserId}}/{{#gitRepoId}}{{.}}{{/gitRepoId}}{{^gitRepoId}}YOUR_GIT_REPO{{/gitRepoId}}.git'
+
+### Include the Ruby code directly
+
+Include the Ruby code directly using `-I` as follows:
+
+```shell
+ruby -Ilib script.rb
+```
+
+## Quick Start
+
+```ruby
+require 'MailchimpTransactional'
+
+begin
+  client = MailchimpTransactional::Client.new(ENV['MANDRILL_KEY'])
+  result = client.users.ping() # => 'PONG!'
+  p result
+rescue MailchimpTransactional::ApiError => e
+  puts "Error: #{e}"
+end
+```
+
+## Sending Requests
+All requests are sent via POST and accept a single argument as the request body parameter.
+```ruby
+mailchimp.templates.publish({ :name => 'My Template' });
+```
+
+## Output Formats
+Optionally, you can set the default response format for **all requests** to one of the following:
+- `json` *(default)*
+- `xml`
+- `php`
+- `yaml`
+
+```ruby
+mailchimp.set_default_output_format('xml');
+```
+
+You can also set the response format for a **single request** by passing in a special `outputFormat` param to the request body.
+```ruby
+mailchimp.senders.list({ :outputFormat => 'php' });
+```
+
+## API Endpoints
+
+All URIs are relative to *{{basePath}}*
+
+| SDK Method | Endpoint |
+| ---------- | -------- |
+{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}| **{{#tags}}{{{name}}}{{/tags}}.{{vendorExtensions.x-custom-config.methodNameSnake}}** | {{path}} |
+{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}

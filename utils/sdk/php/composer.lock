@@ -1,0 +1,538 @@
+{
+  "_readme": [
+    "This file locks the dependencies of your project to a known state",
+    "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+    "This file is @generated automatically"
+  ],
+  "content-hash": "09479167a0020ee2828a87dee6d90761",
+  "packages": [
+    {
+      "name": "guzzlehttp/guzzle",
+      "version": "6.5.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/guzzle/guzzle.git",
+        "reference": "43ece0e75098b7ecd8d13918293029e555a50f82"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/guzzle/guzzle/zipball/43ece0e75098b7ecd8d13918293029e555a50f82",
+        "reference": "43ece0e75098b7ecd8d13918293029e555a50f82",
+        "shasum": ""
+      },
+      "require": {
+        "ext-json": "*",
+        "guzzlehttp/promises": "^1.0",
+        "guzzlehttp/psr7": "^1.6.1",
+        "php": ">=5.5"
+      },
+      "require-dev": {
+        "ext-curl": "*",
+        "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.4 || ^7.0",
+        "psr/log": "^1.1"
+      },
+      "suggest": {
+        "ext-intl": "Required for Internationalized Domain Name (IDN) support",
+        "psr/log": "Required for using the Log middleware"
+      },
+      "type": "library",
+      "extra": {
+        "branch-alias": {
+          "dev-master": "6.5-dev"
+        }
+      },
+      "autoload": {
+        "psr-4": {
+          "GuzzleHttp\\": "src/"
+        },
+        "files": ["src/functions_include.php"]
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": ["MIT"],
+      "authors": [
+        {
+          "name": "Michael Dowling",
+          "email": "mtdowling@gmail.com",
+          "homepage": "https://github.com/mtdowling"
+        }
+      ],
+      "description": "Guzzle is a PHP HTTP client library",
+      "homepage": "http://guzzlephp.org/",
+      "keywords": [
+        "client",
+        "curl",
+        "framework",
+        "http",
+        "http client",
+        "rest",
+        "web service"
+      ],
+      "time": "2019-12-23T11:57:10+00:00"
+    },
+    {
+      "name": "guzzlehttp/promises",
+      "version": "v1.3.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/guzzle/promises.git",
+        "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/guzzle/promises/zipball/a59da6cf61d80060647ff4d3eb2c03a2bc694646",
+        "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646",
+        "shasum": ""
+      },
+      "require": {
+        "php": ">=5.5.0"
+      },
+      "require-dev": {
+        "phpunit/phpunit": "^4.0"
+      },
+      "type": "library",
+      "extra": {
+        "branch-alias": {
+          "dev-master": "1.4-dev"
+        }
+      },
+      "autoload": {
+        "psr-4": {
+          "GuzzleHttp\\Promise\\": "src/"
+        },
+        "files": ["src/functions_include.php"]
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": ["MIT"],
+      "authors": [
+        {
+          "name": "Michael Dowling",
+          "email": "mtdowling@gmail.com",
+          "homepage": "https://github.com/mtdowling"
+        }
+      ],
+      "description": "Guzzle promises library",
+      "keywords": ["promise"],
+      "time": "2016-12-20T10:07:11+00:00"
+    },
+    {
+      "name": "guzzlehttp/psr7",
+      "version": "1.6.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/guzzle/psr7.git",
+        "reference": "239400de7a173fe9901b9ac7c06497751f00727a"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/guzzle/psr7/zipball/239400de7a173fe9901b9ac7c06497751f00727a",
+        "reference": "239400de7a173fe9901b9ac7c06497751f00727a",
+        "shasum": ""
+      },
+      "require": {
+        "php": ">=5.4.0",
+        "psr/http-message": "~1.0",
+        "ralouphie/getallheaders": "^2.0.5 || ^3.0.0"
+      },
+      "provide": {
+        "psr/http-message-implementation": "1.0"
+      },
+      "require-dev": {
+        "ext-zlib": "*",
+        "phpunit/phpunit": "~4.8.36 || ^5.7.27 || ^6.5.8"
+      },
+      "suggest": {
+        "zendframework/zend-httphandlerrunner": "Emit PSR-7 responses"
+      },
+      "type": "library",
+      "extra": {
+        "branch-alias": {
+          "dev-master": "1.6-dev"
+        }
+      },
+      "autoload": {
+        "psr-4": {
+          "GuzzleHttp\\Psr7\\": "src/"
+        },
+        "files": ["src/functions_include.php"]
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": ["MIT"],
+      "authors": [
+        {
+          "name": "Michael Dowling",
+          "email": "mtdowling@gmail.com",
+          "homepage": "https://github.com/mtdowling"
+        },
+        {
+          "name": "Tobias Schultze",
+          "homepage": "https://github.com/Tobion"
+        }
+      ],
+      "description": "PSR-7 message implementation that also provides common utility methods",
+      "keywords": [
+        "http",
+        "message",
+        "psr-7",
+        "request",
+        "response",
+        "stream",
+        "uri",
+        "url"
+      ],
+      "time": "2019-07-01T23:21:34+00:00"
+    },
+    {
+      "name": "phpoption/phpoption",
+      "version": "1.7.3",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/schmittjoh/php-option.git",
+        "reference": "4acfd6a4b33a509d8c88f50e5222f734b6aeebae"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/schmittjoh/php-option/zipball/4acfd6a4b33a509d8c88f50e5222f734b6aeebae",
+        "reference": "4acfd6a4b33a509d8c88f50e5222f734b6aeebae",
+        "shasum": ""
+      },
+      "require": {
+        "php": "^5.5.9 || ^7.0 || ^8.0"
+      },
+      "require-dev": {
+        "bamarni/composer-bin-plugin": "^1.3",
+        "phpunit/phpunit": "^4.8.35 || ^5.0 || ^6.0 || ^7.0"
+      },
+      "type": "library",
+      "extra": {
+        "branch-alias": {
+          "dev-master": "1.7-dev"
+        }
+      },
+      "autoload": {
+        "psr-4": {
+          "PhpOption\\": "src/PhpOption/"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": ["Apache-2.0"],
+      "authors": [
+        {
+          "name": "Johannes M. Schmitt",
+          "email": "schmittjoh@gmail.com"
+        },
+        {
+          "name": "Graham Campbell",
+          "email": "graham@alt-three.com"
+        }
+      ],
+      "description": "Option Type for PHP",
+      "keywords": ["language", "option", "php", "type"],
+      "time": "2020-03-21T18:07:53+00:00"
+    },
+    {
+      "name": "postlight/mailchimp-marketing",
+      "version": "dev-cache",
+      "dist": {
+        "type": "path",
+        "url": "../../../swagger-out/mailchimp-marketing-php/MailchimpMarketing",
+        "reference": "93fcac8b2ce7219ddaaf98e79e9c08de0af10d0a"
+      },
+      "require": {
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "guzzlehttp/guzzle": "^6.2",
+        "php": ">=5.5"
+      },
+      "require-dev": {
+        "friendsofphp/php-cs-fixer": "~2.12",
+        "phpunit/phpunit": "^4.8",
+        "squizlabs/php_codesniffer": "~2.6"
+      },
+      "type": "library",
+      "autoload": {
+        "psr-4": {
+          "MailchimpMarketing\\": "lib/"
+        }
+      },
+      "autoload-dev": {
+        "psr-4": {
+          "MailchimpMarketing\\": "test/"
+        }
+      },
+      "license": ["proprietary"],
+      "authors": [
+        {
+          "name": "Swagger and contributors",
+          "homepage": "https://github.com/swagger-api/swagger-codegen"
+        }
+      ],
+      "homepage": "http://swagger.io",
+      "keywords": ["api", "php", "sdk", "swagger"]
+    },
+    {
+      "name": "postlight/mailchimp-transactional",
+      "version": "dev-cache",
+      "dist": {
+        "type": "path",
+        "url": "../../../swagger-out/transactional-php/MailchimpTransactional",
+        "reference": "dd014de78e17152bcb34d191cfe81606530f3a20"
+      },
+      "require": {
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "guzzlehttp/guzzle": "^6.2",
+        "php": ">=5.5"
+      },
+      "require-dev": {
+        "friendsofphp/php-cs-fixer": "~2.12",
+        "phpunit/phpunit": "^4.8",
+        "squizlabs/php_codesniffer": "~2.6"
+      },
+      "type": "library",
+      "autoload": {
+        "psr-4": {
+          "MailchimpTransactional\\": "lib/"
+        }
+      },
+      "autoload-dev": {
+        "psr-4": {
+          "MailchimpTransactional\\": "test/"
+        }
+      },
+      "license": ["proprietary"],
+      "authors": [
+        {
+          "name": "Swagger and contributors",
+          "homepage": "https://github.com/swagger-api/swagger-codegen"
+        }
+      ],
+      "homepage": "http://swagger.io",
+      "keywords": ["api", "php", "sdk", "swagger"]
+    },
+    {
+      "name": "psr/http-message",
+      "version": "1.0.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/php-fig/http-message.git",
+        "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
+        "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
+        "shasum": ""
+      },
+      "require": {
+        "php": ">=5.3.0"
+      },
+      "type": "library",
+      "extra": {
+        "branch-alias": {
+          "dev-master": "1.0.x-dev"
+        }
+      },
+      "autoload": {
+        "psr-4": {
+          "Psr\\Http\\Message\\": "src/"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": ["MIT"],
+      "authors": [
+        {
+          "name": "PHP-FIG",
+          "homepage": "http://www.php-fig.org/"
+        }
+      ],
+      "description": "Common interface for HTTP messages",
+      "homepage": "https://github.com/php-fig/http-message",
+      "keywords": [
+        "http",
+        "http-message",
+        "psr",
+        "psr-7",
+        "request",
+        "response"
+      ],
+      "time": "2016-08-06T14:39:51+00:00"
+    },
+    {
+      "name": "ralouphie/getallheaders",
+      "version": "3.0.3",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/ralouphie/getallheaders.git",
+        "reference": "120b605dfeb996808c31b6477290a714d356e822"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/ralouphie/getallheaders/zipball/120b605dfeb996808c31b6477290a714d356e822",
+        "reference": "120b605dfeb996808c31b6477290a714d356e822",
+        "shasum": ""
+      },
+      "require": {
+        "php": ">=5.6"
+      },
+      "require-dev": {
+        "php-coveralls/php-coveralls": "^2.1",
+        "phpunit/phpunit": "^5 || ^6.5"
+      },
+      "type": "library",
+      "autoload": {
+        "files": ["src/getallheaders.php"]
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": ["MIT"],
+      "authors": [
+        {
+          "name": "Ralph Khattar",
+          "email": "ralph.khattar@gmail.com"
+        }
+      ],
+      "description": "A polyfill for getallheaders.",
+      "time": "2019-03-08T08:55:37+00:00"
+    },
+    {
+      "name": "symfony/polyfill-ctype",
+      "version": "v1.15.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/symfony/polyfill-ctype.git",
+        "reference": "4719fa9c18b0464d399f1a63bf624b42b6fa8d14"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/4719fa9c18b0464d399f1a63bf624b42b6fa8d14",
+        "reference": "4719fa9c18b0464d399f1a63bf624b42b6fa8d14",
+        "shasum": ""
+      },
+      "require": {
+        "php": ">=5.3.3"
+      },
+      "suggest": {
+        "ext-ctype": "For best performance"
+      },
+      "type": "library",
+      "extra": {
+        "branch-alias": {
+          "dev-master": "1.15-dev"
+        }
+      },
+      "autoload": {
+        "psr-4": {
+          "Symfony\\Polyfill\\Ctype\\": ""
+        },
+        "files": ["bootstrap.php"]
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": ["MIT"],
+      "authors": [
+        {
+          "name": "Gert de Pagter",
+          "email": "BackEndTea@gmail.com"
+        },
+        {
+          "name": "Symfony Community",
+          "homepage": "https://symfony.com/contributors"
+        }
+      ],
+      "description": "Symfony polyfill for ctype functions",
+      "homepage": "https://symfony.com",
+      "keywords": ["compatibility", "ctype", "polyfill", "portable"],
+      "funding": [
+        {
+          "url": "https://symfony.com/sponsor",
+          "type": "custom"
+        },
+        {
+          "url": "https://github.com/fabpot",
+          "type": "github"
+        },
+        {
+          "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+          "type": "tidelift"
+        }
+      ],
+      "time": "2020-02-27T09:26:54+00:00"
+    },
+    {
+      "name": "vlucas/phpdotenv",
+      "version": "v4.1.3",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/vlucas/phpdotenv.git",
+        "reference": "88f7acc95150bca002a498899f8b52f318e444c2"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/88f7acc95150bca002a498899f8b52f318e444c2",
+        "reference": "88f7acc95150bca002a498899f8b52f318e444c2",
+        "shasum": ""
+      },
+      "require": {
+        "php": "^5.5.9 || ^7.0",
+        "phpoption/phpoption": "^1.7.2",
+        "symfony/polyfill-ctype": "^1.9"
+      },
+      "require-dev": {
+        "bamarni/composer-bin-plugin": "^1.3",
+        "ext-filter": "*",
+        "ext-pcre": "*",
+        "phpunit/phpunit": "^4.8.35 || ^5.0 || ^6.0 || ^7.0"
+      },
+      "suggest": {
+        "ext-filter": "Required to use the boolean validator.",
+        "ext-pcre": "Required to use most of the library."
+      },
+      "type": "library",
+      "extra": {
+        "branch-alias": {
+          "dev-master": "4.1-dev"
+        }
+      },
+      "autoload": {
+        "psr-4": {
+          "Dotenv\\": "src/"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": ["BSD-3-Clause"],
+      "authors": [
+        {
+          "name": "Graham Campbell",
+          "email": "graham@alt-three.com",
+          "homepage": "https://gjcampbell.co.uk/"
+        },
+        {
+          "name": "Vance Lucas",
+          "email": "vance@vancelucas.com",
+          "homepage": "https://vancelucas.com/"
+        }
+      ],
+      "description": "Loads environment variables from `.env` to `getenv()`, `$_ENV` and `$_SERVER` automagically.",
+      "keywords": ["dotenv", "env", "environment"],
+      "funding": [
+        {
+          "url": "https://tidelift.com/funding/github/packagist/vlucas/phpdotenv",
+          "type": "tidelift"
+        }
+      ],
+      "time": "2020-03-27T23:37:15+00:00"
+    }
+  ],
+  "packages-dev": [],
+  "aliases": [],
+  "minimum-stability": "stable",
+  "stability-flags": {
+    "postlight/mailchimp-marketing": 20,
+    "postlight/mailchimp-transactional": 20
+  },
+  "prefer-stable": false,
+  "prefer-lowest": false,
+  "platform": [],
+  "platform-dev": [],
+  "plugin-api-version": "1.1.0"
+}

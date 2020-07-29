@@ -1,0 +1,66 @@
+# Mailchimp Marketing SDK — PHP
+
+The official PHP SDK for the Mailchimp Marketing API
+
+## Installation
+
+**Option 1:** Install via Packagist
+```
+composer require mailchimp/marketing
+```
+
+Or add the following to `composer.json`
+```
+{
+  "require": {
+    "{{#composerVendorName}}{{.}}{{/composerVendorName}}{{^composerVendorName}}{{gitUserId}}{{/composerVendorName}}/{{#composerProjectName}}{{.}}{{/composerProjectName}}{{^composerProjectName}}{{gitRepoId}}{{/composerProjectName}}": "*"
+  }
+}
+```
+
+Install all composer dependencies using:
+```
+composer install
+```
+
+**Option 2:** Install Manually
+
+Clone the repo
+```
+git clone git@github.com:postlight/mailchimp-marketing-php.git
+```
+
+In the SDK project root, install all dependencies
+```
+composer install
+```
+
+Manually include `vendor/autoload.php` in your implementation
+```php
+require_once('/path/to/{{packagePath}}/vendor/autoload.php');
+```
+
+## Quick Start
+
+```php
+require_once('/path/to/{{packagePath}}/vendor/autoload.php');
+
+$mailchimp = new {{invokerPackage}}\ApiClient();
+
+$mailchimp->setConfig([
+  'apiKey' => 'YOUR_API_KEY',
+  'server' => 'YOUR_SERVER_PREFIX'
+]);
+
+$response = $mailchimp->ping->get();
+print_r($response);
+```
+
+## API Endpoints
+
+All URIs are relative to *{{basePath}}*
+
+| SDK Method | Endpoint |
+| ---------- | -------- |
+{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}| **{{#tags}}{{{name}}}{{/tags}}.{{vendorExtensions.x-custom-config.methodNameCamel}}** | {{path}} |
+{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}

@@ -1,0 +1,14 @@
+var ApiClient = require('../ApiClient');
+
+module.exports = function (apiClient) {
+  this.apiClient = apiClient || ApiClient.instance();
+{{#operations}}{{#operation}}
+  /**
+   * {{#summary}}{{summary}}{{/summary}}
+   * {{#notes}}{{notes}}{{/notes}}
+   */
+  this.{{vendorExtensions.x-custom-config.methodNameCamel}} = function (body) {
+    return this.apiClient.post('{{&path}}', body);
+  };
+{{/operation}}{{/operations}}
+};
