@@ -241,103 +241,95 @@ jobs:
           name: marketing-python.zip
           path: swagger-out/marketing-python/marketing-python.zip
 
-  generate-java:
-    runs-on: ubuntu-latest
-    needs: [validate, setup-cache]
-    steps:
-      - uses: actions/checkout@v2
-      - name: Initialize Marketing Cache
-        id: init-cache-mc
-        uses: actions/cache@v1
-        with:
-          path: .cache
-          key: cache-dir
+  # generate-java:
+  #   runs-on: ubuntu-latest
+  #   needs: [validate, setup-cache]
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Initialize Marketing Cache
+  #       id: init-cache-mc
+  #       uses: actions/cache@v1
+  #       with:
+  #         path: .cache
+  #         key: cache-dir
 
-      - name: Cache node_modules
-        uses: actions/cache@v1
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+  #     - name: Cache node_modules
+  #       uses: actions/cache@v1
+  #       env:
+  #         cache-name: cache-node-modules
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-build-${{ env.cache-name }}-
+  #           ${{ runner.os }}-build-
+  #           ${{ runner.os }}-
 
-      - name: Generate → marketing-java
-        run: |
-          npm install
-          node utils/actions/updateLangConfig.js --api=marketing --lang=java --specVersion=${{ env.SPEC_VERSION }}
-          npm run generate:java:marketing
-        env:
-          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+  #     - name: Generate → marketing-java
+  #       run: |
+  #         npm install
+  #         node utils/actions/updateLangConfig.js --api=marketing --lang=java --specVersion=${{ env.SPEC_VERSION }}
+  #         npm run generate:java:marketing
+  #       env:
+  #         SPEC_VERSION: ${{ needs.validate.outputs.version }}
 
-      - name: Zip build artifact → marketing-java
-        working-directory: swagger-out/marketing-java
-        run: zip -r marketing-java.zip .
+  #     - name: Zip build artifact → marketing-java
+  #       working-directory: swagger-out/marketing-java
+  #       run: zip -r marketing-java.zip .
 
-      - name: Upload build artifact → marketing-java
-        uses: actions/upload-artifact@v1
-        with:
-          name: marketing-java.zip
-          path: swagger-out/marketing-java/marketing-java.zip
+  #     - name: Upload build artifact → marketing-java
+  #       uses: actions/upload-artifact@v1
+  #       with:
+  #         name: marketing-java.zip
+  #         path: swagger-out/marketing-java/marketing-java.zip
 
-  generate-csharp:
-    runs-on: ubuntu-latest
-    needs: [validate, setup-cache]
-    steps:
-      - uses: actions/checkout@v2
+  # generate-csharp:
+  #   runs-on: ubuntu-latest
+  #   needs: [validate, setup-cache]
+  #   steps:
+  #     - uses: actions/checkout@v2
 
-      - name: Initialize Marketing Cache
-        id: init-cache-mc
-        uses: actions/cache@v1
-        with:
-          path: .cache
-          key: cache-dir
+  #     - name: Initialize Marketing Cache
+  #       id: init-cache-mc
+  #       uses: actions/cache@v1
+  #       with:
+  #         path: .cache
+  #         key: cache-dir
 
-      - name: Cache node_modules
-        uses: actions/cache@v1
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+  #     - name: Cache node_modules
+  #       uses: actions/cache@v1
+  #       env:
+  #         cache-name: cache-node-modules
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-build-${{ env.cache-name }}-
+  #           ${{ runner.os }}-build-
+  #           ${{ runner.os }}-
 
-      - name: Generate → marketing-csharp
-        run: |
-          npm install
-          node utils/actions/updateLangConfig.js --api=marketing --lang=csharp --specVersion=${{ env.SPEC_VERSION }}
-          npm run generate:csharp:marketing
-        env:
-          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+  #     - name: Generate → marketing-csharp
+  #       run: |
+  #         npm install
+  #         node utils/actions/updateLangConfig.js --api=marketing --lang=csharp --specVersion=${{ env.SPEC_VERSION }}
+  #         npm run generate:csharp:marketing
+  #       env:
+  #         SPEC_VERSION: ${{ needs.validate.outputs.version }}
 
-      - name: Zip build artifact → marketing-csharp
-        working-directory: swagger-out/marketing-csharp
-        run: zip -r marketing-csharp.zip .
+  #     - name: Zip build artifact → marketing-csharp
+  #       working-directory: swagger-out/marketing-csharp
+  #       run: zip -r marketing-csharp.zip .
 
-      - name: Upload build artifact → marketing-csharp
-        uses: actions/upload-artifact@v1
-        with:
-          name: marketing-csharp.zip
-          path: swagger-out/marketing-csharp/marketing-csharp.zip
+  #     - name: Upload build artifact → marketing-csharp
+  #       uses: actions/upload-artifact@v1
+  #       with:
+  #         name: marketing-csharp.zip
+  #         path: swagger-out/marketing-csharp/marketing-csharp.zip
 
   create-release:
     runs-on: ubuntu-latest
     needs:
-      [
-        validate,
-        generate-node,
-        generate-php,
-        generate-ruby,
-        generate-python,
-        generate-java,
-        generate-csharp,
-      ]
+      [validate, generate-node, generate-php, generate-ruby, generate-python]
     steps:
       - name: Create Release
         uses: actions/create-release@latest

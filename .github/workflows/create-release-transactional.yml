@@ -241,114 +241,112 @@ jobs:
           name: transactional-python.zip
           path: swagger-out/transactional-python/transactional-python.zip
 
-  generate-java:
-    runs-on: ubuntu-latest
-    needs: [validate, setup-cache]
-    steps:
-      - uses: actions/checkout@v2
-      - name: Initialize Transactional Cache
-        id: init-cache-md
-        uses: actions/cache@v1
-        with:
-          path: .cache
-          key: cache-dir
+  # generate-java:
+  #   runs-on: ubuntu-latest
+  #   needs: [validate, setup-cache]
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Initialize Transactional Cache
+  #       id: init-cache-md
+  #       uses: actions/cache@v1
+  #       with:
+  #         path: .cache
+  #         key: cache-dir
 
-      - name: Cache node_modules
-        uses: actions/cache@v1
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+  #     - name: Cache node_modules
+  #       uses: actions/cache@v1
+  #       env:
+  #         cache-name: cache-node-modules
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-build-${{ env.cache-name }}-
+  #           ${{ runner.os }}-build-
+  #           ${{ runner.os }}-
 
-      - name: Generate → transactional-java
-        run: |
-          npm install
-          node utils/actions/updateLangConfig.js --api=transactional --lang=java --specVersion=${{ env.SPEC_VERSION }}
-          npm run generate:java:transactional
-        env:
-          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+  #     - name: Generate → transactional-java
+  #       run: |
+  #         npm install
+  #         node utils/actions/updateLangConfig.js --api=transactional --lang=java --specVersion=${{ env.SPEC_VERSION }}
+  #         npm run generate:java:transactional
+  #       env:
+  #         SPEC_VERSION: ${{ needs.validate.outputs.version }}
 
-      - name: Zip build artifact → transactional-java
-        working-directory: swagger-out/transactional-java
-        run: zip -r transactional-java.zip .
+  #     - name: Zip build artifact → transactional-java
+  #       working-directory: swagger-out/transactional-java
+  #       run: zip -r transactional-java.zip .
 
-      - name: Upload build artifact → transactional-java
-        uses: actions/upload-artifact@v1
-        with:
-          name: transactional-java.zip
-          path: swagger-out/transactional-java/transactional-java.zip
+  #     - name: Upload build artifact → transactional-java
+  #       uses: actions/upload-artifact@v1
+  #       with:
+  #         name: transactional-java.zip
+  #         path: swagger-out/transactional-java/transactional-java.zip
 
-  generate-csharp:
-    runs-on: ubuntu-latest
-    needs: [validate, setup-cache]
-    steps:
-      - uses: actions/checkout@v2
+  # generate-csharp:
+  #   runs-on: ubuntu-latest
+  #   needs: [validate, setup-cache]
+  #   steps:
+  #     - uses: actions/checkout@v2
 
-      - name: Initialize Transactional Cache
-        id: init-cache-md
-        uses: actions/cache@v1
-        with:
-          path: .cache
-          key: cache-dir
+  #     - name: Initialize Transactional Cache
+  #       id: init-cache-md
+  #       uses: actions/cache@v1
+  #       with:
+  #         path: .cache
+  #         key: cache-dir
 
-      - name: Cache node_modules
-        uses: actions/cache@v1
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+  #     - name: Cache node_modules
+  #       uses: actions/cache@v1
+  #       env:
+  #         cache-name: cache-node-modules
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-build-${{ env.cache-name }}-
+  #           ${{ runner.os }}-build-
+  #           ${{ runner.os }}-
 
-      - name: Generate → transactional-csharp
-        run: |
-          npm install
-          node utils/actions/updateLangConfig.js --api=transactional --lang=csharp --specVersion=${{ env.SPEC_VERSION }}
-          npm run generate:csharp:transactional
-        env:
-          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+  #     - name: Generate → transactional-csharp
+  #       run: |
+  #         npm install
+  #         node utils/actions/updateLangConfig.js --api=transactional --lang=csharp --specVersion=${{ env.SPEC_VERSION }}
+  #         npm run generate:csharp:transactional
+  #       env:
+  #         SPEC_VERSION: ${{ needs.validate.outputs.version }}
 
-      - name: Zip build artifact → transactional-csharp
-        working-directory: swagger-out/transactional-csharp
-        run: zip -r transactional-csharp.zip .
+  #     - name: Zip build artifact → transactional-csharp
+  #       working-directory: swagger-out/transactional-csharp
+  #       run: zip -r transactional-csharp.zip .
 
-      - name: Upload build artifact → transactional-csharp
-        uses: actions/upload-artifact@v1
-        with:
-          name: transactional-csharp.zip
-          path: swagger-out/transactional-csharp/transactional-csharp.zip
+  #     - name: Upload build artifact → transactional-csharp
+  #       uses: actions/upload-artifact@v1
+  #       with:
+  #         name: transactional-csharp.zip
+  #         path: swagger-out/transactional-csharp/transactional-csharp.zip
 
-  create-release:
-    runs-on: ubuntu-latest
-    needs:
-      [
-        validate,
-        generate-node,
-        generate-php,
-        generate-ruby,
-        generate-python,
-        generate-java,
-        generate-csharp,
-      ]
-    steps:
-      - name: Create Release
-        uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
-          SPEC_VERSION: ${{ needs.validate.outputs.version }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Mailchimp Transactional v${{ env.SPEC_VERSION }}
-          draft: true
-          prerelease: false
+  # create-release:
+  #   runs-on: ubuntu-latest
+  #   needs:
+  #     [
+  #       validate,
+  #       generate-node,
+  #       generate-php,
+  #       generate-ruby,
+  #       generate-python
+  #     ]
+  #   steps:
+  #     - name: Create Release
+  #       uses: actions/create-release@latest
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
+  #         SPEC_VERSION: ${{ needs.validate.outputs.version }}
+  #       with:
+  #         tag_name: ${{ github.ref }}
+  #         release_name: Mailchimp Transactional v${{ env.SPEC_VERSION }}
+  #         draft: true
+  #         prerelease: false
 
   publish-node:
     runs-on: ubuntu-latest
