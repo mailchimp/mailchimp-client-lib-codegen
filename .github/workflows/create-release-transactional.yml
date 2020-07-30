@@ -11,7 +11,7 @@ on:
 
 env:
   PUBLISH_INTERNAL: true # whether or not to push to git repos
-  PUBLISH_EXTERNAL: true # whether or not to push to package managers
+  PUBLISH_EXTERNAL: false # whether or not to push to package managers
 
 jobs:
   validate:
