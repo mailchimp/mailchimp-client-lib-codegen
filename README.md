@@ -135,28 +135,28 @@ import mailchimp_marketing
 
 | Marketing |                                                                                       |
 | --------- | ------------------------------------------------------------------------------------- |
-| Node.js   | [mailchimp-marketing-node](https://github.com/postlight/mailchimp-marketing-node)     |
-| PHP       | [mailchimp-marketing-php](https://github.com/postlight/mailchimp-marketing-php)       |
-| Ruby      | [mailchimp-marketing-ruby](https://github.com/postlight/mailchimp-marketing-ruby)     |
-| Python    | [mailchimp-marketing-python](https://github.com/postlight/mailchimp-marketing-python) |
+| Node.js   | [mailchimp-marketing-node](https://github.com/mailchimp/mailchimp-marketing-node)     |
+| PHP       | [mailchimp-marketing-php](https://github.com/mailchimp/mailchimp-marketing-php)       |
+| Ruby      | [mailchimp-marketing-ruby](https://github.com/mailchimp/mailchimp-marketing-ruby)     |
+| Python    | [mailchimp-marketing-python](https://github.com/mailchimp/mailchimp-marketing-python) |
 
 | Transactional |                                                                                               |
 | ------------- | --------------------------------------------------------------------------------------------- |
-| Node.js       | [mailchimp-transactional-node](https://github.com/postlight/mailchimp-transactional-node)     |
-| PHP           | [mailchimp-transactional-php](https://github.com/postlight/mailchimp-transactional-php)       |
-| Ruby          | [mailchimp-transactional-ruby](https://github.com/postlight/mailchimp-transactional-ruby)     |
-| Python        | [mailchimp-transactional-python](https://github.com/postlight/mailchimp-transactional-python) |
+| Node.js       | [mailchimp-transactional-node](https://github.com/mailchimp/mailchimp-transactional-node)     |
+| PHP           | [mailchimp-transactional-php](https://github.com/mailchimp/mailchimp-transactional-php)       |
+| Ruby          | [mailchimp-transactional-ruby](https://github.com/mailchimp/mailchimp-transactional-ruby)     |
+| Python        | [mailchimp-transactional-python](https://github.com/mailchimp/mailchimp-transactional-python) |
 
 # Published Clients — External
 
-| Marketing  |                                                                   |
-| ---------- | ----------------------------------------------------------------- |
-| Javascript | [NPM](https://www.npmjs.com/package/@postlight/postlight_mc_test) |
-| Ruby       | [RubyGems](https://rubygems.org/gems/PostlightMCTest)             |
-| Python     | [PyPI](https://test.pypi.org/project/postlight-mc-test/)          |
+| Marketing  |     |
+| ---------- | --- |
+| Javascript | TBA |
+| Ruby       | TBA |
+| Python     | TBA |
 
-| Transactional |                                                                   |
-| ------------- | ----------------------------------------------------------------- |
-| Javascript    | [NPM](https://www.npmjs.com/package/@postlight/postlight_md_test) |
-| Ruby          | [RubyGems](https://rubygems.org/gems/PostlightMDTest)             |
-| Python        | [PyPI](https://test.pypi.org/project/postlight-md-test/)          |
+| Transactional |     |
+| ------------- | --- |
+| Javascript    | TBA |
+| Ruby          | TBA |
+| Python        | TBA |
