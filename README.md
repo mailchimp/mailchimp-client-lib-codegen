@@ -149,14 +149,16 @@ import mailchimp_marketing
 
 # Published Clients — External
 
-| Marketing |                                                                     |
-| --------- | ------------------------------------------------------------------- |
-| Node      | [NPM](https://www.npmjs.com/package/@mailchimp/mailchimp_marketing) |
-| Ruby      | [RubyGems](https://rubygems.org/gems/MailchimpMarketing)            |
-| Python    | TBA                                                                 |
+| Marketing      |                                                                     |
+| -------------- | ------------------------------------------------------------------- |
+| Node           | [NPM](https://www.npmjs.com/package/@mailchimp/mailchimp_marketing) |
+| Ruby           | [RubyGems](https://rubygems.org/gems/MailchimpMarketing)            |
+| Python (Dist)  | [PyPI](https://pypi.org/project/mailchimp-marketing/)               |
+| Python (Test)) | [PyPI](https://test.pypi.org/project/mailchimp-marketing/)          |
 
 | Transactional |                                                                         |
 | ------------- | ----------------------------------------------------------------------- |
 | Node          | [NPM](https://www.npmjs.com/package/@mailchimp/mailchimp_transactional) |
 | Ruby          | [RubyGems](https://rubygems.org/gems/MailchimpTransactional)            |
-| Python        | TBA                                                                     |
+| Python (Dist) | [PyPI](https://pypi.org/project/mailchimp-transactional/)               |
+| Python (Test) | [PyPI](https://test.pypi.org/project/mailchimp-transactional/)          |
