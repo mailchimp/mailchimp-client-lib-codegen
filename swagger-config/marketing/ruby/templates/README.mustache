@@ -1,6 +1,6 @@
-# Mailchimp Marketing SDK — Ruby
+# Mailchimp Marketing — Ruby
 
-The official Ruby SDK for the Mailchimp Marketing API (v1)
+The official Ruby client library for the Mailchimp Marketing API (v1)
 
 ## Installation
 
@@ -46,7 +46,10 @@ require 'MailchimpMarketing'
 
 begin
   client = MailchimpMarketing::Client.new()
-  client.set_config(ENV['API_KEY'], ENV['API_SERVER'])
+  client.set_config({
+    :api_key => 'YOUR_API_KEY',
+    :server => 'YOUR_SERVER_PREFIX'
+  })
   result = client.ping.get()
   p result
 rescue MailchimpMarketing::ApiError => e
@@ -54,43 +57,53 @@ rescue MailchimpMarketing::ApiError => e
 end
 ```
 
-If your api key contains a server suffix (i.e. '-us19'), passing in the server key may be omitted, like so:
+## Authentication Methods
 
-```python
-client.setConfig(ENV['API_KEY'])
+The client library can be configured to use either **Basic Auth** or **OAuth2**.
+
+For either method, a server prefix should be passed in i.e. `us19`, in order for the client to determine to appropriate host url.
+
+### Basic Auth
+```ruby
+client.set_config({
+  :api_key => 'YOUR_API_KEY',
+  :server => 'YOUR_SERVER_PREFIX'
+})
+```
+
+### OAuth2
+```ruby
+client.set_config({
+  :access_token => 'YOUR_ACCESS_TOKEN',
+  :server => 'YOUR_SERVER_PREFIX'
+})
 ```
 
 ## API Endpoints
 
 All URIs are relative to *{{basePath}}*
 
-| SDK Method | Endpoint |
+| Method | Endpoint |
 | ---------- | -------- |
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}| **{{#tags}}{{{name}}}{{/tags}}.{{vendorExtensions.x-custom-config.methodNameSnake}}** | {{path}} |
 {{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
 
-## Additional SDKs
+## Additional Client Libraries
 
-Mailchimp Marketing SDKs are available in a number of additional languages.
+Mailchimp Marketing libraries are available in the following languages:
 
 <div>
-  <a href="https://github.com/postlight/mailchimp-marketing-node">
-  <img src="https://github.com/postlight/mailchimp/blob/master/resources/images/lang_node.png?raw=true" width="44" height="44">
+  <a href="https://github.com/mailchimp/mailchimp-marketing-node">
+  <img src="https://github.com/mailchimp/mailchimp-client-lib-codegen/blob/master/resources/images/lang_node.png?raw=true" width="44" height="44">
   </a>
-  <a href="https://github.com/postlight/mailchimp-marketing-php">
-  <img src="https://github.com/postlight/mailchimp/blob/master/resources/images/lang_php.png?raw=true" width="44" height="44">
+  <a href="https://github.com/mailchimp/mailchimp-marketing-php">
+  <img src="https://github.com/mailchimp/mailchimp-client-lib-codegen/blob/master/resources/images/lang_php.png?raw=true" width="44" height="44">
   </a>
-  <a href="https://github.com/postlight/mailchimp-marketing-ruby">
-  <img src="https://github.com/postlight/mailchimp/blob/master/resources/images/lang_ruby.png?raw=true" width="44" height="44">
+  <a href="https://github.com/mailchimp/mailchimp-marketing-ruby">
+  <img src="https://github.com/mailchimp/mailchimp-client-lib-codegen/blob/master/resources/images/lang_ruby.png?raw=true" width="44" height="44">
   </a>
-  <a href="https://github.com/postlight/mailchimp-marketing-python">
-  <img src="https://github.com/postlight/mailchimp/blob/master/resources/images/lang_python.png?raw=true" width="44" height="44">
-  </a>
-  <a href="https://github.com/postlight/mailchimp-marketing-java">
-  <img src="https://github.com/postlight/mailchimp/blob/master/resources/images/lang_java.png?raw=true" width="44" height="44">
-  </a>
-    <a href="https://github.com/postlight/mailchimp-marketing-csharp">
-  <img src="https://github.com/postlight/mailchimp/blob/master/resources/images/lang_csharp.png?raw=true" width="44" height="44">
+  <a href="https://github.com/mailchimp/mailchimp-marketing-python">
+  <img src="https://github.com/mailchimp/mailchimp-client-lib-codegen/blob/master/resources/images/lang_python.png?raw=true" width="44" height="44">
   </a>
 </div>
 
