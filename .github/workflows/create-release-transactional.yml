@@ -455,4 +455,4 @@ jobs:
         uses: pypa/gh-action-pypi-publish@master
         with:
           password: ${{ secrets.PYPI_TOKEN }}
-          packages_dir: marketing-python/dist
+          packages_dir: transactional-python/dist
