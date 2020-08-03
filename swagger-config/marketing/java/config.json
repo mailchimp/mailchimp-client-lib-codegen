@@ -4,6 +4,6 @@
   "invokerPackage": "com.mailchimp.marketing",
   "groupId": "com.mailchimp",
   "artifactId": "marketing",
-  "artifactUrl": "https://github.com/postlight/mailchimp-marketing-java",
+  "artifactUrl": "https://github.com/mailchimp/mailchimp-marketing-java",
   "artifactDescription": "Mailchimp Marketing Java SDK"
 }

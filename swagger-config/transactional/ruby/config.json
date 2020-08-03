@@ -3,6 +3,6 @@
   "moduleName": "MailchimpTransactional",
   "gemDescription": "Mailchimp Transactional Ruby SDK",
   "gemLicense": "Apache-2.0",
-  "gitUserId": "postlight",
+  "gitUserId": "mailchimp",
   "gitRepoId": "mailchimp-transactional-ruby"
 }

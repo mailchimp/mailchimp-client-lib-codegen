@@ -5,6 +5,6 @@
   "apiPackage": "Api",
   "composerVendorName": "mailchimp",
   "composerProjectName": "marketing",
-  "gitUserId": "postlight",
+  "gitUserId": "mailchimp",
   "gitRepoId": "mailchimp-marketing-php"
 }

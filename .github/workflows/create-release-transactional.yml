@@ -86,7 +86,7 @@ jobs:
         with:
           node-version: '12.x'
           registry-url: 'https://registry.npmjs.org'
-          scope: '@postlight'
+          scope: '@mailchimp'
 
       - name: Generate → transactional-javascript
         run: |
@@ -266,7 +266,7 @@ jobs:
         with:
           node-version: '12.x'
           registry-url: 'https://registry.npmjs.org'
-          scope: '@postlight'
+          scope: '@mailchimp'
 
       - name: Prepare Build & Publishing Tools
         run: npm install

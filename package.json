@@ -1,5 +1,5 @@
 {
-  "name": "mailchimp-playground",
+  "name": "mailchimp",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -32,14 +32,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/postlight/mailchimp.git"
+    "url": "https://github.com/mailchimp/mailchimp-client-lib-codegen"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/postlight/mailchimp/issues"
+    "url": "https://github.com/mailchimp/mailchimp-client-lib-codegen/issues"
   },
-  "homepage": "https://github.com/postlight/mailchimp#readme",
+  "homepage": "https://github.com/mailchimp/mailchimp-client-lib-codegen",
   "dependencies": {
     "@actions/core": "^1.2.3",
     "@actions/github": "^2.1.1",
