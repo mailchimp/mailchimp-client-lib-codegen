@@ -2,10 +2,10 @@ name: 📦 Create Transactional SDK Release
 
 on:
   push:
-    # paths:
-    #   - 'spec/transactional.json'
-    #   - 'swagger-config/transactional/**.*'
-    #   - '.github/workflows/create-release-transactional.yml'
+    paths:
+      - 'spec/transactional.json'
+      - 'swagger-config/transactional/**.*'
+      - '.github/workflows/create-release-transactional.yml'
     branches:
       - master
 
