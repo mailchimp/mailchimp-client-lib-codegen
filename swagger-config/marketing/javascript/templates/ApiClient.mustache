@@ -32,6 +32,7 @@ var querystring = require('querystring');
    */
 {{/emitJSDoc}}  this.config = {
     apiKey: '',
+    accessToken: '',
     server: 'invalid-server'
   };
 
@@ -122,8 +123,8 @@ var querystring = require('querystring');
     return encodeURIComponent(value);
   });
 
-  // Add correct server based on the API key
-  if (this.config && typeof this.config.server !== 'undefined') {
+  // Define the server
+  if (typeof this.config.server !== 'undefined') {
     url = url.replace('server', this.config.server);
   }
 
@@ -332,14 +333,19 @@ exports.CollectionFormatEnum = {
   var url = this.buildUrl(path, pathParams);
   var request = superagent(httpMethod, url);
 
-  // apply basic authentication
-  if (this.config && typeof this.config.apiKey !== 'undefined') {
+  // Basic Authentication
+  if (this.config.apiKey !== undefined && this.config.apiKey !== '') {
     request.auth('user', this.config.apiKey);
+  }
+
+  // OAuth Authentication
+  else if (this.config.accessToken !== undefined && this.config.accessToken !== '') {
+    request.set({'Authorization': 'Bearer ' + this.config.accessToken});
   }
 
   // set query parameters
   if (httpMethod.toUpperCase() === 'GET' && this.cache === false) {
-      queryParams['_'] = new Date().getTime();
+    queryParams['_'] = new Date().getTime();
   }
   request.query(this.normalizeParams(queryParams));
 

@@ -14,17 +14,11 @@ from {{packageName}}.api_client import ApiClient
 from {{packageName}}.configuration import Configuration
 
 class Client(object):
-  def __init__(self, api_key = '', server = ''):
-    self.api_key = api_key
-    self.server = server
-    self.api_client = ApiClient(api_key, server)
+  def __init__(self, config = {}):
+    self.api_client = ApiClient(config)
 
     {{#apiInfo}}{{#apis}}self.{{baseName}} = {{classname}}(self.api_client)
     {{/apis}}{{/apiInfo}}
 
-  def setConfig(self, api_key='', server=''):
-    self.api_key = api_key or self.api_key
-    self.server = server or self.server
-    self.api_client.set_config(api_key, server)
-
-    # TODO: parse server here! 
+  def setConfig(self, config = {}):
+    self.api_client.set_config(config)

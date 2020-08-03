@@ -259,24 +259,16 @@ use {{invokerPackage}}\ObjectSerializer;
             {{#isKeyInHeader}}$headers['{{keyParamName}}'] = $apiKey;{{/isKeyInHeader}}{{#isKeyInQuery}}$queryParams['{{keyParamName}}'] = $apiKey;{{/isKeyInQuery}}
         }
         {{/isApiKey}}
-        {{#isBasic}}
-        // this endpoint requires HTTP basic authentication
-        if ($this->config->getUsername() !== null || $this->config->getPassword() !== null) {
+
+        // Basic Authentication
+        if (!empty($this->config->getUsername()) && !empty($this->config->getPassword())) {
             $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
         }
-        {{/isBasic}}
-        {{#isBearer}}
-        // this endpoint requires Bearer token
-        if ($this->config->getAccessToken() !== null) {
+
+        // OAuth Authentication
+        if (!empty($this->config->getAccessToken())) {
             $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
         }
-        {{/isBearer}}
-        {{#isOAuth}}
-        // this endpoint requires OAuth (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-        {{/isOAuth}}
         {{/authMethods}}
 
         $defaultHeaders = [];
