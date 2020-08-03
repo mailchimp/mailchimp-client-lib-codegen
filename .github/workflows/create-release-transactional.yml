@@ -452,6 +452,7 @@ jobs:
           packages_dir: transactional-python/dist
 
       - name: Publish → PyPI → marketing-python (dist)
+        if: env.PUBLISH_EXTERNAL == 'true'
         uses: pypa/gh-action-pypi-publish@master
         with:
           password: ${{ secrets.PYPI_TOKEN }}
