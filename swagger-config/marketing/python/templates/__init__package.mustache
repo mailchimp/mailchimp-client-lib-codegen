@@ -20,5 +20,5 @@ class Client(object):
     {{#apiInfo}}{{#apis}}self.{{baseName}} = {{classname}}(self.api_client)
     {{/apis}}{{/apiInfo}}
 
-  def setConfig(self, config = {}):
+  def set_config(self, config = {}):
     self.api_client.set_config(config)
