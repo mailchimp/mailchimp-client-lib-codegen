@@ -7,7 +7,6 @@ require '{{gemName}}/api_client'
 require '{{gemName}}/api_error'
 require '{{gemName}}/version'
 
-
 # APIs
 {{#apiInfo}}
 {{#apis}}
@@ -17,8 +16,8 @@ require '{{importPath}}'
 
 module {{moduleName}}
   class Client
-    def initialize(api_key = '', server = '')
-      @api_client = ApiClient.new(api_key, server)
+    def initialize(config = {})
+      @api_client = ApiClient.new(config)
 
       {{#apiInfo}}
       {{#apis}}
@@ -27,8 +26,8 @@ module {{moduleName}}
       {{/apiInfo}}
     end
 
-    def set_config(api_key = '', server = '')
-      @api_client.set_config(api_key, server)
+    def set_config(config = {})
+      @api_client.set_config(config)
     end
 
     {{#apiInfo}}
