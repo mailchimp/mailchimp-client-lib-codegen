@@ -249,7 +249,7 @@ jobs:
       - name: Create Release
         uses: actions/create-release@latest
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
         with:
           tag_name: ${{ github.ref }}
@@ -292,7 +292,7 @@ jobs:
           git commit -m "Update mailchimp-marketing-node to v${{ env.SPEC_VERSION }}"
           git push origin master --force
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
 
       - name: Publish → npm → marketing-node
@@ -336,7 +336,7 @@ jobs:
           git commit -m "Update mailchimp-marketing-php to v${{ env.SPEC_VERSION }}"
           git push origin master --force
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
 
   publish-ruby:
@@ -386,7 +386,7 @@ jobs:
           git commit -m "Update mailchimp-marketing-ruby to v${{ env.SPEC_VERSION }}"
           git push origin master --force
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
 
       - name: Publish → RubyGems → marketing-ruby
@@ -439,7 +439,7 @@ jobs:
           git commit -m "Update mailchimp-marketing-python to v${{ env.SPEC_VERSION }}"
           git push origin master --force
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
 
       # Publish Marketing SDKs Externally
