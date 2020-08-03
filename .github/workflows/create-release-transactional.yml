@@ -11,7 +11,7 @@ on:
 
 env:
   PUBLISH_INTERNAL: true # whether or not to push to git repos
-  PUBLISH_EXTERNAL: true # whether or not to push to package managers
+  PUBLISH_EXTERNAL: false # whether or not to push to package managers
 
 jobs:
   validate:
@@ -104,13 +104,13 @@ jobs:
 
       - name: Zip build artifact → transactional-node
         working-directory: swagger-out/transactional-node
-        run: zip -r transactional-node.zip .
+        run: zip -r mailchimp-transactional-node.zip .
 
       - name: Upload build artifact → transactional-node
         uses: actions/upload-artifact@v1
         with:
-          name: transactional-node.zip
-          path: swagger-out/transactional-node/transactional-node.zip
+          name: mailchimp-transactional-node.zip
+          path: swagger-out/transactional-node/mailchimp-transactional-node.zip
 
   generate-php:
     runs-on: ubuntu-latest
@@ -147,13 +147,13 @@ jobs:
 
       - name: Zip build artifact → transactional-php
         working-directory: swagger-out/transactional-php
-        run: zip -r transactional-php.zip .
+        run: zip -r mailchimp-transactional-php.zip .
 
       - name: Upload build artifact → transactional-php
         uses: actions/upload-artifact@v1
         with:
-          name: transactional-php.zip
-          path: swagger-out/transactional-php/transactional-php.zip
+          name: mailchimp-transactional-php.zip
+          path: swagger-out/transactional-php/mailchimp-transactional-php.zip
 
   generate-ruby:
     runs-on: ubuntu-latest
@@ -190,13 +190,13 @@ jobs:
 
       - name: Zip build artifact → transactional-ruby
         working-directory: swagger-out/transactional-ruby
-        run: zip -r transactional-ruby.zip .
+        run: zip -r mailchimp-transactional-ruby.zip .
 
       - name: Upload build artifact → transactional-ruby
         uses: actions/upload-artifact@v1
         with:
-          name: transactional-ruby.zip
-          path: swagger-out/transactional-ruby/transactional-ruby.zip
+          name: mailchimp-transactional-ruby.zip
+          path: swagger-out/transactional-ruby/mailchimp-transactional-ruby.zip
 
   generate-python:
     runs-on: ubuntu-latest
@@ -233,13 +233,13 @@ jobs:
 
       - name: Zip build artifact → transactional-python
         working-directory: swagger-out/transactional-python
-        run: zip -r transactional-python.zip .
+        run: zip -r mailchimp-transactional-python.zip .
 
       - name: Upload build artifact → transactional-python
         uses: actions/upload-artifact@v1
         with:
-          name: transactional-python.zip
-          path: swagger-out/transactional-python/transactional-python.zip
+          name: mailchimp-transactional-python.zip
+          path: swagger-out/transactional-python/mailchimp-transactional-python.zip
 
   create-release:
     runs-on: ubuntu-latest
@@ -273,12 +273,12 @@ jobs:
 
       - uses: actions/download-artifact@v1
         with:
-          name: transactional-node.zip
+          name: mailchimp-transactional-node.zip
           path: zip
 
       - name: Unzip build artifact
         run: |
-          unzip zip/transactional-node.zip -d transactional-node
+          unzip zip/mailchimp-transactional-node.zip -d transactional-node
 
       - name: Publish → internal → transactional-node
         if: env.PUBLISH_INTERNAL == 'true'
@@ -317,12 +317,12 @@ jobs:
 
       - uses: actions/download-artifact@v1
         with:
-          name: transactional-php.zip
+          name: mailchimp-transactional-php.zip
           path: zip
 
       - name: Unzip build artifact
         run: |
-          unzip zip/transactional-php.zip -d transactional-php
+          unzip zip/mailchimp-transactional-php.zip -d transactional-php
 
       - name: Publish → internal → transactional-php
         if: env.PUBLISH_INTERNAL == 'true'
@@ -367,12 +367,12 @@ jobs:
 
       - uses: actions/download-artifact@v1
         with:
-          name: transactional-ruby.zip
+          name: mailchimp-transactional-ruby.zip
           path: zip
 
       - name: Unzip build artifact
         run: |
-          unzip zip/transactional-ruby.zip -d transactional-ruby
+          unzip zip/mailchimp-transactional-ruby.zip -d transactional-ruby
 
       - name: Publish → internal → transactional-ruby
         if: env.PUBLISH_INTERNAL == 'true'
@@ -414,12 +414,12 @@ jobs:
 
       - uses: actions/download-artifact@v1
         with:
-          name: transactional-python.zip
+          name: mailchimp-transactional-python.zip
           path: zip
 
       - name: Unzip build artifact
         run: |
-          unzip zip/transactional-python.zip -d transactional-python
+          unzip zip/mailchimp-transactional-python.zip -d transactional-python
 
       - name: Prepare Build & Publishing Tools
         working-directory: transactional-python
@@ -443,10 +443,16 @@ jobs:
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
 
       # Publish Transactional SDKs Externally
-      - name: Publish → PyPI → transactional-python
+      - name: Publish → PyPI → transactional-python (test)
         if: env.PUBLISH_EXTERNAL == 'true'
         uses: pypa/gh-action-pypi-publish@master
         with:
-          password: ${{ secrets.PYPI_TOKEN }}
+          password: ${{ secrets.PYPI_TOKEN_TEST }}
           repository_url: https://test.pypi.org/legacy/
           packages_dir: transactional-python/dist
+
+      - name: Publish → PyPI → marketing-python (dist)
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          password: ${{ secrets.PYPI_TOKEN }}
+          packages_dir: marketing-python/dist

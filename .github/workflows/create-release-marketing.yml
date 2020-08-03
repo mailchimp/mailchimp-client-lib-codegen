@@ -11,7 +11,7 @@ on:
 
 env:
   PUBLISH_INTERNAL: true # whether or not to push to git repos
-  PUBLISH_EXTERNAL: true # whether or not to push to package managers
+  PUBLISH_EXTERNAL: false # whether or not to push to package managers
 
 jobs:
   validate:
@@ -104,13 +104,13 @@ jobs:
 
       - name: Zip build artifact → marketing-node
         working-directory: swagger-out/marketing-node
-        run: zip -r marketing-node.zip .
+        run: zip -r mailchimp-marketing-node.zip .
 
       - name: Upload build artifact → marketing-node
         uses: actions/upload-artifact@v1
         with:
-          name: marketing-node.zip
-          path: swagger-out/marketing-node/marketing-node.zip
+          name: mailchimp-marketing-node.zip
+          path: swagger-out/marketing-node/mailchimp-marketing-node.zip
 
   generate-php:
     runs-on: ubuntu-latest
@@ -147,13 +147,13 @@ jobs:
 
       - name: Zip build artifact → marketing-php
         working-directory: swagger-out/marketing-php
-        run: zip -r marketing-php.zip .
+        run: zip -r mailchimp-marketing-php.zip .
 
       - name: Upload build artifact → marketing-php
         uses: actions/upload-artifact@v1
         with:
-          name: marketing-php.zip
-          path: swagger-out/marketing-php/marketing-php.zip
+          name: mailchimp-marketing-php.zip
+          path: swagger-out/marketing-php/mailchimp-marketing-php.zip
 
   generate-ruby:
     runs-on: ubuntu-latest
@@ -190,13 +190,13 @@ jobs:
 
       - name: Zip build artifact → marketing-ruby
         working-directory: swagger-out/marketing-ruby
-        run: zip -r marketing-ruby.zip .
+        run: zip -r mailchimp-marketing-ruby.zip .
 
       - name: Upload build artifact → marketing-ruby
         uses: actions/upload-artifact@v1
         with:
-          name: marketing-ruby.zip
-          path: swagger-out/marketing-ruby/marketing-ruby.zip
+          name: mailchimp-marketing-ruby.zip
+          path: swagger-out/marketing-ruby/mailchimp-marketing-ruby.zip
 
   generate-python:
     runs-on: ubuntu-latest
@@ -233,13 +233,13 @@ jobs:
 
       - name: Zip build artifact → marketing-python
         working-directory: swagger-out/marketing-python
-        run: zip -r marketing-python.zip .
+        run: zip -r mailchimp-marketing-python.zip .
 
       - name: Upload build artifact → marketing-python
         uses: actions/upload-artifact@v1
         with:
-          name: marketing-python.zip
-          path: swagger-out/marketing-python/marketing-python.zip
+          name: mailchimp-marketing-python.zip
+          path: swagger-out/marketing-python/mailchimp-marketing-python.zip
 
   create-release:
     runs-on: ubuntu-latest
@@ -273,12 +273,12 @@ jobs:
 
       - uses: actions/download-artifact@v1
         with:
-          name: marketing-node.zip
+          name: mailchimp-marketing-node.zip
           path: zip
 
       - name: Unzip build artifact
         run: |
-          unzip zip/marketing-node.zip -d marketing-node
+          unzip zip/mailchimp-marketing-node.zip -d marketing-node
 
       - name: Publish → internal → marketing-node
         if: env.PUBLISH_INTERNAL == 'true'
@@ -317,12 +317,12 @@ jobs:
 
       - uses: actions/download-artifact@v1
         with:
-          name: marketing-php.zip
+          name: mailchimp-marketing-php.zip
           path: zip
 
       - name: Unzip build artifact
         run: |
-          unzip zip/marketing-php.zip -d marketing-php
+          unzip zip/mailchimp-marketing-php.zip -d marketing-php
 
       - name: Publish → internal → marketing-php
         if: env.PUBLISH_INTERNAL == 'true'
@@ -367,12 +367,12 @@ jobs:
 
       - uses: actions/download-artifact@v1
         with:
-          name: marketing-ruby.zip
+          name: mailchimp-marketing-ruby.zip
           path: zip
 
       - name: Unzip build artifact
         run: |
-          unzip zip/marketing-ruby.zip -d marketing-ruby
+          unzip zip/mailchimp-marketing-ruby.zip -d marketing-ruby
 
       - name: Publish → internal → marketing-ruby
         if: env.PUBLISH_INTERNAL == 'true'
@@ -414,12 +414,12 @@ jobs:
 
       - uses: actions/download-artifact@v1
         with:
-          name: marketing-python.zip
+          name: mailchimp-marketing-python.zip
           path: zip
 
       - name: Unzip build artifact
         run: |
-          unzip zip/marketing-python.zip -d marketing-python
+          unzip zip/mailchimp-marketing-python.zip -d marketing-python
 
       - name: Prepare Build & Publishing Tools
         working-directory: marketing-python
@@ -443,10 +443,16 @@ jobs:
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
 
       # Publish Marketing SDKs Externally
-      - name: Publish → PyPI → marketing-python
+      - name: Publish → PyPI → marketing-python (test)
         if: env.PUBLISH_EXTERNAL == 'true'
         uses: pypa/gh-action-pypi-publish@master
         with:
-          password: ${{ secrets.PYPI_TOKEN }}
+          password: ${{ secrets.PYPI_TOKEN_TEST }}
           repository_url: https://test.pypi.org/legacy/
+          packages_dir: marketing-python/dist
+
+      - name: Publish → PyPI → marketing-python (dist)
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          password: ${{ secrets.PYPI_TOKEN }}
           packages_dir: marketing-python/dist
