@@ -70,6 +70,10 @@ generate_for_language() {
     if [ "${sdk_name}" == "transactional-php" ]; then
         rm -rf "${output_dir}/MailchimpTransactional/lib/Model"
     fi
+
+    if [ "${sdk_name}" == "marketing-python" ]; then
+        rm -rf "${output_dir}/mailchimp_marketing/models"
+    fi
 }
 
 if [ -n "$target_language" ] && [ -n "$target_product" ]
