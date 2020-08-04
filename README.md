@@ -7,9 +7,9 @@ This tool is used to auto-generate and publish both Mailchimp Marketing and Tran
 ## Table of contents
 
 - [Quick start](#quick-start)
-- [Generate Clients](#generate-clients)
-- [Published Clients - Internal](#published-clients-internal)
-- [Published Clients — External](#published-clients-external)
+- [Generate clients](#generate-clients)
+- [Published clients - Internal](#published-clients-internal)
+- [Published clients — External](#published-clients-external)
 
 ## Quick start
 
@@ -20,7 +20,7 @@ npm install
 npm run generate
 ```
 
-## Generate Clients
+## Generate clients
 
 ```
 # Install codegen
@@ -36,7 +36,7 @@ npm run validate
 npm run generate
 ```
 
-# Published Clients — Internal
+# Published clients — Internal
 
 | Marketing |                                                                                       |
 | --------- | ------------------------------------------------------------------------------------- |
@@ -52,7 +52,7 @@ npm run generate
 | Ruby          | [mailchimp-transactional-ruby](https://github.com/mailchimp/mailchimp-transactional-ruby)     |
 | Python        | [mailchimp-transactional-python](https://github.com/mailchimp/mailchimp-transactional-python) |
 
-# Published Clients — External
+# Published clients — External
 
 | Marketing      |                                                                     |
 | -------------- | ------------------------------------------------------------------- |
