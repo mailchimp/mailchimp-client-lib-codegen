@@ -59,19 +59,11 @@ module {{moduleName}}
 
       res = request(http_method, path, query_params, header_params, body)
 
-      data = nil
-      if res.headers['content-type'] && res.headers['content-type'].include?('application/json')
+      if res.status <= 200
         data = JSON.parse(res.body)
+        data
       else
-        data = res.body
-      end
-
-      if data
-        if res.status <= 200
-          data
-        else
-          fail ApiError.new(res.body)
-        end
+        fail ApiError.new(res.body)
       end
     end
 
@@ -94,7 +86,7 @@ module {{moduleName}}
       case http_method.to_sym.downcase
       when :delete
         conn.delete do |req|
-          req.body = body.to_json
+          req.body = body
         end
       when :get
         conn.get
@@ -104,15 +96,15 @@ module {{moduleName}}
         conn.options
       when :post
         conn.post do |req|
-          req.body = body.to_json
+          req.body = body
         end
       when :put
         conn.put do |req|
-          req.body = body.to_json
+          req.body = body
         end
       when :patch
         conn.patch do |req|
-          req.body = body.to_json
+          req.body = body
         end
       else
         fail ApiError.new('Invalid http_method')
@@ -131,7 +123,7 @@ module {{moduleName}}
       URI.encode(@config.base_url + path)
     end
 
-    # Format HTTP request body as string
+    # Format HTTP request body
     def build_request_body(header_params, form_params, body)
       if header_params['Content-Type'] == 'application/x-www-form-urlencoded' ||
           header_params['Content-Type'] == 'multipart/form-data'
