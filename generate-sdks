@@ -33,7 +33,7 @@ generate_for_language() {
 
     swagger_cmd="java -jar ./codegen/${codegen_build}"
 
-    # generate SDKs
+    # generate client library
     $swagger_cmd generate \
         --input-spec "./spec/$2.json" \
         --lang "$1" \
@@ -42,10 +42,8 @@ generate_for_language() {
         --output $output_dir \
         -DapiTests=false
 
-    # regenerate apis w/ latest verson (if necessary)
+    # handle marketing-javascript
     if [ "${sdk_name}" == "marketing-javascript" ]; then
-        echo "re-generating APIs only on latest version"
-
         codegen_build="swagger-codegen-cli-2.4.12.jar"
         swagger_cmd="java -jar ./codegen/${codegen_build}"
 
@@ -63,17 +61,24 @@ generate_for_language() {
     rm -rf "${output_dir}/.swagger-codegen"
     rm -rf "${output_dir}/.swagger-codegen-ignore"
 
+    output_root="${output_dir}"
+
     if [ "${sdk_name}" == "marketing-php" ]; then
-        rm -rf "${output_dir}/MailchimpMarketing/lib/Model"
+        output_root="${output_root}/MailchimpMarketing"
+        rm -rf "${output_root}/lib/Model"
     fi
 
     if [ "${sdk_name}" == "transactional-php" ]; then
-        rm -rf "${output_dir}/MailchimpTransactional/lib/Model"
+        output_root="${output_root}/MailchimpTransactional"
+        rm -rf "${output_root}/lib/Model"
     fi
 
     if [ "${sdk_name}" == "marketing-python" ]; then
-        rm -rf "${output_dir}/mailchimp_marketing/models"
+        rm -rf "${output_root}/mailchimp_marketing/models"
     fi
+
+    # add additional files to client root dir
+    cp ./LICENSE "${output_root}"
 }
 
 if [ -n "$target_language" ] && [ -n "$target_product" ]
