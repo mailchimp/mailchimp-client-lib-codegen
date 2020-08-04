@@ -61,13 +61,15 @@ module {{moduleName}}
         res = conn.get(:query => opts[:query_params])
       end
 
-      if res.status == 204
-        return "success"
-      elsif res.status == 200
-        return JSON.parse(res.body)
-      else
-        return res.body
+      data = nil
+      data = JSON.parse(res.body) if res.status == 200
+      data = "success" if res.status == 204
+
+      if (!data)
+        fail ApiError.new(:status => res.status, :response_body => res.body)
       end
+
+      return data
     end
 
     # Convert object (array, hash, object, etc) to JSON string.
