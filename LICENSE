@@ -1,4 +1,8 @@
- AS AN INDIVIDUAL, “YOU” “YOUR” AND “LICENSEE” REFERS TO YOU INDIVIDUALLY.  IF YOU ARE AGREEING TO THIS AGREEMENT AS A REPRESENTATIVE OF A LEGAL ENTITY, YOU REPRESENT THAT YOU HAVE THE AUTHORITY TO BIND THAT ENTITY AND “YOU” “YOUR” AND “LICENSEE” REFERS TO THAT LEGAL ENTITY AND ALL THE USERS ACCESSING THE SOFTWARE BY, THROUGH OR ON BEHALF OF THAT LEGAL ENTITY. IF YOU DO NOT AGREE WITH ALL OF THE TERMS OF THIS AGREEMENT, DO NOT (AND ENSURE THAT YOUR END USERS DO NOT) OPEN, INSTALL, COPY OR USE THE MAILCHIMP CLIENT LIBRARY.
+Mailchimp Client Library License Agreement
+ 
+IMPORTANT- PLEASE READ CAREFULLY BEFORE OPENING, INSTALLING, COPYING OR USING THE CLIENT LIBRARY.  This Client Library License Agreement (“Agreement”) is a legal document by and between you (hereinafter referred to as “You” “Your” or “Licensee”) and The Rocket Science Group LLC (“Mailchimp”) (each a “Party” and collectively, “Parties”) for the client library, including any upgrades, modified versions, updates, additions, and copies of the foregoing, including the software and related documentation (the “Mailchimp Client Library”).
+ 
+BY OPENING, INSTALLING, COPYING OR USING THE MAILCHIMP CLIENT LIBRARY OR ANY PORTION THEREOF, YOU AGREE TO ALL THE TERMS OF THIS AGREEMENT.  IF YOU ARE AGREEING TO THIS AGREEMENT AS AN INDIVIDUAL, “YOU” “YOUR” AND “LICENSEE” REFERS TO YOU INDIVIDUALLY.  IF YOU ARE AGREEING TO THIS AGREEMENT AS A REPRESENTATIVE OF A LEGAL ENTITY, YOU REPRESENT THAT YOU HAVE THE AUTHORITY TO BIND THAT ENTITY AND “YOU” “YOUR” AND “LICENSEE” REFERS TO THAT LEGAL ENTITY AND ALL THE USERS ACCESSING THE SOFTWARE BY, THROUGH OR ON BEHALF OF THAT LEGAL ENTITY. IF YOU DO NOT AGREE WITH ALL OF THE TERMS OF THIS AGREEMENT, DO NOT (AND ENSURE THAT YOUR END USERS DO NOT) OPEN, INSTALL, COPY OR USE THE MAILCHIMP CLIENT LIBRARY.
 
 TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
 1. Definitions.
@@ -27,7 +31,7 @@ You may add Your own copyright statement to Your modifications and may provide a
 
 6. Trademarks. This License does not grant permission to use the trade names, trademarks, service marks, or product names of Mailchimp, except as required for reasonable and customary use in describing the origin of the Work and reproducing the content of the NOTICE file.
 
-7. Export controls. The Mailchimp Client Library is subject to united states export laws and regulations. You must comply with all domestic and international export laws and regulations that apply to the Mailchimp Client Library. These laws include restrictions on destinations, end-users and end use.
+7. Export controls. The Mailchimp Client Library is subject to united states export laws and regulations. You must comply with all domestic and international export laws and regulations that apply to the Mailchimp Client Library. These laws include restrictions on destinations, end-users and end use. 
 
 8. Disclaimer of Warranty.    Unless required by applicable law or agreed to in writing, Licensor provides the Work (and each Contributor provides its Contributions) on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied, including, without limitation, any warranties or conditions of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are solely responsible for determining the appropriateness of using or redistributing the Work and assume any risks associated with Your exercise of permissions under this License.
 
