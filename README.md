@@ -1,6 +1,5 @@
 <p align="center">
     <img src="./resources/images/readme_cover.png" alt="Mailchimp Freddie" width="100%" height="auto">
-    <img src="https://github.com/mailchimp/mailchimp-client-lib-codegen/workflows/Validate%20Specs/badge.svg" alt="Validate Specs Status" width="auto" height="20">
 </p>
 
 This tool is used to auto-generate and publish both Mailchimp Marketing and Transactional client libraries.
