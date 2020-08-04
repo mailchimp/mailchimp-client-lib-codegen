@@ -81,10 +81,10 @@ module {{moduleName}}
       {{/bodyParam}}
 
       local_var_path = '{{{path}}}'{{#pathParams}}.sub('{' + '{{baseName}}' + '}', {{paramName}}.to_s){{/pathParams}}
-      data, status_code, headers = @api_client.call_api(:{{httpMethod}}, local_var_path,
+      data = @api_client.call_api(:{{httpMethod}}, local_var_path,
         :query_params => query_params,
         :body => post_body)
-      return data, status_code, headers
+      return data
     end
 {{/operation}}
   end
