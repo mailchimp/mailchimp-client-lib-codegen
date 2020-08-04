@@ -3,7 +3,6 @@
 =end
 
 require 'uri'
-require 'json'
 
 module {{moduleName}}
 {{#operations}}
@@ -74,17 +73,6 @@ module {{moduleName}}
       query_params[:'{{{baseName}}}'] = {{#collectionFormat}}@api_client.build_collection_param(opts[:'{{{paramName}}}'], :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}opts[:'{{{paramName}}}']{{/collectionFormat}} if !opts[:'{{{paramName}}}'].nil?
       {{/required}}
       {{/queryParams}}
-      form_params = {}
-      {{#formParams}}
-      {{#required}}
-      form_params['{{baseName}}'] = {{#collectionFormat}}@api_client.build_collection_param({{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}{{{paramName}}}{{/collectionFormat}}
-      {{/required}}
-      {{/formParams}}
-      {{#formParams}}
-      {{^required}}
-      form_params['{{baseName}}'] = {{#collectionFormat}}@api_client.build_collection_param(opts[:'{{{paramName}}}'], :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}opts[:'{{{paramName}}}']{{/collectionFormat}} if !opts[:'{{paramName}}'].nil?
-      {{/required}}
-      {{/formParams}}
       {{^bodyParam}}
       post_body = nil
       {{/bodyParam}}
@@ -95,7 +83,6 @@ module {{moduleName}}
       local_var_path = '{{{path}}}'{{#pathParams}}.sub('{' + '{{baseName}}' + '}', {{paramName}}.to_s){{/pathParams}}
       data, status_code, headers = @api_client.call_api(:{{httpMethod}}, local_var_path,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body)
       return data, status_code, headers
     end

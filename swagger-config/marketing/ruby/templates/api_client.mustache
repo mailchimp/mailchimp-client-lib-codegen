@@ -3,7 +3,7 @@
 =end
 
 require 'json'
-require 'faraday'
+require 'excon'
 
 module {{moduleName}}
   class ApiClient
@@ -33,6 +33,7 @@ module {{moduleName}}
     def set_config(config = {})
       @api_key = config[:api_key] || ''
       @is_basic_auth = @api_key.to_s.strip.empty? == false
+
       @access_token = config[:access_token] || ''
       @is_oauth = @access_token.to_s.strip.empty? == false
 
@@ -45,126 +46,28 @@ module {{moduleName}}
     end
 
     def call_api(http_method, path, opts = {})
-      header_params = {
-        'Content-Type' => 'application/json',
-        'User-Agent' => @user_agent
-      }
-      query_params = opts[:query_params] || {}
-      form_params = opts[:form_params] || {}
+      headers = {'Content-Type' => "application/json"}
+      headers[:Authorization] = "Basic #{@api_key}" if @is_basic_auth
+      headers[:Authorization] = "Bearer #@access_token" if @is_oauth
 
-      body = {}
-      if [:post, :patch, :put, :delete].include?(http_method.to_sym.downcase)
-        body = build_request_body(header_params, form_params, opts[:body])
-      end
-
-      res = request(http_method, path, query_params, header_params, body)
-
-      data = nil
-      if res.headers['content-type'] && res.headers['content-type'].include?('application/json')
-        data = JSON.parse(res.body)
-      else
-        data = res.body
-      end
-
-      if data
-        if res.status <= 200
-          data
-        else
-          fail ApiError.new(res.body)
-        end
-      end
-    end
-
-    def request(http_method, path, query_params = nil, header_params = nil, body = nil)
       host = @server.length > 0 ? @host.sub('server', @server) : @host
-      url = host + path
+      conn = Excon.new(host + path, :headers => headers)
 
-      # Apply Authentication
-      conn = Faraday.new(url) do |conn|
-        conn.headers = header_params
-        conn.params = query_params
-
-        if @is_basic_auth
-          conn.basic_auth('user', @api_key)
-        elsif @is_oauth
-          conn.headers["Authorization"] = "Bearer #{@access_token}"
-        end
-      end
-
+      res = nil
       case http_method.to_sym.downcase
-      when :delete
-        conn.delete do |req|
-          req.body = body.to_json
-        end
+      when :post, :put, :delete
+        res = conn.request(:method => http_method, :body => opts[:body])
       when :get
-        conn.get
-      when :head
-        conn.head
-      when :options
-        conn.options
-      when :post
-        conn.post do |req|
-          req.body = body.to_json
-        end
-      when :put
-        conn.put do |req|
-          req.body = body.to_json
-        end
-      when :patch
-        conn.patch do |req|
-          req.body = body.to_json
-        end
-      else
-        fail ApiError.new('Invalid http_method')
+        res = conn.get(:query => opts[:query_params])
       end
-    end
 
-    # Sanitize filename by removing path.
-    # e.g. ../../sun.gif becomes sun.gif
-    def sanitize_filename(filename)
-      filename.gsub(/.*[\/\\]/, '')
-    end
-
-    # Add leading and trailing slashes to path
-    def build_request_url(path)
-      path = "/#{path}".gsub(/\/+/, '/')
-      URI.encode(@config.base_url + path)
-    end
-
-    # Format HTTP request body as string
-    def build_request_body(header_params, form_params, body)
-      if header_params['Content-Type'] == 'application/x-www-form-urlencoded' ||
-          header_params['Content-Type'] == 'multipart/form-data'
-        data = {}
-        form_params.each do |key, value|
-          case value
-          when ::File, ::Array, nil
-            data[key] = value
-          else
-            data[key] = value.to_s
-          end
-        end
-      elsif body
-        data = body.is_a?(String) ? body : body.to_json
+      if res.status == 204
+        return "success"
+      elsif res.status == 200
+        return JSON.parse(res.body)
       else
-        data = nil
+        return res.body
       end
-      data
-    end
-
-    # Return Accept header based on an array of accepts provided.
-    def select_header_accept(accepts)
-      return nil if accepts.nil? || accepts.empty?
-      json_accept = accepts.find { |s| json_mime?(s) }
-      json_accept || accepts.join(',')
-    end
-
-    # Return Content-Type header based on an array of content types provided.
-    def select_header_content_type(content_types)
-      return 'application/json' if content_types.nil? || content_types.empty?
-
-      json_content_type = content_types.find { |s| json_mime?(s) }
-      json_content_type || content_types.first
     end
 
     # Convert object (array, hash, object, etc) to JSON string.
@@ -204,11 +107,6 @@ module {{moduleName}}
       else
         fail "unknown collection format: #{collection_format.inspect}"
       end
-    end
-
-    # Check if the given MIME is a JSON MIME.
-    def json_mime?(mime)
-      (mime == '*/*') || !(mime =~ /Application\/.*json(?!p)(;.*)?/i).nil?
     end
   end
 end
