@@ -54,16 +54,18 @@ npm run generate
 
 # Published clients — External
 
-| Marketing      |                                                                     |
-| -------------- | ------------------------------------------------------------------- |
-| Node           | [NPM](https://www.npmjs.com/package/@mailchimp/mailchimp_marketing) |
-| Ruby           | [RubyGems](https://rubygems.org/gems/MailchimpMarketing)            |
-| Python (Dist)  | [PyPI](https://pypi.org/project/mailchimp-marketing/)               |
-| Python (Test)) | [PyPI](https://test.pypi.org/project/mailchimp-marketing/)          |
+| Marketing      |                                                                           |
+| -------------- | ------------------------------------------------------------------------- |
+| Node           | [NPM](https://www.npmjs.com/package/@mailchimp/mailchimp_marketing)       |
+| PHP            | [Packagist](https://www.npmjs.com/package/@mailchimp/mailchimp_marketing) |
+| Ruby           | [RubyGems](https://rubygems.org/gems/MailchimpMarketing)                  |
+| Python (Dist)  | [PyPI](https://pypi.org/project/mailchimp-marketing/)                     |
+| Python (Test)) | [PyPI](https://test.pypi.org/project/mailchimp-marketing/)                |
 
-| Transactional |                                                                         |
-| ------------- | ----------------------------------------------------------------------- |
-| Node          | [NPM](https://www.npmjs.com/package/@mailchimp/mailchimp_transactional) |
-| Ruby          | [RubyGems](https://rubygems.org/gems/MailchimpTransactional)            |
-| Python (Dist) | [PyPI](https://pypi.org/project/mailchimp-transactional/)               |
-| Python (Test) | [PyPI](https://test.pypi.org/project/mailchimp-transactional/)          |
+| Transactional |                                                                               |
+| ------------- | ----------------------------------------------------------------------------- |
+| Node          | [NPM](https://www.npmjs.com/package/@mailchimp/mailchimp_transactional)       |
+| PHP           | [Packagist](https://www.npmjs.com/package/@mailchimp/mailchimp_transactional) |
+| Ruby          | [RubyGems](https://rubygems.org/gems/MailchimpTransactional)                  |
+| Python (Dist) | [PyPI](https://pypi.org/project/mailchimp-transactional/)                     |
+| Python (Test) | [PyPI](https://test.pypi.org/project/mailchimp-transactional/)                |
