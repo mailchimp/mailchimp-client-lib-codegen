@@ -14,110 +14,55 @@ module {{moduleName}}
       @api_client = api_client
     end
 {{#operation}}
-    {{#summary}}
-    # {{{summary}}}
-    {{/summary}}
-    {{#notes}}
-    # {{{notes}}}
-    {{/notes}}
-{{#allParams}}{{#required}}    # @param {{paramName}} {{description}}
-{{/required}}{{/allParams}}    # @param [Hash] opts the optional parameters
-{{#allParams}}{{^required}}    # @option opts [{{{dataType}}}] :{{paramName}} {{description}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
-{{/required}}{{/allParams}}    # @return [{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}nil{{/returnType}}]
-    def {{vendorExtensions.x-custom-config.methodNameSnake}}({{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}opts = {})
-      data = {{vendorExtensions.x-custom-config.methodNameSnake}}_with_http_info({{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}opts)
-      data
-    end
 
     {{#summary}}
     # {{summary}}
     {{/summary}}
-    {{#notes}}
-    # {{notes}}
-    {{/notes}}
-{{#allParams}}{{#required}}    # @param {{paramName}} {{description}}
-{{/required}}{{/allParams}}    # @param [Hash] opts the optional parameters
-{{#allParams}}{{^required}}    # @option opts [{{{dataType}}}] :{{paramName}} {{description}}
-{{/required}}{{/allParams}}    # @return [Array<({{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}nil{{/returnType}}, Fixnum, Hash)>] {{#returnType}}{{{returnType}}} data{{/returnType}}{{^returnType}}nil{{/returnType}}, response status code and response headers
-    def {{vendorExtensions.x-custom-config.methodNameSnake}}_with_http_info({{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}opts = {})
+    def {{vendorExtensions.x-custom-config.methodNameSnake}}({{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}opts = {})
       {{#allParams}}
       {{#required}}
-      # verify the required parameter '{{paramName}}' is set
-      if {{{paramName}}}.nil?
-        fail ArgumentError, "Missing the required parameter '{{paramName}}' when calling {{classname}}.{{operationId}}"
-      end
+      fail ArgumentError, "Missing required param: '{{paramName}}'" if {{{paramName}}}.nil?
       {{#isEnum}}
       {{^isContainer}}
-      # verify enum value
-      if ![{{#allowableValues}}{{#values}}'{{{this}}}'{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}].include?({{{paramName}}})
-        fail ArgumentError, "invalid value for '{{{paramName}}}', must be one of {{#allowableValues}}{{#values}}{{{this}}}{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}"
-      end
+      fail ArgumentError, "invalid value for '{{{paramName}}}', must be one of {{#allowableValues}}{{#values}}{{{this}}}{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}" if ![{{#allowableValues}}{{#values}}'{{{this}}}'{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}].include?({{{paramName}}})
       {{/isContainer}}
       {{/isEnum}}
       {{/required}}
       {{^required}}
       {{#isEnum}}
       {{#collectionFormat}}
-      if opts[:'{{{paramName}}}'] && !opts[:'{{{paramName}}}'].all? { |item| [{{#allowableValues}}{{#values}}'{{{this}}}'{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}].include?(item) }
-        fail ArgumentError, 'invalid value for "{{{paramName}}}", must include one of {{#allowableValues}}{{#values}}{{{this}}}{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}'
-      end
+      fail ArgumentError, 'invalid value for "{{{paramName}}}", must include one of {{#allowableValues}}{{#values}}{{{this}}}{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}' if opts[:'{{{paramName}}}'] && !opts[:'{{{paramName}}}'].all? { |item| [{{#allowableValues}}{{#values}}'{{{this}}}'{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}].include?(item) }
       {{/collectionFormat}}
       {{^collectionFormat}}
-      if opts[:'{{{paramName}}}'] && ![{{#allowableValues}}{{#values}}'{{{this}}}'{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}].include?(opts[:'{{{paramName}}}'])
-        fail ArgumentError, 'invalid value for "{{{paramName}}}", must be one of {{#allowableValues}}{{#values}}{{{this}}}{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}'
-      end
+      fail ArgumentError, 'invalid value for "{{{paramName}}}", must be one of {{#allowableValues}}{{#values}}{{{this}}}{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}' if opts[:'{{{paramName}}}'] && ![{{#allowableValues}}{{#values}}'{{{this}}}'{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}].include?(opts[:'{{{paramName}}}'])
       {{/collectionFormat}}
       {{/isEnum}}
       {{/required}}
       {{#hasValidation}}
       {{#maxLength}}
-      if {{^required}}!opts[:'{{{paramName}}}'].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}}.to_s.length > {{{maxLength}}}
-        fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, the character length must be smaller than or equal to {{{maxLength}}}.'
-      end
-
+      fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}", the character length must be smaller than or equal to {{{maxLength}}}.' if {{^required}}!opts[:'{{{paramName}}}'].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}}.to_s.length > {{{maxLength}}}
       {{/maxLength}}
       {{#minLength}}
-      if{{^required}}!opts[:'{{{paramName}}}'].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}}.to_s.length < {{{minLength}}}
-        fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, the character length must be great than or equal to {{{minLength}}}.'
-      end
-
+      fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}", the character length must be great than or equal to {{{minLength}}}.' if{{^required}}!opts[:'{{{paramName}}}'].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}}.to_s.length < {{{minLength}}}
       {{/minLength}}
       {{#maximum}}
-      if {{^required}}!opts[:'{{{paramName}}}'].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}} >{{#exclusiveMaximum}}={{/exclusiveMaximum}} {{{maximum}}}
-        fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, must be smaller than {{^exclusiveMaximum}}or equal to {{/exclusiveMaximum}}{{{maximum}}}.'
-      end
-
+      fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}", must be smaller than {{^exclusiveMaximum}}or equal to {{/exclusiveMaximum}}{{{maximum}}}.' if {{^required}}!opts[:'{{{paramName}}}'].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}} >{{#exclusiveMaximum}}={{/exclusiveMaximum}} {{{maximum}}}
       {{/maximum}}
       {{#minimum}}
-      if {{^required}}!opts[:'{{{paramName}}}'].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}} <{{#exclusiveMinimum}}={{/exclusiveMinimum}} {{{minimum}}}
-        fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, must be greater than {{^exclusiveMinimum}}or equal to {{/exclusiveMinimum}}{{{minimum}}}.'
-      end
-
+      fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}", must be greater than {{^exclusiveMinimum}}or equal to {{/exclusiveMinimum}}{{{minimum}}}.' if {{^required}}!opts[:'{{{paramName}}}'].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}} <{{#exclusiveMinimum}}={{/exclusiveMinimum}} {{{minimum}}}
       {{/minimum}}
       {{#pattern}}
-      if {{^required}}!opts[:'{{{paramName}}}'].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}} !~ Regexp.new({{{pattern}}})
-        fail ArgumentError, "invalid value for '{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:\"{{{paramName}}}\"]{{/required}}' when calling {{classname}}.{{operationId}}, must conform to the pattern {{{pattern}}}."
-      end
-
+      fail ArgumentError, "invalid value for '{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:\"{{{paramName}}}\"]{{/required}}', must conform to the pattern {{{pattern}}}." if {{^required}}!opts[:'{{{paramName}}}'].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}} !~ Regexp.new({{{pattern}}})
       {{/pattern}}
       {{#maxItems}}
-      if {{^required}}!opts[:'{{{paramName}}}'].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}}.length > {{{maxItems}}}
-        fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, number of items must be less than or equal to {{{maxItems}}}.'
-      end
-
+      fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}", must be less than or equal to {{{maxItems}}}.' if {{^required}}!opts[:'{{{paramName}}}'].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}}.length > {{{maxItems}}}
       {{/maxItems}}
       {{#minItems}}
-      if {{^required}}!opts[:'{{{paramName}}}'].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}}.length < {{{minItems}}}
-        fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, number of items must be greater than or equal to {{{minItems}}}.'
-      end
-
+      fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}", must be greater than or equal to {{{minItems}}}.' if {{^required}}!opts[:'{{{paramName}}}'].nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}}.length < {{{minItems}}}
       {{/minItems}}
       {{/hasValidation}}
       {{/allParams}}
-      # resource path
-      local_var_path = '{{{path}}}'{{#pathParams}}.sub('{' + '{{baseName}}' + '}', {{paramName}}.to_s){{/pathParams}}
 
-      # query parameters
       query_params = {}
       {{#queryParams}}
       {{#required}}
@@ -129,29 +74,6 @@ module {{moduleName}}
       query_params[:'{{{baseName}}}'] = {{#collectionFormat}}@api_client.build_collection_param(opts[:'{{{paramName}}}'], :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}opts[:'{{{paramName}}}']{{/collectionFormat}} if !opts[:'{{{paramName}}}'].nil?
       {{/required}}
       {{/queryParams}}
-
-      # header parameters
-      header_params = {}
-      {{#hasProduces}}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept([{{#produces}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/produces}}])
-      {{/hasProduces}}
-      {{#hasConsumes}}
-      # HTTP header 'Content-Type'
-      header_params['Content-Type'] = @api_client.select_header_content_type([{{#consumes}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/consumes}}])
-      {{/hasConsumes}}
-      {{#headerParams}}
-      {{#required}}
-      header_params[:'{{{baseName}}}'] = {{#collectionFormat}}@api_client.build_collection_param({{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}{{{paramName}}}{{/collectionFormat}}
-      {{/required}}
-      {{/headerParams}}
-      {{#headerParams}}
-      {{^required}}
-      header_params[:'{{{baseName}}}'] = {{#collectionFormat}}@api_client.build_collection_param(opts[:'{{{paramName}}}'], :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}opts[:'{{{paramName}}}']{{/collectionFormat}} if !opts[:'{{{paramName}}}'].nil?
-      {{/required}}
-      {{/headerParams}}
-
-      # form parameters
       form_params = {}
       {{#formParams}}
       {{#required}}
@@ -163,8 +85,6 @@ module {{moduleName}}
       form_params['{{baseName}}'] = {{#collectionFormat}}@api_client.build_collection_param(opts[:'{{{paramName}}}'], :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}opts[:'{{{paramName}}}']{{/collectionFormat}} if !opts[:'{{paramName}}'].nil?
       {{/required}}
       {{/formParams}}
-
-      # http body
       {{^bodyParam}}
       post_body = nil
       {{/bodyParam}}
@@ -172,14 +92,11 @@ module {{moduleName}}
       post_body = @api_client.object_to_http_body({{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:'{{{paramName}}}']{{/required}})
       {{/bodyParam}}
 
-      auth_names = [{{#authMethods}}'{{name}}'{{#hasMore}}, {{/hasMore}}{{/authMethods}}]
+      local_var_path = '{{{path}}}'{{#pathParams}}.sub('{' + '{{baseName}}' + '}', {{paramName}}.to_s){{/pathParams}}
       data, status_code, headers = @api_client.call_api(:{{httpMethod}}, local_var_path,
-        :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
-        :body => post_body,
-        :auth_names => auth_names{{#returnType}},
-        :return_type => '{{{returnType}}}'{{/returnType}})
+        :body => post_body)
       return data, status_code, headers
     end
 {{/operation}}

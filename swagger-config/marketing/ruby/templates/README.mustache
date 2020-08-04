@@ -4,39 +4,24 @@ The official Ruby client library for the Mailchimp Marketing API (v1)
 
 ## Installation
 
-### Build a gem
+### via RubyGems
 
-To build the Ruby code into a gem:
+```shell
+gem install MailchimpMarketing
+```
+
+### via Git
+
+```shell
+gem '{{{gemName}}}', :git => 'https://github.com/{{#gitUserId}}{{.}}{{/gitUserId}}{{^gitUserId}}YOUR_GIT_USERNAME{{/gitUserId}}/{{#gitRepoId}}{{.}}{{/gitRepoId}}{{^gitRepoId}}YOUR_GIT_REPO{{/gitRepoId}}.git'
+```
+
+### via Local Installation
 
 ```shell
 gem build {{{gemName}}}.gemspec
-```
-
-Then either install the gem locally:
-
-```shell
 gem install ./{{{gemName}}}-{{{gemVersion}}}.gem
-```
-(for development, run `gem install --dev ./{{{gemName}}}-{{{gemVersion}}}.gem` to install the development dependencies)
-
-or publish the gem to a gem hosting service, e.g. [RubyGems](https://rubygems.org/).
-
-Finally add this to the Gemfile:
-
-    gem '{{{gemName}}}', '~> {{{gemVersion}}}'
-
-### Install from Git
-
-If the Ruby gem is hosted at a git repository: https://github.com/{{#gitUserId}}{{.}}{{/gitUserId}}{{^gitUserId}}YOUR_GIT_USERNAME{{/gitUserId}}/{{#gitRepoId}}{{.}}{{/gitRepoId}}{{^gitRepoId}}YOUR_GIT_REPO{{/gitRepoId}}, then add the following in the Gemfile:
-
-    gem '{{{gemName}}}', :git => 'https://github.com/{{#gitUserId}}{{.}}{{/gitUserId}}{{^gitUserId}}YOUR_GIT_USERNAME{{/gitUserId}}/{{#gitRepoId}}{{.}}{{/gitRepoId}}{{^gitRepoId}}YOUR_GIT_REPO{{/gitRepoId}}.git'
-
-### Include the Ruby code directly
-
-Include the Ruby code directly using `-I` as follows:
-
-```shell
-ruby -Ilib script.rb
+gem '{{{gemName}}}', '~> {{{gemVersion}}}'
 ```
 
 ## Quick Start
@@ -59,11 +44,10 @@ end
 
 ## Authentication Methods
 
-The client library can be configured to use either **Basic Auth** or **OAuth2**.
-
-For either method, a server prefix should be passed in i.e. `us19`, in order for the client to determine to appropriate host url.
+The client library can be configured to use either **Basic Auth** or **OAuth2**. A server prefix should be provided i.e. `us19`, in order for the client to determine to appropriate host url.
 
 ### Basic Auth
+
 ```ruby
 client.set_config({
   :api_key => 'YOUR_API_KEY',
@@ -72,9 +56,21 @@ client.set_config({
 ```
 
 ### OAuth2
+
 ```ruby
 client.set_config({
   :access_token => 'YOUR_ACCESS_TOKEN',
+  :server => 'YOUR_SERVER_PREFIX'
+})
+```
+
+### Shorthand
+
+As a shortcut, the configuration object can be passed in directly when creating the client.
+
+```ruby
+client = MailchimpMarketing::Client.new({
+  :api_key => 'YOUR_API_KEY',
   :server => 'YOUR_SERVER_PREFIX'
 })
 ```
