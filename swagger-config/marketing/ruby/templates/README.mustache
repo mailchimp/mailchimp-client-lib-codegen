@@ -35,7 +35,7 @@ begin
     :api_key => 'YOUR_API_KEY',
     :server => 'YOUR_SERVER_PREFIX'
   })
-  result = client.ping.get()
+  result = client.ping.get
   p result
 rescue MailchimpMarketing::ApiError => e
   puts "Error: #{e}"
