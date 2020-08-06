@@ -9,27 +9,10 @@ module {{moduleName}}
   class {{classname}}
     attr_accessor :api_client
 
-    attr_accessor :api_key
-
-    def initialize(api_key = '', api_client = ApiClient.default)
-      @api_key = api_key
+    def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
 {{#operation}}
-    {{#summary}}
-    # {{{summary}}}
-    {{/summary}}
-    {{#notes}}
-    # {{{notes}}}
-    {{/notes}}
-{{#allParams}}{{#required}}    # @param {{paramName}} {{description}}
-{{/required}}{{/allParams}}    # @param [Hash] opts the optional parameters
-{{#allParams}}{{^required}}    # @option opts [{{{dataType}}}] :{{paramName}} {{description}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
-{{/required}}{{/allParams}}    # @return [{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}nil{{/returnType}}]
-    def {{vendorExtensions.x-custom-config.methodNameSnake}}({{#allParams}}{{#required}}{{paramName}} = {}, {{/required}}{{/allParams}}opts = {})
-      {{#returnType}}data = {{/returnType}}{{vendorExtensions.x-custom-config.methodNameSnake}}_with_http_info({{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}opts)
-      {{#returnType}}data{{/returnType}}{{^returnType}}nil{{/returnType}}
-    end
 
     {{#summary}}
     # {{summary}}
@@ -41,24 +24,9 @@ module {{moduleName}}
 {{/required}}{{/allParams}}    # @param [Hash] opts the optional parameters
 {{#allParams}}{{^required}}    # @option opts [{{{dataType}}}] :{{paramName}} {{description}}
 {{/required}}{{/allParams}}    # @return [Array<({{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}nil{{/returnType}}, Fixnum, Hash)>] {{#returnType}}{{{returnType}}} data{{/returnType}}{{^returnType}}nil{{/returnType}}, response status code and response headers
-    def {{vendorExtensions.x-custom-config.methodNameSnake}}_with_http_info({{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}opts = {})
-      {{#allParams}}
-      {{#required}}
-      # add api key to request body
-      body[:key] = @api_key
-
-      {{#isEnum}}
-      {{^isContainer}}
-      {{/isContainer}}
-      {{/isEnum}}
-      {{/required}}
-      {{/allParams}}
-      # resource path
-      local_var_path = '{{{path}}}'{{#pathParams}}.sub('{' + '{{baseName}}' + '}', {{paramName}}.to_s){{/pathParams}}
-
-      # http body (model)
-      data = @api_client.call_api(:{{httpMethod}}, local_var_path, :body => body)
-      return data
+    def {{vendorExtensions.x-custom-config.methodNameSnake}}(body = {})
+      data = @api_client.call_api(:{{httpMethod}}, '{{{path}}}'{{#pathParams}}.sub('{' + '{{baseName}}' + '}', {{paramName}}.to_s){{/pathParams}}, body)
+      data
     end
 {{/operation}}
   end

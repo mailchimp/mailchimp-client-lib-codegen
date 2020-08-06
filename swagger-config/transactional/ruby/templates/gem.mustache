@@ -7,7 +7,6 @@ require '{{gemName}}/api_client'
 require '{{gemName}}/api_error'
 require '{{gemName}}/version'
 
-
 # APIs
 {{#apiInfo}}
 {{#apis}}
@@ -18,22 +17,16 @@ require '{{importPath}}'
 module {{moduleName}}
   class Client
     def initialize(api_key = '')
-      @api_key = api_key
-      @api_client = ApiClient.new()
-
-      {{#apiInfo}}
-      {{#apis}}
-      @{{baseName}} = {{classname}}.new(@api_key, @api_client)
-      {{/apis}}
-      {{/apiInfo}}
+      set_api_key(api_key)
     end
 
     def set_api_key(api_key = '')
       @api_key = api_key
+      @api_client = ApiClient.new(@api_key)
 
       {{#apiInfo}}
       {{#apis}}
-      @{{baseName}} = {{classname}}.new(@api_key, @api_client)
+      @{{baseName}} = {{classname}}.new(@api_client)
       {{/apis}}
       {{/apiInfo}}
     end
@@ -43,11 +36,11 @@ module {{moduleName}}
     end
 
     {{#apiInfo}}
-      {{#apis}}
-      def {{classVarName}}
-        @{{baseName}}
-      end
-      {{/apis}}
-      {{/apiInfo}}
+    {{#apis}}
+    def {{classVarName}}
+      @{{baseName}}
+    end
+    {{/apis}}
+    {{/apiInfo}}
   end
 end
