@@ -45,8 +45,8 @@ ruby -Ilib script.rb
 require 'MailchimpTransactional'
 
 begin
-  client = MailchimpTransactional::Client.new(ENV['MANDRILL_KEY'])
-  result = client.users.ping() # => 'PONG!'
+  client = MailchimpTransactional::Client.new('YOUR_API_KEY')
+  result = client.users.ping
   p result
 rescue MailchimpTransactional::ApiError => e
   puts "Error: #{e}"
@@ -56,7 +56,7 @@ end
 ## Sending Requests
 All requests are sent via POST and accept a single argument as the request body parameter.
 ```ruby
-mailchimp.templates.publish({ :name => 'My Template' });
+client.templates.publish({ name: 'My Template' });
 ```
 
 ## Output Formats
@@ -67,12 +67,12 @@ Optionally, you can set the default response format for **all requests** to one 
 - `yaml`
 
 ```ruby
-mailchimp.set_default_output_format('xml');
+client.set_default_output_format('xml');
 ```
 
 You can also set the response format for a **single request** by passing in a special `outputFormat` param to the request body.
 ```ruby
-mailchimp.senders.list({ :outputFormat => 'php' });
+client.senders.list({ outputFormat: 'php' });
 ```
 
 ## API Endpoints

@@ -61,15 +61,15 @@ module {{moduleName}}
       # handle response
       data = nil
 
-      puts "active format: #{active_output_format}"
-
       if res.status == 200
         if active_output_format == 'json'
-          return JSON.parse(res.body)
+          data = JSON.parse(res.body)
         else
-          return res.body
+          data = res.body
         end
-      else
+      end
+
+      if (!data)
         fail ApiError.new(:status => res.status, :response_body => res.body)
       end
 
