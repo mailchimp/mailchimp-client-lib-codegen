@@ -32,7 +32,6 @@ export PATH="$JAVA_HOME:$PATH"
 export PATH="/usr/local/opt/swagger-codegen@2/bin:$PATH"
 
 # See package.json for all available generate commands
-npm run validate
 npm run generate
 ```
 

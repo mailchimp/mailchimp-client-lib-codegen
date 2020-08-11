@@ -18,3 +18,4 @@ venv/
 venv*/
 dist/
 *.egg-info/
+.vscode/settings.json
