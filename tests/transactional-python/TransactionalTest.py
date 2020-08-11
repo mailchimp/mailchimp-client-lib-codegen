@@ -17,7 +17,6 @@ sys.modules[spec.name] = mailchimp_transactional
 spec.loader.exec_module(mailchimp_transactional)
 
 class TestMailchimpTransactional(unittest.TestCase):
-
     def test_can_read_environment_vars(self):
       self.assertTrue(isinstance(TRANSACTIONAL_API_KEY, str))
 

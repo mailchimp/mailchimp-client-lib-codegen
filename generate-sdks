@@ -79,11 +79,6 @@ generate_for_language() {
 
     # add additional files to client root dir
     cp ./LICENSE "${output_root}"
-
-    # copy tests
-    # if [ "${sdk_name}" == "marketing-javascript" ]; then
-    #    cp -r "${config_dir}/tests" "${output_root}/src"
-    # fi
 }
 
 if [ -n "$target_language" ] && [ -n "$target_product" ]

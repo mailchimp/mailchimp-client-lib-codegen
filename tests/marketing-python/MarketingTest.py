@@ -19,7 +19,6 @@ sys.modules[spec.name] = mailchimp_marketing
 spec.loader.exec_module(mailchimp_marketing)
 
 class TestMailchimpMarketing(unittest.TestCase):
-
     def test_can_read_environment_vars(self):
       self.assertTrue(isinstance(MARKETING_API_KEY, str))
       self.assertTrue(isinstance(MARKETING_ACCESS_TOKEN, str))
