@@ -241,10 +241,168 @@ jobs:
           name: mailchimp-transactional-python.zip
           path: swagger-out/transactional-python/mailchimp-transactional-python.zip
 
+  test-node:
+    runs-on: ubuntu-latest
+    needs: [generate-node]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@mailchimp'
+
+      - name: Prepare Build & Publishing Tools
+        run: npm install
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: mailchimp-transactional-node.zip
+          path: zip
+
+      - name: Unzip build artifact
+        run: |
+          mkdir -p swagger-out/transactional-javascript
+          unzip zip/mailchimp-transactional-node.zip -d swagger-out/transactional-javascript
+
+      - name: Install client
+        working-directory: swagger-out/transactional-javascript
+        run: npm install
+
+      - name: Run test suite
+        run: npm run test -- TransactionalTest.test.js
+        env:
+          TRANSACTIONAL_API_KEY: ${{ secrets.TRANSACTIONAL_API_KEY }}
+
+  test-php:
+    runs-on: ubuntu-latest
+    needs: [generate-php]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Initialize Transactional Cache
+        id: init-cache-mc
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: mailchimp-transactional-php.zip
+          path: zip
+
+      - name: Unzip build artifact
+        run: |
+          mkdir -p swagger-out/transactional-php
+          unzip zip/mailchimp-transactional-php.zip -d swagger-out/transactional-php
+
+      - uses: php-actions/composer@v2
+        with:
+          command: install -d swagger-out/transactional-php/MailchimpTransactional
+
+      - name: Install client dependencies
+        run: |
+          wget -O phpunit https://phar.phpunit.de/phpunit-9.phar
+          chmod +x phpunit
+          ./phpunit --version
+
+      - name: Run test suite
+        working-directory: tests/transactional-php
+        run: |
+          TRANSACTIONAL_API_KEY=${{ secrets.TRANSACTIONAL_API_KEY }} \
+          phpunit MailchimpTransactional.php
+        env:
+          TRANSACTIONAL_API_KEY: ${{ secrets.TRANSACTIONAL_API_KEY }}
+
+  test-ruby:
+    runs-on: ubuntu-latest
+    needs: [generate-ruby]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Initialize Transactional Cache
+        id: init-cache-mc
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: mailchimp-transactional-ruby.zip
+          path: zip
+
+      - name: Unzip build artifact
+        run: |
+          mkdir -p swagger-out/transactional-ruby
+          unzip zip/mailchimp-transactional-ruby.zip -d swagger-out/transactional-ruby
+
+      - name: Set up Ruby 2.6
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.6'
+
+      - name: Install client dependencies
+        run: gem install rspec
+
+      - name: Install client
+        working-directory: swagger-out/transactional-ruby
+        run: |
+          gem build MailchimpTransactional.gemspec --output=MailchimpTransactional-test.gem
+          gem install ./MailchimpTransactional-test.gem
+
+      - name: Run test suite
+        run: |
+          cd tests/transactional-ruby
+          TRANSACTIONAL_API_KEY=${{ secrets.TRANSACTIONAL_API_KEY }} \
+          rspec TransactionalTest_spec.rb
+        env:
+          TRANSACTIONAL_API_KEY: ${{ secrets.TRANSACTIONAL_API_KEY }}
+
+  test-python:
+    runs-on: ubuntu-latest
+    needs: [generate-python]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Initialize Transactional Cache
+        id: init-cache-mc
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - name: Install Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: mailchimp-transactional-python.zip
+          path: zip
+
+      - name: Unzip build artifact
+        run: |
+          mkdir -p swagger-out/transactional-python
+          unzip zip/mailchimp-transactional-python.zip -d swagger-out/transactional-python
+
+      - name: Install client dependencies
+        run: pip install -U python-dotenv
+
+      - name: Install client
+        working-directory: swagger-out/transactional-python
+        run: python3 setup.py install --user
+
+      - name: Run test suite
+        run: |
+          cd tests/transactional-python
+          TRANSACTIONAL_API_KEY=${{ secrets.TRANSACTIONAL_API_KEY }} \
+          python3 TransactionalTest.py
+        env:
+          TRANSACTIONAL_API_KEY: ${{ secrets.TRANSACTIONAL_API_KEY }}
+
   create-release:
     runs-on: ubuntu-latest
-    needs:
-      [validate, generate-node, generate-php, generate-ruby, generate-python]
+    needs: [validate, test-node, test-php, test-ruby, test-python]
     steps:
       - name: Create Release
         uses: actions/create-release@latest
