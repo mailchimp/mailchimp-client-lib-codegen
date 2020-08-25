@@ -24,11 +24,7 @@
     "generate:java:transactional": "./generate-sdks java transactional",
     "generate:csharp": "./generate-sdks csharp",
     "generate:csharp:marketing": "./generate-sdks csharp marketing",
-    "generate:csharp:transactional": "./generate-sdks csharp transactional",
-    "regenerate-and-run:python:transactional": "rm -rf swagger-out/transactional-python && npm run generate:python:transactional && source utils/sdk/python/venv/bin/activate && cd swagger-out/transactional-python/ && python setup.py install --force && pip install python-dotenv && cd ../../utils/sdk/python && python useTransactional.py && deactivate",
-    "regenerate-and-run:python:marketing": "rm -rf swagger-out/marketing-python && npm run generate:python:marketing && source utils/sdk/python/venv/bin/activate && cd swagger-out/marketing-python/ && python setup.py install --force && pip install python-dotenv && cd ../../utils/sdk/python && python useMarketing.py && deactivate",
-    "regenerate-and-run:ruby:transactional": "rm -rf swagger-out/transactional-ruby && npm run generate:ruby:transactional && cd utils/sdk/ruby && gem build ../../../swagger-out/transactional-ruby/MailchimpTransactional.gemspec && sudo gem install ../../../swagger-out/transactional-ruby/MailchimpTransactional-1.0.0.gem && sudo gem install dotenv && ruby useTransactional.rb",
-    "regenerate-and-run:ruby:marketing": "rm -rf swagger-out/marketing-ruby && npm run generate:ruby:marketing && cd utils/sdk/ruby && gem build ../../../swagger-out/marketing-ruby/MailchimpMarketing.gemspec && sudo gem install ../../../swagger-out/marketing-ruby/MailchimpMarketing-1.0.0.gem && sudo gem install dotenv && ruby useMarketing.rb"
+    "generate:csharp:transactional": "./generate-sdks csharp transactional"
   },
   "repository": {
     "type": "git",

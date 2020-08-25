@@ -4,6 +4,7 @@ swagger-out
 .env
 node_modules
 utils/example
+.phpunit.result.cache
 
 # PHP
 utils/sdk/php/vendor

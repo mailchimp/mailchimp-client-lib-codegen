@@ -171,11 +171,11 @@
   },
   "swagger": "2.0",
   "info": {
-    "version": "1.0.13",
+    "version": "1.0.14",
     "title": "Mailchimp Transactional API",
     "contact": {
       "name": "API Support",
-      "email": "apihelp@mandrill.com"
+      "email": "apihelp@mailchimp.com"
     },
     "x-permalink": "https://github.com/mailchimp/mailchimp-client-lib-codegen/blob/master/spec/transactional.json"
   },
