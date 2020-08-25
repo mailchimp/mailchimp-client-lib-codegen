@@ -1,3 +1,4 @@
+import time
 import os
 import sys
 import unittest
@@ -30,6 +31,44 @@ class TestMailchimpTransactional(unittest.TestCase):
       client.set_api_key(TRANSACTIONAL_API_KEY)
       resp = client.users.ping()
       self.assertEqual(resp, "PONG!")
+
+    def test_template_lifecycle(self):
+      client = mailchimp_transactional.Client()
+      client.set_api_key(TRANSACTIONAL_API_KEY)
+
+      timestamp = str(time.time())
+      templateName = "TemplatePython_" + timestamp;
+      templateSubjectA = "TemplatePythonSubjectA_" + timestamp;
+      templateSubjectB = "TemplatePythonSubjectB_" + timestamp;
+
+      # can list all templates
+      respA = client.templates.list()
+      self.assertTrue(type(respA) == list)
+
+      # can add a template
+      respB = client.templates.add({
+        'name': templateName,
+        'subject': templateSubjectA
+      })
+      self.assertTrue(respB.get('name') == templateName)
+      self.assertTrue(respB.get('subject') == templateSubjectA)
+
+      # can get template info
+      respC = client.templates.info({ 'name': templateName })
+      self.assertTrue(respC.get('name') == templateName)
+      self.assertTrue(respC.get('subject') == templateSubjectA)
+
+      # can update a template
+      respD = client.templates.update({
+        'name': templateName,
+        'subject': templateSubjectB
+      })
+      self.assertTrue(respD.get('name') == templateName)
+      self.assertTrue(respD.get('subject') == templateSubjectB)
+
+      # can delete a template
+      respE = client.templates.delete({ 'name': templateName })
+      self.assertTrue(respE.get('name') == templateName)
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,4 +1,4 @@
-name: 📦 Create Marketing SDK Release
+name: 📦 Create Marketing Release
 
 on:
   push:

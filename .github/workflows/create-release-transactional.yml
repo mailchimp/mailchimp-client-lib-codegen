@@ -1,4 +1,4 @@
-name: 📦 Create Transactional SDK Release
+name: 📦 Create Transactional Release
 
 on:
   push:
@@ -310,7 +310,7 @@ jobs:
         working-directory: tests/transactional-php
         run: |
           TRANSACTIONAL_API_KEY=${{ secrets.TRANSACTIONAL_API_KEY }} \
-          phpunit MailchimpTransactional.php
+          phpunit TransactionalTest.php
         env:
           TRANSACTIONAL_API_KEY: ${{ secrets.TRANSACTIONAL_API_KEY }}
 
