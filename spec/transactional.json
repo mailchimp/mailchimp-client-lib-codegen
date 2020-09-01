@@ -8042,7 +8042,7 @@
           "methodNameCamel": "list",
           "methodNameSnake": "list"
         },
-        "summary": "List most clicked ur ls",
+        "summary": "List most clicked urls",
         "description": "Get the 100 most clicked URLs.",
         "operationId": "postUrlsList",
         "tags": ["urls"],
@@ -8104,7 +8104,7 @@
           "methodNameCamel": "search",
           "methodNameSnake": "search"
         },
-        "summary": "Search most clicked ur ls",
+        "summary": "Search most clicked urls",
         "description": "Return the 100 most clicked URLs that match the search query given.",
         "operationId": "postUrlsSearchDeprecated",
         "tags": ["urls"],
