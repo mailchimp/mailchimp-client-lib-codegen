@@ -35,7 +35,11 @@ class ApiClient
 
     public function __construct()
     {
-        $this->requestClient = new RequestClient();
+        $this->requestClient = new RequestClient([
+            'defaults' => [
+                'timeout' => 120.0
+            ]
+        ]);
 
         // API Routes
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}{{#-first}}        $this->{{#tags}}{{{name}}}{{/tags}} = new {{classname}}($this);
