@@ -64,9 +64,9 @@ class ApiClient(object):
         else:
             return res
 
-    def request(self, method, url, body=None, headers=None):
+    def request(self, method, url, body=None, headers=None, timeout=120.0):
         if method is 'POST':
-            return requests.post(url, data=json.dumps(body), headers=headers)
+            return requests.post(url, data=json.dumps(body), headers=headers, timeout=timeout)
         else:
             raise ValueError(
                 "http method must be `POST`"
