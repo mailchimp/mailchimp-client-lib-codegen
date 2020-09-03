@@ -51,7 +51,7 @@ module {{moduleName}}
       headers[:Authorization] = "Bearer #@access_token" if @is_oauth
 
       host = @server.length > 0 ? @host.sub('server', @server) : @host
-      conn = Excon.new(host + path, :headers => headers)
+      conn = Excon.new(host + path, :headers => headers, :read_timeout => 120, :write_timeout => 120)
 
       res = nil
       case http_method.to_sym.downcase
