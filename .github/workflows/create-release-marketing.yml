@@ -1,6 +1,7 @@
 name: 📦 Create Marketing Release
 
 on:
+  pull_request:
   push:
     paths:
       - 'spec/marketing.json'
@@ -10,8 +11,8 @@ on:
       - master
 
 env:
-  PUBLISH_INTERNAL: true # whether or not to push to git repos
-  PUBLISH_EXTERNAL: true # whether or not to push to package managers
+  PUBLISH_INTERNAL: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }} # push to git repos?
+  PUBLISH_EXTERNAL: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }} # push to package managers?
 
 jobs:
   validate:
