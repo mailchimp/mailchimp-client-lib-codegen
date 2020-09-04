@@ -38,7 +38,11 @@ use {{invokerPackage}}\ObjectSerializer;
 
     public function __construct(ApiClient $config = null)
     {
-        $this->client = new Client();
+        $this->client = new Client([
+            'defaults' => [
+                'timeout' => 120.0
+            ]
+        ]);
         $this->headerSelector = new HeaderSelector();
         $this->config = $config ?: new ApiClient();
     }
