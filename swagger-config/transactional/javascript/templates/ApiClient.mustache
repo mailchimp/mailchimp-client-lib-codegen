@@ -1,7 +1,7 @@
 {{>licenseInfo}}
 var axios = require('axios');
 
-axios.defaults.timeout = 120000; // 120s
+axios.defaults.timeout = 300000; // 300s
 
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}{{#-first}}var {{baseName}} = require('./api/{{classname}}');
 {{/-first}}{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}

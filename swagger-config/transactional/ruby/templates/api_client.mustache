@@ -55,7 +55,7 @@ module {{moduleName}}
       body[:key] = @api_key
 
       # send request
-      conn = Excon.new(url, :headers => {'Content-Type' => 'application/json'}, :read_timeout => 120, :write_timeout => 120)
+      conn = Excon.new(url, :headers => {'Content-Type' => 'application/json'}, :read_timeout => 300, :write_timeout => 300)
       res = conn.post(:body => body.to_json)
 
       # handle response
