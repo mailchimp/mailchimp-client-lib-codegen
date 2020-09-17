@@ -20,9 +20,15 @@ jobs:
       - name: POST Prod Build Hook
         run: curl -X POST -d {} ${{ env.NETLIFY_PROD_BUILD_HOOK }}
         if: env.REBUILD_PROD == 'true'
+        env:
+          NETLIFY_PROD_BUILD_HOOK: ${{ secrets.NETLIFY_PROD_BUILD_HOOK }}
       - name: POST Staging Build Hook
         run: curl -X POST -d {} ${{ env.NETLIFY_STAGING_BUILD_HOOK }}
         if: env.REBUILD_PROD != 'true'
+        env:
+          NETLIFY_STAGING_BUILD_HOOK: ${{ secrets.NETLIFY_STAGING_BUILD_HOOK }}
       - name: POST Dev Build Hook
         run: curl -X POST -d {} ${{ env.NETLIFY_DEV_BUILD_HOOK }}
         if: env.REBUILD_PROD == 'true'
+        env:
+          NETLIFY_DEV_BUILD_HOOK: ${{ secrets.NETLIFY_DEV_BUILD_HOOK }}
