@@ -1,0 +1,28 @@
+name: 🌐 Build Developer Site
+
+on:
+  pull_request:
+  push:
+    paths:
+      - 'spec/marketing.json'
+      - 'spec/transactional.json'
+      - '.github/workflows/build-dev-site.yml'
+    branches:
+      - master
+
+env:
+  REBUILD_PROD: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }} # true iff push to master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: POST Prod Build Hook
+        run: curl -X POST -d {} ${{ env.NETLIFY_PROD_BUILD_HOOK }}
+        if: env.REBUILD_PROD == 'true'
+      - name: POST Staging Build Hook
+        run: curl -X POST -d {} ${{ env.NETLIFY_STAGING_BUILD_HOOK }}
+        if: env.REBUILD_PROD != 'true'
+      - name: POST Dev Build Hook
+        run: curl -X POST -d {} ${{ env.NETLIFY_DEV_BUILD_HOOK }}
+        if: env.REBUILD_PROD == 'true'
