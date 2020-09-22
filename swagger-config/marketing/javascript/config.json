@@ -1,6 +1,6 @@
 {
   "projectName": "@mailchimp/mailchimp_marketing",
-  "projectDescription": "Mailchimp Marketing Javascript SDK",
+  "projectDescription": "The official Node client library for the Mailchimp Marketing API",
   "projectLicenseName": "Apache-2.0",
   "moduleName": "MailchimpMarketing",
   "usePromises": true,

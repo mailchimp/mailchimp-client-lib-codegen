@@ -1,7 +1,7 @@
 {
   "gemName": "MailchimpMarketing",
   "moduleName": "MailchimpMarketing",
-  "gemDescription": "Mailchimp Marketing Ruby SDK",
+  "gemDescription": "The official Ruby client library for the Mailchimp Marketing API",
   "gemLicense": "Apache-2.0",
   "gitUserId": "mailchimp",
   "gitRepoId": "mailchimp-marketing-ruby"

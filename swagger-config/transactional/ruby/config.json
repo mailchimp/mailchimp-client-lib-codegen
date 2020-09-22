@@ -1,7 +1,7 @@
 {
   "gemName": "MailchimpTransactional",
   "moduleName": "MailchimpTransactional",
-  "gemDescription": "Mailchimp Transactional Ruby SDK",
+  "gemDescription": "The official Ruby client library for the Mailchimp Trainsactional API",
   "gemLicense": "Apache-2.0",
   "gitUserId": "mailchimp",
   "gitRepoId": "mailchimp-transactional-ruby"
