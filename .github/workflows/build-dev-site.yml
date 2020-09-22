@@ -5,12 +5,10 @@ on:
     paths:
       - 'spec/marketing.json'
       - 'spec/transactional.json'
-      - '.github/workflows/build-dev-site.yml'
   push:
     paths:
       - 'spec/marketing.json'
       - 'spec/transactional.json'
-      - '.github/workflows/build-dev-site.yml'
     branches:
       - master
 
