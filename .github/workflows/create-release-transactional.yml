@@ -494,8 +494,8 @@ jobs:
           git config --local user.name "GitHub Action"
           git remote add origin https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-php.git
           git add --force .
-          git tag -a v${{ env.SPEC_VERSION }}
           git commit -m "Update mailchimp-transactional-php to v${{ env.SPEC_VERSION }}"
+          git tag -a v${{ env.SPEC_VERSION }}
           git push origin master --force
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
