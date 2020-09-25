@@ -459,10 +459,10 @@ jobs:
         if: env.PUBLISH_INTERNAL == 'true'
         working-directory: marketing-node
         run: |
-          git init
+          rm -rf .git # remove any existing .git directory
+          git clone --bare https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-marketing-node.git .git # copy from repo to track history
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-marketing-node.git
           git add --force .
           git commit -m "Update mailchimp-marketing-node to v${{ env.SPEC_VERSION }}"
           git push origin master --force
@@ -503,10 +503,10 @@ jobs:
         if: env.PUBLISH_INTERNAL == 'true'
         working-directory: marketing-php/MailchimpMarketing
         run: |
-          git init
+          rm -rf .git # remove any existing .git directory
+          git clone --bare https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-marketing-php.git .git # copy from repo to track history
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-marketing-php.git
           git add --force .
           git commit -m "Update mailchimp-marketing-php to v${{ env.SPEC_VERSION }}"
           git push origin master --force
@@ -553,10 +553,10 @@ jobs:
         if: env.PUBLISH_INTERNAL == 'true'
         working-directory: marketing-ruby
         run: |
-          git init
+          rm -rf .git # remove any existing .git directory
+          git clone --bare https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-marketing-ruby.git .git # copy from repo to track history
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-marketing-ruby.git
           git add --force .
           git commit -m "Update mailchimp-marketing-ruby to v${{ env.SPEC_VERSION }}"
           git push origin master --force
@@ -606,10 +606,10 @@ jobs:
         if: env.PUBLISH_INTERNAL == 'true'
         working-directory: marketing-python
         run: |
-          git init
+          rm -rf .git # remove any existing .git directory
+          git clone --bare https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-marketing-python.git .git # copy from repo to track history
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-marketing-python.git
           git add --force .
           git commit -m "Update mailchimp-marketing-python to v${{ env.SPEC_VERSION }}"
           git push origin master --force
