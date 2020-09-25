@@ -15,16 +15,7 @@ use GuzzleHttp\Exception\RequestException;
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}{{#-first}}
 use {{invokerPackage}}\Api\{{classname}};{{/-first}}{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
 
-/**
- * ApiClient Class Doc Comment
- * PHP version 5
- *
- * @category Class
- * @package  {{invokerPackage}}
- * @author   Swagger Codegen team
- * @link     https://github.com/swagger-api/swagger-codegen
- */
-class ApiClient
+class Configuration
 {
     protected $host = '{{basePath}}';
     protected $apiKey = '';
@@ -94,14 +85,14 @@ class ApiClient
         if (array_key_exists('outputFormat', $body)) {
             $selectedFormat = strtolower($body['outputFormat']);
 
-            if (in_array($selectedFormat, ApiClient::$formatList)) {
+            if (in_array($selectedFormat, Configuration::$formatList)) {
                 $postUrl = $postUrl . '.' . $selectedFormat;
                 unset($body['outputFormat']);
                 $useDefaultOutputFormat = false;
             }
         }
 
-        if ($useDefaultOutputFormat && in_array($defaultOutputFormat, ApiClient::$formatList)) {
+        if ($useDefaultOutputFormat && in_array($defaultOutputFormat, Configuration::$formatList)) {
             $postUrl = $postUrl . '.' . $defaultOutputFormat;
         }
 

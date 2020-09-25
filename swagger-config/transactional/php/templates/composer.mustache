@@ -13,15 +13,13 @@
     "homepage": "http://swagger.io",
     "license": "proprietary",
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "authors": [
         {
             "name": "Swagger and contributors",
             "homepage": "https://github.com/swagger-api/swagger-codegen"
         }
     ],
-    "scripts": {
-        "pre-autoload-dump": "mv ./lib/Configuration.php ./lib/ApiClient.php"
-    },
     "require": {
         "php": ">=5.5",
         "ext-curl": "*",

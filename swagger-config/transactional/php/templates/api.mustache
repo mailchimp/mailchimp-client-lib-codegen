@@ -20,7 +20,7 @@
 namespace {{apiPackage}};
 
 use {{invokerPackage}}\ApiException;
-use {{invokerPackage}}\ApiClient;
+use {{invokerPackage}}\Configuration;
 use {{invokerPackage}}\HeaderSelector;
 use {{invokerPackage}}\ObjectSerializer;
 
@@ -34,11 +34,11 @@ use {{invokerPackage}}\ObjectSerializer;
  */
 {{#operations}}class {{classname}}
 {
-    protected $apiClient;
+    protected $Configuration;
 
-    public function __construct(ApiClient $apiClient = null)
+    public function __construct(Configuration $config = null)
     {
-        $this->apiClient = $apiClient ?: new ApiClient();
+        $this->config = $config ?: new Configuration();
     }
 
 {{#operation}}
@@ -48,7 +48,7 @@ use {{invokerPackage}}\ObjectSerializer;
      */
     public function {{vendorExtensions.x-custom-config.methodNameCamel}}($body = [])
     {
-        return $this->apiClient->post('{{path}}', $body);
+        return $this->config->post('{{path}}', $body);
     }
 {{/operation}}
 }
