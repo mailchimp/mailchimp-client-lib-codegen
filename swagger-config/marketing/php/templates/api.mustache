@@ -26,7 +26,7 @@ use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use {{invokerPackage}}\ApiException;
-use {{invokerPackage}}\ApiClient;
+use {{invokerPackage}}\Configuration;
 use {{invokerPackage}}\HeaderSelector;
 use {{invokerPackage}}\ObjectSerializer;
 
@@ -36,7 +36,7 @@ use {{invokerPackage}}\ObjectSerializer;
     protected $config;
     protected $headerSelector;
 
-    public function __construct(ApiClient $config = null)
+    public function __construct(Configuration $config = null)
     {
         $this->client = new Client([
             'defaults' => [
@@ -44,7 +44,7 @@ use {{invokerPackage}}\ObjectSerializer;
             ]
         ]);
         $this->headerSelector = new HeaderSelector();
-        $this->config = $config ?: new ApiClient();
+        $this->config = $config ?: new Configuration();
     }
 
     public function getConfig()

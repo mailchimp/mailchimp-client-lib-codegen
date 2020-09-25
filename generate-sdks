@@ -66,11 +66,17 @@ generate_for_language() {
     if [ "${sdk_name}" == "marketing-php" ]; then
         output_root="${output_root}/MailchimpMarketing"
         rm -rf "${output_root}/lib/Model"
+
+        # Copy additional files
+        cp "${templates_dir}/ApiClient.php" "${output_root}/lib/ApiClient.php"
     fi
 
     if [ "${sdk_name}" == "transactional-php" ]; then
         output_root="${output_root}/MailchimpTransactional"
         rm -rf "${output_root}/lib/Model"
+
+        # Copy additional files
+        cp "${templates_dir}/ApiClient.php" "${output_root}/lib/ApiClient.php"
     fi
 
     if [ "${sdk_name}" == "marketing-python" ]; then

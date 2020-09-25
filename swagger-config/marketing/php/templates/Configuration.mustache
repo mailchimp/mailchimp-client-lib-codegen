@@ -11,7 +11,7 @@ namespace {{invokerPackage}};
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}{{#-first}}
 use {{invokerPackage}}\Api\{{classname}};{{/-first}}{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
 
-class ApiClient
+class Configuration
 {
     private static $defaultConfiguration;
 
