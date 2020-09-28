@@ -445,10 +445,10 @@ jobs:
         if: env.PUBLISH_INTERNAL == 'true'
         working-directory: transactional-node
         run: |
-          git init
+          rm -rf .git # remove any existing .git directory
+          git clone --bare https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-node.git .git # copy from repo to track history
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-node.git
           git add --force .
           git commit -m "Update mailchimp-transactional-node to v${{ env.SPEC_VERSION }}"
           git push origin master --force
@@ -489,10 +489,10 @@ jobs:
         if: env.PUBLISH_INTERNAL == 'true'
         working-directory: transactional-php/MailchimpTransactional
         run: |
-          git init
+          rm -rf .git # remove any existing .git directory
+          git clone --bare https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-php.git .git # copy from repo to track history
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-php.git
           git add --force .
           git commit -m "Update mailchimp-transactional-php to v${{ env.SPEC_VERSION }}"
           git tag -a v${{ env.SPEC_VERSION }} -m "Update v${{ env.SPEC_VERSION }}"
@@ -540,10 +540,10 @@ jobs:
         if: env.PUBLISH_INTERNAL == 'true'
         working-directory: transactional-ruby
         run: |
-          git init
+          rm -rf .git # remove any existing .git directory
+          git clone --bare https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-ruby.git .git # copy from repo to track history
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-ruby.git
           git add --force .
           git commit -m "Update mailchimp-transactional-ruby to v${{ env.SPEC_VERSION }}"
           git push origin master --force
@@ -593,10 +593,10 @@ jobs:
         if: env.PUBLISH_INTERNAL == 'true'
         working-directory: transactional-python
         run: |
-          git init
+          rm -rf .git # remove any existing .git directory
+          git clone --bare https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-python.git .git # copy from repo to track history
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git remote add origin https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-python.git
           git add --force .
           git commit -m "Update mailchimp-transactional-python to v${{ env.SPEC_VERSION }}"
           git push origin master --force
