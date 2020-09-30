@@ -446,7 +446,9 @@ jobs:
         working-directory: transactional-node
         run: |
           rm -rf .git # remove any existing .git directory
-          git clone --bare https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-node.git .git # copy from repo to track history
+          git clone https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-node repo # clone repo to track history
+          mv repo/.git . # move cloned git history to root
+          rm -rf repo
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add --force .
@@ -490,7 +492,9 @@ jobs:
         working-directory: transactional-php/MailchimpTransactional
         run: |
           rm -rf .git # remove any existing .git directory
-          git clone --bare https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-php.git .git # copy from repo to track history
+          git clone https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-php repo # clone repo to track history
+          mv repo/.git . # move cloned git history to root
+          rm -rf repo
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add --force .
@@ -541,7 +545,9 @@ jobs:
         working-directory: transactional-ruby
         run: |
           rm -rf .git # remove any existing .git directory
-          git clone --bare https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-ruby.git .git # copy from repo to track history
+          git clone https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-ruby repo # clone repo to track history
+          mv repo/.git . # move cloned git history to root
+          rm -rf repo
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add --force .
@@ -594,7 +600,9 @@ jobs:
         working-directory: transactional-python
         run: |
           rm -rf .git # remove any existing .git directory
-          git clone --bare https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-python.git .git # copy from repo to track history
+          git clone https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-python repo # clone repo to track history
+          mv repo/.git . # move cloned git history to root
+          rm -rf repo
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add --force .

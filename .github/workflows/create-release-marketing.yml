@@ -460,7 +460,9 @@ jobs:
         working-directory: marketing-node
         run: |
           rm -rf .git # remove any existing .git directory
-          git clone --bare https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-marketing-node.git .git # copy from repo to track history
+          git clone https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-marketing-node.git repo # clone repo to track history
+          mv repo/.git . # move cloned git history to root
+          rm -rf repo
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add --force .
@@ -504,7 +506,9 @@ jobs:
         working-directory: marketing-php/MailchimpMarketing
         run: |
           rm -rf .git # remove any existing .git directory
-          git clone --bare https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-marketing-php.git .git # copy from repo to track history
+          git clone https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-marketing-php.git repo # clone repo to track history
+          mv repo/.git . # move cloned git history to root
+          rm -rf repo
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add --force .
@@ -555,7 +559,9 @@ jobs:
         working-directory: marketing-ruby
         run: |
           rm -rf .git # remove any existing .git directory
-          git clone --bare https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-marketing-ruby.git .git # copy from repo to track history
+          git clone https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-marketing-ruby.git repo # clone repo to track history
+          mv repo/.git . # move cloned git history to root
+          rm -rf repo
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add --force .
@@ -608,7 +614,9 @@ jobs:
         working-directory: marketing-python
         run: |
           rm -rf .git # remove any existing .git directory
-          git clone --bare https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-marketing-python.git .git # copy from repo to track history
+          git clone https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-marketing-python.git repo # clone repo to track history
+          mv repo/.git . # move cloned git history to root
+          rm -rf repo
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add --force .
