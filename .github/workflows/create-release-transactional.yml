@@ -10,7 +10,7 @@ on:
     paths:
       - 'spec/transactional.json'
       - 'swagger-config/transactional/**.*'
-      - 'workflows/create-release-marketing.yml'
+      - 'workflows/create-release-transactional.yml'
     branches:
       - master
 
