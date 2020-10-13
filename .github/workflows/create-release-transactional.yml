@@ -500,8 +500,7 @@ jobs:
           git add --force .
           git commit -m "Update mailchimp-transactional-php to v${{ env.SPEC_VERSION }}"
           git tag -a v${{ env.SPEC_VERSION }} -m "Update v${{ env.SPEC_VERSION }}"
-          git push origin master --force
-          git push --tags
+          git push origin master --follow-tags --force
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
