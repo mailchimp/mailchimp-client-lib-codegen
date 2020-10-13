@@ -5,10 +5,12 @@ on:
     paths:
       - 'spec/marketing.json'
       - 'swagger-config/marketing/**.*'
+      - 'workflows/create-release-marketing.yml'
   push:
     paths:
       - 'spec/marketing.json'
       - 'swagger-config/marketing/**.*'
+      - 'workflows/create-release-marketing.yml'
     branches:
       - master
 
