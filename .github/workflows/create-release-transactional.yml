@@ -5,12 +5,12 @@ on:
     paths:
       - 'spec/transactional.json'
       - 'swagger-config/transactional/**.*'
-      - 'workflows/create-release-transactional.yml'
+      - '.github/workflows/create-release-transactional.yml'
   push:
     paths:
       - 'spec/transactional.json'
       - 'swagger-config/transactional/**.*'
-      - 'workflows/create-release-transactional.yml'
+      - '.github/workflows/create-release-transactional.yml'
     branches:
       - master
 
@@ -614,7 +614,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
 
-      # Publish Transactional SDKs Externally
       - name: Publish → PyPI → transactional-python (test)
         if: env.PUBLISH_EXTERNAL == 'true'
         uses: pypa/gh-action-pypi-publish@master

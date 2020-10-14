@@ -5,12 +5,12 @@ on:
     paths:
       - 'spec/marketing.json'
       - 'swagger-config/marketing/**.*'
-      - 'workflows/create-release-marketing.yml'
+      - '.github/workflows/create-release-marketing.yml'
   push:
     paths:
       - 'spec/marketing.json'
       - 'swagger-config/marketing/**.*'
-      - 'workflows/create-release-marketing.yml'
+      - '.github/workflows/create-release-marketing.yml'
     branches:
       - master
 
@@ -628,7 +628,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
 
-      # Publish Marketing SDKs Externally
       - name: Publish → PyPI → marketing-python (test)
         if: env.PUBLISH_EXTERNAL == 'true'
         uses: pypa/gh-action-pypi-publish@master
