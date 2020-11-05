@@ -1,5 +1,7 @@
 <p align="center">
-  <img src="./resources/images/mcdev-banner.png" alt="Mailchimp Developer" width="100%" height="auto">
+  <a href="https://mailchimp.com/developer/">
+    <img src="./resources/images/mcdev-banner.png" alt="Mailchimp Developer" width="100%" height="auto">
+  </a>
 </p>
 
 # mailchimp-client-lib-codegen
