@@ -1,15 +1,10 @@
 <p align="center">
-    <img src="./resources/images/readme_cover.png" alt="Mailchimp Freddie" width="100%" height="auto">
+  <img src="./resources/images/mcdev-banner.png" alt="Mailchimp Developer" width="100%" height="auto">
 </p>
 
+# mailchimp-client-lib-codegen
+
 This tool is used to auto-generate and publish both Mailchimp Marketing and Transactional client libraries.
-
-## Table of contents
-
-- [Quick start](#quick-start)
-- [Generate clients](#generate-clients)
-- [Published clients - Internal](#published-clients-internal)
-- [Published clients — External](#published-clients-external)
 
 ## Quick start
 
