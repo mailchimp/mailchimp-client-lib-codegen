@@ -303,8 +303,9 @@ jobs:
           mkdir -p swagger-out/marketing-php
           unzip zip/mailchimp-marketing-php.zip -d swagger-out/marketing-php
 
-      - uses: php-actions/composer@v2
+      - uses: php-actions/composer@v5
         with:
+          php_version: 7.4
           command: install -d swagger-out/marketing-php/MailchimpMarketing
 
       - name: Install client dependencies
