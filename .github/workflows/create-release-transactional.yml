@@ -301,8 +301,9 @@ jobs:
           mkdir -p swagger-out/transactional-php
           unzip zip/mailchimp-transactional-php.zip -d swagger-out/transactional-php
 
-      - uses: php-actions/composer@v2
+      - uses: php-actions/composer@v5
         with:
+          php_version: 7.4
           command: install -d swagger-out/transactional-php/MailchimpTransactional
 
       - name: Install client dependencies
