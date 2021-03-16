@@ -158,7 +158,7 @@ use {{invokerPackage}}\ObjectSerializer;
         // query params
         {{#collectionFormat}}
         if (is_array(${{paramName}})) {
-            $queryParams['{{baseName}}'] = ${{paramName}};
+            $queryParams['{{baseName}}'] = ObjectSerializer::serializeCollection(${{paramName}}, '{{collectionFormat}}');
         } else
         {{/collectionFormat}}
         if (${{paramName}} !== null) {
