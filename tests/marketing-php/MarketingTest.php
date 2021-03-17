@@ -16,6 +16,32 @@ class MarketingTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals("Everything's Chimpy!", $resp->health_status);
     }
 
+    public function testIncludeExclude()
+    {
+        $client = new MailchimpMarketing\ApiClient();
+        $client->setConfig([
+            'apiKey' => getenv('MARKETING_API_KEY'),
+            'server' => getenv('MARKETING_SERVER'),
+        ]);
+
+        # include fields
+        $resp = $client->root->getRoot(["account_id"]);
+        $this->assertObjectHasAttribute("account_id", $resp);
+        $this->assertObjectNotHasAttribute("login_id", $resp);
+
+        $resp = $client->root->getRoot(["account_id", "login_id"]);
+        $this->assertObjectHasAttribute("account_id", $resp);
+        $this->assertObjectHasAttribute("login_id", $resp);
+
+        $resp = $client->root->getRoot(null, ["account_id"]);
+        $this->assertObjectNotHasAttribute("account_id", $resp);
+        $this->assertObjectHasAttribute("login_id", $resp);
+
+        $resp = $client->root->getRoot(null, ["account_id", "login_id"]);
+        $this->assertObjectNotHasAttribute("login_id", $resp);
+        $this->assertObjectNotHasAttribute("account_id", $resp);
+    }
+
     public function testOAuth()
     {
         $client = new MailchimpMarketing\ApiClient();
