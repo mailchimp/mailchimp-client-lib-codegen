@@ -171,7 +171,7 @@
   },
   "swagger": "2.0",
   "info": {
-    "version": "1.0.25",
+    "version": "1.0.26",
     "title": "Mailchimp Transactional API",
     "contact": {
       "name": "API Support",
@@ -3074,7 +3074,7 @@
                 },
                 "send_at": {
                   "type": "string",
-                  "description": "when this message should be sent as a UTC timestamp in YYYY-MM-DD HH:MM:SS format. If you specify a time in the past, the message will be sent immediately. An additional fee applies for scheduled email, and this feature is only available to accounts with a positive balance.",
+                  "description": "when this message should be sent as a UTC timestamp in YYYY-MM-DD HH:MM:SS format. If you specify a time in the past, the message will be sent immediately.",
                   "format": "date-time"
                 }
               }
