@@ -10,10 +10,10 @@ on:
       - 'spec/marketing.json'
       - 'spec/transactional.json'
     branches:
-      - master
+      - main
 
 env:
-  REBUILD_PROD: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }} # true iff push to master
+  REBUILD_PROD: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }} # true iff push to main
 
 jobs:
   build:
