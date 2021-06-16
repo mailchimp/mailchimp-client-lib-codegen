@@ -28,7 +28,7 @@ git init
 # Adds the files in the local repository and stages them for commit.
 git add .
 
-# Commits the tracked changes and prepares them to be pushed to a remote repository. 
+# Commits the tracked changes and prepares them to be pushed to a remote repository.
 git commit -m "$release_note"
 
 # Sets the new remote
@@ -44,9 +44,8 @@ if [ "$git_remote" = "" ]; then # git remote not defined
 
 fi
 
-git pull origin master
+git pull origin main
 
 # Pushes (Forces) the changes in the local repository up to the remote repository
 echo "Git pushing to https://github.com/${git_user_id}/${git_repo_id}.git"
-git push origin master 2>&1 | grep -v 'To https'
-
+git push origin main 2>&1 | grep -v 'To https'
