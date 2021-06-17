@@ -76,7 +76,7 @@ class Configuration
 
         // prepare request params
         $postUrl = $this->getHost() . $path;
-        $postBody = [ 'form_params' => $body ];
+        $postBody = [ 'json' => $body ];
 
         // set output format
         $defaultOutputFormat = $this->getDefaultOutputFormat();
