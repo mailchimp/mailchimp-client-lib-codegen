@@ -5,6 +5,7 @@ swagger-out
 node_modules
 utils/example
 .phpunit.result.cache
+.idea/
 
 # PHP
 utils/sdk/php/vendor
