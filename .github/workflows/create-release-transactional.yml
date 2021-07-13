@@ -98,7 +98,6 @@ jobs:
           npm install
           node utils/actions/updateLangConfig.js --api=transactional --lang=javascript --specVersion=${{ env.SPEC_VERSION }}
           npm run generate:javascript:transactional
-          node utils/actions/generateTypes.js --api=transactional
         env:
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
 
