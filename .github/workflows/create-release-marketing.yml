@@ -98,7 +98,6 @@ jobs:
           npm install
           node utils/actions/updateLangConfig.js --api=marketing --lang=javascript --specVersion=${{ env.SPEC_VERSION }}
           npm run generate:javascript:marketing
-          node utils/actions/generateTypes.js --api=marketing
         env:
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
 
