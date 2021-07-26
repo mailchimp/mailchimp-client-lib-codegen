@@ -1,7 +1,7 @@
 name: Test Marketing Client Libraries
 
 on:
-  workflow_on:
+  workflow_run:
     workflows: ["Validate and Generate Marketing Client Libraries"]
     types:
       - completed
