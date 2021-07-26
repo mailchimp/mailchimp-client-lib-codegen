@@ -1,0 +1,198 @@
+name: Test Marketing Client Libraries
+
+on:
+  workflow_on:
+    workflows: ["Validate and Generate Marketing Client Libraries"]
+    types:
+      - completed
+jobs:
+  setup-cache:
+    runs-on: ubuntu-latest
+    needs: [validate]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Initialize Cache
+        id: init-cache-mc
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+      - name: Install Codegen CLI
+        if: steps.init-cache-mc.outputs.cache-hit != 'true'
+        run: |
+          mkdir .cache
+          wget https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.7/swagger-codegen-cli-2.4.7.jar -O .cache/swagger-codegen-cli.jar
+          java -jar .cache/swagger-codegen-cli.jar help
+
+  test-node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@mailchimp'
+
+      - name: Prepare Build & Publishing Tools
+        run: npm install
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: mailchimp-marketing-node.zip
+          path: zip
+
+      - name: Unzip build artifact
+        run: |
+          mkdir -p swagger-out/marketing-javascript
+          unzip zip/mailchimp-marketing-node.zip -d swagger-out/marketing-javascript
+
+      - name: Install client
+        working-directory: swagger-out/marketing-javascript
+        run: npm install
+
+      - name: Run test suite
+        run: npm run test -- MarketingTest.test.js
+        env:
+          MARKETING_API_KEY: ${{ secrets.MARKETING_API_KEY }}
+          MARKETING_ACCESS_TOKEN: ${{ secrets.MARKETING_ACCESS_TOKEN }}
+          MARKETING_SERVER: ${{ secrets.MARKETING_SERVER }}
+
+  test-php:
+    runs-on: ubuntu-latest
+    needs: [generate-php]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Initialize Marketing Cache
+        id: init-cache-mc
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: mailchimp-marketing-php.zip
+          path: zip
+
+      - name: Unzip build artifact
+        run: |
+          mkdir -p swagger-out/marketing-php
+          unzip zip/mailchimp-marketing-php.zip -d swagger-out/marketing-php
+
+      - uses: php-actions/composer@v5
+        with:
+          php_version: 7.4
+          command: install -d swagger-out/marketing-php/MailchimpMarketing
+
+      - name: Install client dependencies
+        run: |
+          wget -O phpunit https://phar.phpunit.de/phpunit-9.phar
+          chmod +x phpunit
+          ./phpunit --version
+
+      - name: Run test suite
+        working-directory: tests/marketing-php
+        run: |
+          MARKETING_API_KEY=${{ secrets.MARKETING_API_KEY }} \
+          MARKETING_SERVER=${{ secrets.MARKETING_SERVER }} \
+          MARKETING_ACCESS_TOKEN=${{ secrets.MARKETING_ACCESS_TOKEN }} \
+          phpunit MarketingTest.php
+        env:
+          MARKETING_API_KEY: ${{ secrets.MARKETING_API_KEY }}
+          MARKETING_ACCESS_TOKEN: ${{ secrets.MARKETING_ACCESS_TOKEN }}
+          MARKETING_SERVER: ${{ secrets.MARKETING_SERVER }}
+
+  test-ruby:
+    runs-on: ubuntu-latest
+    needs: [generate-ruby]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Initialize Marketing Cache
+        id: init-cache-mc
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: mailchimp-marketing-ruby.zip
+          path: zip
+
+      - name: Unzip build artifact
+        run: |
+          mkdir -p swagger-out/marketing-ruby
+          unzip zip/mailchimp-marketing-ruby.zip -d swagger-out/marketing-ruby
+
+      - name: Set up Ruby 2.6
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.6'
+
+      - name: Install client dependencies
+        run: gem install rspec
+
+      - name: Install client
+        working-directory: swagger-out/marketing-ruby
+        run: |
+          gem build MailchimpMarketing.gemspec --output=MailchimpMarketing-test.gem
+          gem install ./MailchimpMarketing-test.gem
+
+      - name: Run test suite
+        run: |
+          cd tests/marketing-ruby
+          MARKETING_API_KEY=${{ secrets.MARKETING_API_KEY }} \
+          MARKETING_SERVER=${{ secrets.MARKETING_SERVER }} \
+          MARKETING_ACCESS_TOKEN=${{ secrets.MARKETING_ACCESS_TOKEN }} \
+          rspec MarketingTest_spec.rb
+        env:
+          MARKETING_API_KEY: ${{ secrets.MARKETING_API_KEY }}
+          MARKETING_ACCESS_TOKEN: ${{ secrets.MARKETING_ACCESS_TOKEN }}
+          MARKETING_SERVER: ${{ secrets.MARKETING_SERVER }}
+
+  test-python:
+    runs-on: ubuntu-latest
+    needs: [generate-python]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Initialize Marketing Cache
+        id: init-cache-mc
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - name: Install Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: mailchimp-marketing-python.zip
+          path: zip
+
+      - name: Unzip build artifact
+        run: |
+          mkdir -p swagger-out/marketing-python
+          unzip zip/mailchimp-marketing-python.zip -d swagger-out/marketing-python
+
+      - name: Install client dependencies
+        run: pip install -U python-dotenv
+
+      - name: Install client
+        working-directory: swagger-out/marketing-python
+        run: python3 setup.py install --user
+
+      - name: Run test suite
+        run: |
+          cd tests/marketing-python
+          MARKETING_API_KEY=${{ secrets.MARKETING_API_KEY }} \
+          MARKETING_SERVER=${{ secrets.MARKETING_SERVER }} \
+          MARKETING_ACCESS_TOKEN=${{ secrets.MARKETING_ACCESS_TOKEN }} \
+          python3 MarketingTest.py
+        env:
+          MARKETING_API_KEY: ${{ secrets.MARKETING_API_KEY }}
+          MARKETING_ACCESS_TOKEN: ${{ secrets.MARKETING_ACCESS_TOKEN }}
+          MARKETING_SERVER: ${{ secrets.MARKETING_SERVER }}
