@@ -1,11 +1,6 @@
 name: 📦 Create Marketing Release
 
 on:
-  pull_request:
-    paths:
-      - 'spec/marketing.json'
-      - 'swagger-config/marketing/**.*'
-      - '.github/workflows/create-release-marketing.yml'
   push:
     paths:
       - 'spec/marketing.json'

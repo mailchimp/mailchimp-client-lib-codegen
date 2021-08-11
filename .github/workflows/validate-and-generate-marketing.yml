@@ -1,0 +1,238 @@
+name: Validate and Generate Marketing Client Libraries
+
+on:
+  pull_request:
+    types: [ labeled ]
+
+jobs:
+  validate:
+    if: ${{ github.event.label.name == 'test-marketing' }}
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.set-version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: NPM Install
+        run: npm install
+      - name: Validate Marketing Spec
+        run: npx @apidevtools/swagger-cli validate spec/marketing.json
+      - name: Set Version
+        id: set-version
+        run: node utils/actions/setVersionVar.js --api=marketing
+
+  setup-cache:
+    if: ${{ github.event.label.name == 'test-marketing' }}
+    runs-on: ubuntu-latest
+    needs: [validate]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Initialize Cache
+        id: init-cache-mc
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+      - name: Install Codegen CLI
+        if: steps.init-cache-mc.outputs.cache-hit != 'true'
+        run: |
+          mkdir .cache
+          wget https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.7/swagger-codegen-cli-2.4.7.jar -O .cache/swagger-codegen-cli.jar
+          java -jar .cache/swagger-codegen-cli.jar help
+
+  generate-node:
+    if: ${{ github.event.label.name == 'test-marketing' }}
+    runs-on: ubuntu-latest
+    needs: [validate, setup-cache]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Initialize Marketing Cache
+        id: init-cache-mc
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@mailchimp'
+
+      - name: Generate → marketing-javascript
+        run: |
+          npm install
+          node utils/actions/updateLangConfig.js --api=marketing --lang=javascript --specVersion=${{ env.SPEC_VERSION }}
+          npm run generate:javascript:marketing
+        env:
+          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+
+      - name: Rename marketing-javascript → marketing-node
+        working-directory: swagger-out
+        run: |
+          mv marketing-javascript marketing-node
+
+      - name: Zip build artifact → marketing-node
+        working-directory: swagger-out/marketing-node
+        run: zip -r mailchimp-marketing-node.zip .
+
+      - name: Upload build artifact → marketing-node
+        uses: actions/upload-artifact@v1
+        with:
+          name: mailchimp-marketing-node.zip
+          path: swagger-out/marketing-node/mailchimp-marketing-node.zip
+
+  generate-php:
+    if: ${{ github.event.label.name == 'test-marketing' }}
+    runs-on: ubuntu-latest
+    needs: [validate, setup-cache]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Initialize Marketing Cache
+        id: init-cache-mc
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Generate → marketing-php
+        run: |
+          npm install
+          node utils/actions/updateLangConfig.js --api=marketing --lang=php --specVersion=${{ env.SPEC_VERSION }}
+          npm run generate:php:marketing
+        env:
+          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+
+      - name: Zip build artifact → marketing-php
+        working-directory: swagger-out/marketing-php
+        run: zip -r mailchimp-marketing-php.zip .
+
+      - name: Upload build artifact → marketing-php
+        uses: actions/upload-artifact@v1
+        with:
+          name: mailchimp-marketing-php.zip
+          path: swagger-out/marketing-php/mailchimp-marketing-php.zip
+
+  generate-ruby:
+    if: ${{ github.event.label.name == 'test-marketing' }}
+    runs-on: ubuntu-latest
+    needs: [validate, setup-cache]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Initialize Marketing Cache
+        id: init-cache-mc
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Generate → marketing-ruby
+        run: |
+          npm install
+          node utils/actions/updateLangConfig.js --api=marketing --lang=ruby --specVersion=${{ env.SPEC_VERSION }}
+          npm run generate:ruby:marketing
+        env:
+          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+
+      - name: Zip build artifact → marketing-ruby
+        working-directory: swagger-out/marketing-ruby
+        run: zip -r mailchimp-marketing-ruby.zip .
+
+      - name: Upload build artifact → marketing-ruby
+        uses: actions/upload-artifact@v1
+        with:
+          name: mailchimp-marketing-ruby.zip
+          path: swagger-out/marketing-ruby/mailchimp-marketing-ruby.zip
+
+  generate-python:
+    if: ${{ github.event.label.name == 'test-marketing' }}
+    runs-on: ubuntu-latest
+    needs: [validate, setup-cache]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Initialize Marketing Cache
+        id: init-cache-mc
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Generate → marketing-python
+        run: |
+          npm install
+          node utils/actions/updateLangConfig.js --api=marketing --lang=python --specVersion=${{ env.SPEC_VERSION }}
+          npm run generate:python:marketing
+        env:
+          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+
+      - name: Zip build artifact → marketing-python
+        working-directory: swagger-out/marketing-python
+        run: zip -r mailchimp-marketing-python.zip .
+
+      - name: Upload build artifact → marketing-python
+        uses: actions/upload-artifact@v1
+        with:
+          name: mailchimp-marketing-python.zip
+          path: swagger-out/marketing-python/mailchimp-marketing-python.zip
