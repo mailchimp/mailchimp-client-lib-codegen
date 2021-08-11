@@ -44,7 +44,6 @@ use {{invokerPackage}}\ObjectSerializer;
                 'timeout' => 120.0
             ]
         ]);
-	die();
         $this->headerSelector = new HeaderSelector();
         $this->config = $config ?: new Configuration();
     }
@@ -92,7 +91,6 @@ use {{invokerPackage}}\ObjectSerializer;
             $content = $responseBody->getContents();
             $content = json_decode($content);
 
-            return $content;
 
         } catch (ApiException $e) {
             throw $e->getResponseBody();
