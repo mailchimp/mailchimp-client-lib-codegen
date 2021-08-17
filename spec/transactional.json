@@ -4925,6 +4925,10 @@
                   "valid_signing": {
                     "type": "boolean",
                     "description": "whether this domain can be used to authenticate mail, either for itself or as a custom signing domain. If this is false but spf and dkim are both valid, you will need to verify the domain before using it to authenticate mail"
+                  },
+                  "verify_txt_key": {
+                    "type": "string",
+                    "description": "a unique key used to verify a domain by adding a TXT record. Append this key to 'mandrill_verify.' and add it to your domain's TXT records to verify."
                   }
                 }
               }
@@ -5033,6 +5037,10 @@
                 "valid_signing": {
                   "type": "boolean",
                   "description": "whether this domain can be used to authenticate mail, either for itself or as a custom signing domain. If this is false but spf and dkim are both valid, you will need to verify the domain before using it to authenticate mail"
+                },
+                "verify_txt_key": {
+                  "type": "string",
+                  "description": "a unique key used to verify a domain by adding a TXT record. Append this key to 'mandrill_verify.' and add it to your domain's TXT records to verify."
                 }
               }
             }
@@ -5140,6 +5148,10 @@
                 "valid_signing": {
                   "type": "boolean",
                   "description": "whether this domain can be used to authenticate mail, either for itself or as a custom signing domain. If this is false but spf and dkim are both valid, you will need to verify the domain before using it to authenticate mail"
+                },
+                "verify_txt_key": {
+                  "type": "string",
+                  "description": "a unique key used to verify a domain by adding a TXT record. Append this key to 'mandrill_verify.' and add it to your domain's TXT records to verify."
                 }
               }
             }
