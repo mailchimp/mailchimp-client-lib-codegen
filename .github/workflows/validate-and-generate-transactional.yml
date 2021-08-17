@@ -1,0 +1,238 @@
+name: Validate and Generate Transactional Client Libraries
+
+on:
+  pull_request:
+    types: [ labeled ]
+
+jobs:
+  validate:
+    if: ${{ github.event.label.name == 'test-transactional' }}
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.set-version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: NPM Install
+        run: npm install
+      - name: Validate Transactional Spec
+        run: npx @apidevtools/swagger-cli validate spec/transactional.json
+      - name: Set Version
+        id: set-version
+        run: node utils/actions/setVersionVar.js --api=transactional
+
+  setup-cache:
+    if: ${{ github.event.label.name == 'test-transactional' }}
+    runs-on: ubuntu-latest
+    needs: [validate]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Initialize Cache
+        id: init-cache-md
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+      - name: Install Codegen CLI
+        if: steps.init-cache-md.outputs.cache-hit != 'true'
+        run: |
+          mkdir .cache
+          wget https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.7/swagger-codegen-cli-2.4.7.jar -O .cache/swagger-codegen-cli.jar
+          java -jar .cache/swagger-codegen-cli.jar help
+
+  generate-node:
+    if: ${{ github.event.label.name == 'test-transactional' }}
+    runs-on: ubuntu-latest
+    needs: [validate, setup-cache]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Initialize Transactional Cache
+        id: init-cache-md
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@mailchimp'
+
+      - name: Generate → transactional-javascript
+        run: |
+          npm install
+          node utils/actions/updateLangConfig.js --api=transactional --lang=javascript --specVersion=${{ env.SPEC_VERSION }}
+          npm run generate:javascript:transactional
+        env:
+          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+
+      - name: Rename transactional-javascript → transactional-node
+        working-directory: swagger-out
+        run: |
+          mv transactional-javascript transactional-node
+
+      - name: Zip build artifact → transactional-node
+        working-directory: swagger-out/transactional-node
+        run: zip -r mailchimp-transactional-node.zip .
+
+      - name: Upload build artifact → transactional-node
+        uses: actions/upload-artifact@v1
+        with:
+          name: mailchimp-transactional-node.zip
+          path: swagger-out/transactional-node/mailchimp-transactional-node.zip
+
+  generate-php:
+    if: ${{ github.event.label.name == 'test-transactional' }}
+    runs-on: ubuntu-latest
+    needs: [validate, setup-cache]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Initialize Transactional Cache
+        id: init-cache-md
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Generate → transactional-php
+        run: |
+          npm install
+          node utils/actions/updateLangConfig.js --api=transactional --lang=php --specVersion=${{ env.SPEC_VERSION }}
+          npm run generate:php:transactional
+        env:
+          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+
+      - name: Zip build artifact → transactional-php
+        working-directory: swagger-out/transactional-php
+        run: zip -r mailchimp-transactional-php.zip .
+
+      - name: Upload build artifact → transactional-php
+        uses: actions/upload-artifact@v1
+        with:
+          name: mailchimp-transactional-php.zip
+          path: swagger-out/transactional-php/mailchimp-transactional-php.zip
+
+  generate-ruby:
+    if: ${{ github.event.label.name == 'test-transactional' }}
+    runs-on: ubuntu-latest
+    needs: [validate, setup-cache]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Initialize Transactional Cache
+        id: init-cache-md
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Generate → transactional-ruby
+        run: |
+          npm install
+          node utils/actions/updateLangConfig.js --api=transactional --lang=ruby --specVersion=${{ env.SPEC_VERSION }}
+          npm run generate:ruby:transactional
+        env:
+          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+
+      - name: Zip build artifact → transactional-ruby
+        working-directory: swagger-out/transactional-ruby
+        run: zip -r mailchimp-transactional-ruby.zip .
+
+      - name: Upload build artifact → transactional-ruby
+        uses: actions/upload-artifact@v1
+        with:
+          name: mailchimp-transactional-ruby.zip
+          path: swagger-out/transactional-ruby/mailchimp-transactional-ruby.zip
+
+  generate-python:
+    if: ${{ github.event.label.name == 'test-transactional' }}
+    runs-on: ubuntu-latest
+    needs: [validate, setup-cache]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Initialize Transactional Cache
+        id: init-cache-md
+        uses: actions/cache@v1
+        with:
+          path: .cache
+          key: cache-dir
+
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Generate → transactional-python
+        run: |
+          npm install
+          node utils/actions/updateLangConfig.js --api=transactional --lang=python --specVersion=${{ env.SPEC_VERSION }}
+          npm run generate:python:transactional
+        env:
+          SPEC_VERSION: ${{ needs.validate.outputs.version }}
+
+      - name: Zip build artifact → transactional-python
+        working-directory: swagger-out/transactional-python
+        run: zip -r mailchimp-transactional-python.zip .
+
+      - name: Upload build artifact → transactional-python
+        uses: actions/upload-artifact@v1
+        with:
+          name: mailchimp-transactional-python.zip
+          path: swagger-out/transactional-python/mailchimp-transactional-python.zip
