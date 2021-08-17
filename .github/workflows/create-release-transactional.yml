@@ -1,11 +1,6 @@
 name: 📦 Create Transactional Release
 
 on:
-  pull_request:
-    paths:
-      - 'spec/transactional.json'
-      - 'swagger-config/transactional/**.*'
-      - '.github/workflows/create-release-transactional.yml'
   push:
     paths:
       - 'spec/transactional.json'
