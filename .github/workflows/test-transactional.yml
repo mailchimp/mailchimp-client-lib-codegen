@@ -179,3 +179,11 @@ jobs:
           python3 TransactionalTest.py
         env:
           TRANSACTIONAL_API_KEY: ${{ secrets.TRANSACTIONAL_API_KEY }}
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: POST Staging Build Hook
+        run: curl -X POST -d {} ${{ env.NETLIFY_STAGING_BUILD_HOOK }}
+        env:
+          NETLIFY_STAGING_BUILD_HOOK: ${{ secrets.NETLIFY_STAGING_BUILD_HOOK }}
