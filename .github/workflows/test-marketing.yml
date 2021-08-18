@@ -191,3 +191,11 @@ jobs:
           MARKETING_API_KEY: ${{ secrets.MARKETING_API_KEY }}
           MARKETING_ACCESS_TOKEN: ${{ secrets.MARKETING_ACCESS_TOKEN }}
           MARKETING_SERVER: ${{ secrets.MARKETING_SERVER }}
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: POST Staging Build Hook
+        run: curl -X POST -d {} ${{ env.NETLIFY_STAGING_BUILD_HOOK }}
+        env:
+          NETLIFY_STAGING_BUILD_HOOK: ${{ secrets.NETLIFY_STAGING_BUILD_HOOK }}
