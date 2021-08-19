@@ -75,7 +75,7 @@
       },
       "rejects": {
         "title": "Rejects",
-        "description": "Add, list, or delete from your Rejection Blocklist.",
+        "description": "Add, list, or delete from your Rejection Denylist.",
         "paths": ["/rejects/add", "/rejects/list", "/rejects/delete"]
       },
       "senders": {
@@ -240,7 +240,7 @@
                 },
                 "type": {
                   "type": "string",
-                  "description": "the type of the export job - activity, reject, or whitelist"
+                  "description": "the type of the export job - activity, reject, or allowlist"
                 },
                 "finished_at": {
                   "type": "string",
@@ -311,7 +311,7 @@
                   },
                   "type": {
                     "type": "string",
-                    "description": "the type of the export job - activity, reject, or whitelist"
+                    "description": "the type of the export job - activity, reject, or allowlist"
                   },
                   "finished_at": {
                     "type": "string",
@@ -340,8 +340,8 @@
           "methodNameCamel": "rejects",
           "methodNameSnake": "rejects"
         },
-        "summary": "Export blacklist",
-        "description": "Begins an export of your rejection blacklist. The blacklist will be exported to a zip archive containing a single file named rejects.csv that includes the following fields: email, reason, detail, created_at, expires_at, last_event_at, expires_at.",
+        "summary": "Export denylist",
+        "description": "Begins an export of your rejection denylist. The denylist will be exported to a zip archive containing a single file named rejects.csv that includes the following fields: email, reason, detail, created_at, expires_at, last_event_at, expires_at.",
         "operationId": "postExportsRejects",
         "tags": ["exports"],
         "parameters": [
@@ -385,7 +385,7 @@
                 },
                 "type": {
                   "type": "string",
-                  "description": "the type of the export job - activity, reject, or whitelist"
+                  "description": "the type of the export job - activity, reject, or allowlist"
                 },
                 "finished_at": {
                   "type": "string",
@@ -413,8 +413,8 @@
           "methodNameCamel": "whitelist",
           "methodNameSnake": "whitelist"
         },
-        "summary": "Export whitelist",
-        "description": "Begins an export of your rejection whitelist. The whitelist will be exported to a zip archive containing a single file named whitelist.csv that includes the following fields: email, detail, created_at.",
+        "summary": "Export Allowlist",
+        "description": "Begins an export of your rejection allowlist. The allowlist will be exported to a zip archive containing a single file named whitelist.csv that includes the following fields: email, detail, created_at.",
         "operationId": "postExportsWhitelist",
         "tags": ["exports"],
         "parameters": [
@@ -445,7 +445,7 @@
             "description": "",
             "schema": {
               "type": "object",
-              "description": "information about the whitelist export job that was started",
+              "description": "information about the allowlist export job that was started",
               "properties": {
                 "id": {
                   "type": "string",
@@ -4455,8 +4455,8 @@
           "methodNameCamel": "add",
           "methodNameSnake": "add"
         },
-        "summary": "Add email to blacklist",
-        "description": "Adds an email to your email rejection blacklist. Addresses that you add manually will never expire and there is no reputation penalty for removing them from your blacklist. Attempting to blacklist an address that has been whitelisted will have no effect.",
+        "summary": "Add email to denylist",
+        "description": "Adds an email to your email rejection denylist. Addresses that you add manually will never expire and there is no reputation penalty for removing them from your denylist. Attempting to denylist an address that has been added to the allowlist will have no effect.",
         "operationId": "postRejectsAdd",
         "tags": ["rejects"],
         "parameters": [
@@ -4484,7 +4484,7 @@
                 },
                 "subaccount": {
                   "type": "string",
-                  "description": "an optional unique identifier for the subaccount to limit the blacklist entry",
+                  "description": "an optional unique identifier for the subaccount to limit the denylist entry",
                   "maxLength": 255
                 }
               }
@@ -4520,8 +4520,8 @@
           "methodNameCamel": "list",
           "methodNameSnake": "list"
         },
-        "summary": "List blacklisted emails",
-        "description": "Retrieves your email rejection blacklist. You can provide an email address to limit the results. Returns up to 1000 results. By default, entries that have expired are excluded from the results; set include_expired to true to include them.",
+        "summary": "List denylisted emails",
+        "description": "Retrieves your email rejection denylist. You can provide an email address to limit the results. Returns up to 1000 results. By default, entries that have expired are excluded from the results; set include_expired to true to include them.",
         "operationId": "postRejectsList",
         "tags": ["rejects"],
         "parameters": [
@@ -4549,7 +4549,7 @@
                 },
                 "subaccount": {
                   "type": "string",
-                  "description": "an optional unique identifier for the subaccount to limit the blacklist",
+                  "description": "an optional unique identifier for the subaccount to limit the denylist",
                   "maxLength": 255
                 }
               }
@@ -4564,7 +4564,7 @@
               "description": "Up to 1000 rejection entries",
               "items": {
                 "type": "object",
-                "description": "the information for each rejection blacklist entry",
+                "description": "the information for each rejection  entry",
                 "properties": {
                   "email": {
                     "type": "string",
@@ -4582,7 +4582,7 @@
                   "created_at": {
                     "type": "string",
                     "format": "date-time",
-                    "description": "when the email was added to the blacklist"
+                    "description": "when the email was added to the denylist"
                   },
                   "last_event_at": {
                     "type": "string",
@@ -4592,15 +4592,15 @@
                   "expires_at": {
                     "type": "string",
                     "format": "date-time",
-                    "description": "when the blacklist entry will expire (this may be in the past)"
+                    "description": "when the denylist entry will expire (this may be in the past)"
                   },
                   "expired": {
                     "type": "boolean",
-                    "description": "whether the blacklist entry has expired"
+                    "description": "whether the denylist entry has expired"
                   },
                   "sender": {
                     "type": "object",
-                    "description": "the sender that this blacklist entry applies to, or null if none.",
+                    "description": "the sender that this denylist entry applies to, or null if none.",
                     "properties": {
                       "address": {
                         "type": "string",
@@ -4656,7 +4656,7 @@
                   },
                   "subaccount": {
                     "type": "string",
-                    "description": "the subaccount that this blacklist entry applies to, or null if none."
+                    "description": "the subaccount that this denylist entry applies to, or null if none."
                   }
                 }
               }
@@ -4672,8 +4672,8 @@
           "methodNameCamel": "delete",
           "methodNameSnake": "delete"
         },
-        "summary": "Delete email from blacklist",
-        "description": "Deletes an email rejection. There is no limit to how many rejections you can remove from your blacklist, but keep in mind that each deletion has an affect on your reputation.",
+        "summary": "Delete email from denylist",
+        "description": "Deletes an email rejection. There is no limit to how many rejections you can remove from your denylist, but keep in mind that each deletion has an affect on your reputation.",
         "operationId": "postRejectsDelete",
         "tags": ["rejects"],
         "parameters": [
@@ -4697,7 +4697,7 @@
                 },
                 "subaccount": {
                   "type": "string",
-                  "description": "an optional unique identifier for the subaccount to limit the blacklist deletion",
+                  "description": "an optional unique identifier for the subaccount to limit the denylist deletion",
                   "maxLength": 255
                 }
               }
@@ -4714,7 +4714,7 @@
                 "email": {
                   "type": "string",
                   "format": "email",
-                  "description": "the email address that was removed from the blacklist"
+                  "description": "the email address that was removed from the denylist"
                 },
                 "deleted": {
                   "type": "boolean",
@@ -4722,7 +4722,7 @@
                 },
                 "subaccount": {
                   "type": "string",
-                  "description": "the subaccount blacklist that the address was removed from, if any"
+                  "description": "the subaccount denylist that the address was removed from, if any"
                 }
               }
             }
@@ -9589,8 +9589,8 @@
           "methodNameCamel": "add",
           "methodNameSnake": "add"
         },
-        "summary": "Add email to whitelist",
-        "description": "Adds an email to your email rejection whitelist. If the address is currently on your blacklist, that blacklist entry will be removed automatically.",
+        "summary": "Add email to allowlist",
+        "description": "Adds an email to your email rejection allowlist. If the address is currently on your denylist, that denylist entry will be removed automatically.",
         "operationId": "postWhitelistsAdd",
         "tags": ["whitelists"],
         "parameters": [
@@ -9609,12 +9609,12 @@
                 },
                 "email": {
                   "type": "string",
-                  "description": "an email address to add to the whitelist",
+                  "description": "an email address to add to the allowlist",
                   "format": "email"
                 },
                 "comment": {
                   "type": "string",
-                  "description": "an optional description of why the email was whitelisted",
+                  "description": "an optional description of why the email was added to the allowlist",
                   "maxLength": 255
                 }
               }
@@ -9649,8 +9649,8 @@
           "methodNameCamel": "list",
           "methodNameSnake": "list"
         },
-        "summary": "List whitelisted emails",
-        "description": "Retrieves your email rejection whitelist. You can provide an email address or search prefix to limit the results. Returns up to 1000 results.",
+        "summary": "List allowlisted emails",
+        "description": "Retrieves your email rejection allowlist. You can provide an email address or search prefix to limit the results. Returns up to 1000 results.",
         "operationId": "postWhitelistsList",
         "tags": ["whitelists"],
         "parameters": [
@@ -9681,24 +9681,24 @@
             "description": "",
             "schema": {
               "type": "array",
-              "description": "up to 1000 whitelist entries",
+              "description": "up to 1000 allowlist entries",
               "items": {
                 "type": "object",
-                "description": "the information for each whitelist entry",
+                "description": "the information for each allowlist entry",
                 "properties": {
                   "email": {
                     "type": "string",
                     "format": "email",
-                    "description": "the email that is whitelisted"
+                    "description": "the email that is allowlisted"
                   },
                   "detail": {
                     "type": "string",
-                    "description": "a description of why the email was whitelisted"
+                    "description": "a description of why the email was allowlisted"
                   },
                   "created_at": {
                     "type": "string",
                     "format": "date-time",
-                    "description": "when the email was added to the whitelist"
+                    "description": "when the email was added to the allowlist"
                   }
                 }
               }
@@ -9714,8 +9714,8 @@
           "methodNameCamel": "delete",
           "methodNameSnake": "delete"
         },
-        "summary": "Remove email from whitelist",
-        "description": "Removes an email address from the whitelist.",
+        "summary": "Remove email from allowlist",
+        "description": "Removes an email address from the allowlist.",
         "operationId": "postWhitelistsDelete",
         "tags": ["whitelists"],
         "parameters": [
@@ -9734,7 +9734,7 @@
                 },
                 "email": {
                   "type": "string",
-                  "description": "the email address to remove from the whitelist",
+                  "description": "the email address to remove from the allowlist",
                   "format": "email"
                 }
               }
@@ -9750,7 +9750,7 @@
               "properties": {
                 "email": {
                   "type": "string",
-                  "description": "the email address that was removed from the blacklist"
+                  "description": "the email address that was removed from the denylist"
                 },
                 "deleted": {
                   "type": "boolean",
