@@ -1,5 +1,6 @@
 blank_issues_enabled: true
 contact_links:
+  - name: Marketing SDK Issue Report
   - name: Mailchimp Support
     url: https://mailchimp.com/help/mailchimp-support-options/#How_to_contact_technical_support
     about: Mailchimp Support can help with API issues related to your account
