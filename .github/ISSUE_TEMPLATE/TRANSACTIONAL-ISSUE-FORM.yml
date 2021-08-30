@@ -7,12 +7,13 @@ body:
       value: |
         Thanks for using the Mailchimp Transactional API!
         
-        Before you begin, here's some notes on the best way to get help:
-        If your issue is with the behavior of the API, and not the SDK itself, we recommend reaching out to [Mailchimp Support](https://mailchimp.com/help/mailchimp-support-options/). They're best equipped to troubleshoot API issues in your account.
+        If your issue is with the behavior of the API, and not the SDK itself, we recommend reaching out to Mailchimp Support. Email support is available Monday through Friday between 9am and 5pm EST. When you’re logged in, click on the Support link at the bottom of any page to submit your request.
         
         We recommend using this issue form for:
         - Reporting bugs in the SDKs
         - Proposing changes to the Swagger spec
+        
+        By submitting you agree to the [Code of Conduct](https://github.com/mailchimp/mailchimp-client-lib-codegen/blob/main/code-of-conduct.md).
 
   - type: textarea
     id: what-issue

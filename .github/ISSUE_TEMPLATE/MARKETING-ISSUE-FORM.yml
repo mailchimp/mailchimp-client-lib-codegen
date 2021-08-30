@@ -13,6 +13,8 @@ body:
         We recommend using this issue form for:
         - Reporting bugs in the SDKs
         - Proposing changes to the Swagger spec
+        
+        By submitting you agree to the [Code of Conduct](https://github.com/mailchimp/mailchimp-client-lib-codegen/blob/main/code-of-conduct.md).
 
   - type: textarea
     id: what-issue
