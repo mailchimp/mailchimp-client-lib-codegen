@@ -1,0 +1,38 @@
+name: Marketing SDK Issue Report
+description: File an issue with one of the Marketing SDKs
+labels: [marketing]
+assignees:
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for using the Mailchimp Marketing API!
+        
+        Before you begin, here's some notes on the best way to get help:
+        If your issue is with the behavior of the API, and not the SDK itself, we recommend reaching out to [Mailchimp support](https://mailchimp.com/help/mailchimp-support-options/). They're best equipped to troubleshoot API issues in your account.
+        
+        We do recommend using this issue form for:
+        - Reporting bugs in the SDKs
+        - Proposing changes to the Swagger spec
+
+  - type: textarea
+    id: what-issue
+    attributes:
+      label: What issue did you have?
+      description: Also tell us, what did you expect to happen?
+      placeholder:
+      value:
+    validations:
+      required: true
+  - type: dropdown
+    id: language
+    attributes:
+      label: Language
+      description: Which client are you using?
+      options:
+        - PHP
+        - Node
+        - Python
+        - Ruby
+    validations:
+      required: false
