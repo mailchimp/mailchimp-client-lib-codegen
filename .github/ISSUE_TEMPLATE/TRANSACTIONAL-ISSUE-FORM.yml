@@ -1,7 +1,6 @@
 name: Transactional SDK Issue Report
 description: File an issue with one of the Transactional SDKs
 labels: [transactional]
-assignees:
 body:
   - type: markdown
     attributes:
