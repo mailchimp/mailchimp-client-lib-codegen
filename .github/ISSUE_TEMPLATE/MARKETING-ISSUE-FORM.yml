@@ -8,9 +8,9 @@ body:
         Thanks for using the Mailchimp Marketing API!
         
         Before you begin, here's some notes on the best way to get help:
-        If your issue is with the behavior of the API, and not the SDK itself, we recommend reaching out to [Mailchimp support](https://mailchimp.com/help/mailchimp-support-options/). They're best equipped to troubleshoot API issues in your account.
+        If your issue is with the behavior of the API, and not the SDK itself, we recommend reaching out to [Mailchimp Support](https://mailchimp.com/help/mailchimp-support-options/). They're best equipped to troubleshoot API issues in your account.
         
-        We do recommend using this issue form for:
+        We recommend using this issue form for:
         - Reporting bugs in the SDKs
         - Proposing changes to the Swagger spec
 
