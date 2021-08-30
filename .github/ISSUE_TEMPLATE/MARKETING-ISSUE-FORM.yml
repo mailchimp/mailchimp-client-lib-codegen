@@ -1,7 +1,6 @@
 name: Marketing SDK Issue Report
 description: File an issue with one of the Marketing SDKs
 labels: [marketing]
-assignees:
 body:
   - type: markdown
     attributes:
