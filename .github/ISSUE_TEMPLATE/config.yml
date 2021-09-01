@@ -3,3 +3,6 @@ contact_links:
   - name: Mailchimp Support
     url: https://mailchimp.com/help/mailchimp-support-options/
     about: Mailchimp Support can help with API issues related to your account
+  - name: Discussions
+    url: https://github.com/mailchimp/mailchimp-client-lib-codegen/discussions
+    about: Use Discussions to make suggestions or get help from the community 
