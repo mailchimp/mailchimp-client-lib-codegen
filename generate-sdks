@@ -85,6 +85,10 @@ generate_for_language() {
 
     # add additional files to client root dir
     cp ./LICENSE "${output_root}"
+
+    rm -r "${output_root}/.github"
+    mkdir "${output_root}/.github"
+    cp ./sdk_pull_request_template.md "${output_root}/.github/PULL_REQUEST_TEMPLATE.md"
 }
 
 if [ -n "$target_language" ] && [ -n "$target_product" ]
