@@ -13,6 +13,7 @@ use GuzzleHttp\Client as RequestClient;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}{{#-first}}
+use {{invokerPackage}}\ApiException;
 use {{invokerPackage}}\Api\{{classname}};{{/-first}}{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
 
 class Configuration
@@ -109,7 +110,10 @@ class Configuration
 
             return $resp;
         } catch (RequestException $e) {
-            return $e->hasResponse() ? Psr7\str($e->getResponse()) : $e;
+            if ($e->hasResponse()) {
+                throw new ApiException( 'Request Failed', $e->getCode(), $e->getResponse()->getHeaders(), $e->getResponse()->getBody()->getContents() );
+            }
+            return $e;
         }
     }
 }
