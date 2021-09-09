@@ -13,7 +13,6 @@ use GuzzleHttp\Client as RequestClient;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}{{#-first}}
-use {{invokerPackage}}\ApiException;
 use {{invokerPackage}}\Api\{{classname}};{{/-first}}{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
 
 class Configuration
