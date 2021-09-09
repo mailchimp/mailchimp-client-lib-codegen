@@ -63,6 +63,8 @@ generate_for_language() {
 
     output_root="${output_dir}"
 
+    cp ./CHANGELOG.md "${output_root}/CHANGELOG.md"
+
     if [ "${sdk_name}" == "marketing-php" ]; then
         output_root="${output_root}/MailchimpMarketing"
         rm -rf "${output_root}/lib/Model"
