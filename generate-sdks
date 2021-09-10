@@ -63,8 +63,6 @@ generate_for_language() {
 
     output_root="${output_dir}"
 
-    cp ./CHANGELOG.md "${output_root}/CHANGELOG.md"
-
     if [ "${sdk_name}" == "marketing-php" ]; then
         output_root="${output_root}/MailchimpMarketing"
         rm -rf "${output_root}/lib/Model"
@@ -87,6 +85,7 @@ generate_for_language() {
 
     # add additional files to client root dir
     cp ./LICENSE "${output_root}"
+    cp ./CHANGELOG.md "${output_root}/CHANGELOG.md"
 
     rm -f -r "${output_root}/.github"
     mkdir "${output_root}/.github"
