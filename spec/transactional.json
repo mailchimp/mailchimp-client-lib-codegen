@@ -1,6 +1,11 @@
 {
   "x-doc-structure": {
     "resources": {
+      "allowlists": {
+        "title": "Allowlists",
+        "description": "Add, list, or delete from your Rejection Allowlist.",
+        "paths": ["/allowlists/add", "/allowlists/list", "/allowlists/delete"]
+      },
       "exports": {
         "title": "Exports",
         "description": "Start an export, or get information on export jobs in progress.",
@@ -9,6 +14,7 @@
           "/exports/list",
           "/exports/rejects",
           "/exports/whitelist",
+          "/exports/allowlist",
           "/exports/activity"
         ]
       },
@@ -171,7 +177,7 @@
   },
   "swagger": "2.0",
   "info": {
-    "version": "1.0.39",
+    "version": "1.0.40",
     "title": "Mailchimp Transactional API",
     "contact": {
       "name": "API Support",
@@ -190,6 +196,186 @@
     "application/x-yaml; charset=utf-8"
   ],
   "paths": {
+    "/allowlists/add": {
+      "post": {
+        "x-custom-config": {
+          "methodNameCamel": "add",
+          "methodNameSnake": "add"
+        },
+        "summary": "Add email to allowlist",
+        "description": "Adds an email to your email rejection allowlist. If the address is currently on your denylist, that denylist entry will be removed automatically.",
+        "operationId": "postAllowlistsAdd",
+        "tags": ["allowlists"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["key", "email"],
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "description": "a valid api key"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "an email address to add to the allowlist",
+                  "format": "email"
+                },
+                "comment": {
+                  "type": "string",
+                  "description": "an optional description of why the email was added to the allowlist",
+                  "maxLength": 255
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "description": "a status object containing the address and the result of the operation",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "description": "the email address you provided"
+                },
+                "added": {
+                  "type": "boolean",
+                  "description": "whether the operation succeeded"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/allowlists/list": {
+      "post": {
+        "x-custom-config": {
+          "methodNameCamel": "list",
+          "methodNameSnake": "list"
+        },
+        "summary": "List allowlisted emails",
+        "description": "Retrieves your email rejection allowlist. You can provide an email address or search prefix to limit the results. Returns up to 1000 results.",
+        "operationId": "postAllowlistsList",
+        "tags": ["allowlists"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["key"],
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "description": "a valid api key"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "an optional email address or prefix to search by",
+                  "format": "email"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "description": "up to 1000 allowlist entries",
+              "items": {
+                "type": "object",
+                "description": "the information for each allowlist entry",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "the email that is allowlisted"
+                  },
+                  "detail": {
+                    "type": "string",
+                    "description": "a description of why the email was allowlisted"
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "when the email was added to the allowlist"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/allowlists/delete": {
+      "post": {
+        "x-custom-config": {
+          "methodNameCamel": "delete",
+          "methodNameSnake": "delete"
+        },
+        "summary": "Remove email from allowlist",
+        "description": "Removes an email address from the allowlist.",
+        "operationId": "postAllowlistsDelete",
+        "tags": ["allowlists"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["key", "email"],
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "description": "a valid api key"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "the email address to remove from the allowlist",
+                  "format": "email"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "description": "a status object containing the address and whether the deletion succeeded",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "description": "the email address that was removed from the denylist"
+                },
+                "deleted": {
+                  "type": "boolean",
+                  "description": "whether the address was deleted successfully"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
     "/exports/info": {
       "post": {
         "x-custom-config": {
@@ -385,7 +571,7 @@
                 },
                 "type": {
                   "type": "string",
-                  "description": "the type of the export job - activity, reject, or allowlist"
+                  "description": "the type of the export job - activity, reject, or whitelist"
                 },
                 "finished_at": {
                   "type": "string",
@@ -414,8 +600,81 @@
           "methodNameSnake": "whitelist"
         },
         "summary": "Export Allowlist",
-        "description": "Begins an export of your rejection allowlist. The allowlist will be exported to a zip archive containing a single file named whitelist.csv that includes the following fields: email, detail, created_at.",
+        "description": "Begins an export of your rejection allowlist. The allowlist will be exported to a zip archive containing a single file named allowlist.csv that includes the following fields: email, detail, created_at.",
         "operationId": "postExportsWhitelist",
+        "tags": ["exports"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["key"],
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "description": "a valid api key"
+                },
+                "notify_email": {
+                  "type": "string",
+                  "description": "an optional email address to notify when the export job has finished.",
+                  "format": "email"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "description": "information about the allowlist export job that was started",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "the unique identifier for this Export. Use this identifier when checking the export job's status"
+                },
+                "created_at": {
+                  "type": "string",
+                  "description": "the date and time that the export job was created as a UTC string in YYYY-MM-DD HH:MM:SS format",
+                  "format": "date-time"
+                },
+                "type": {
+                  "type": "string",
+                  "description": "the type of the export job"
+                },
+                "finished_at": {
+                  "type": "string",
+                  "description": "the date and time that the export job was finished as a UTC string in YYYY-MM-DD HH:MM:SS format, or null for jobs that have not run",
+                  "format": "date-time"
+                },
+                "state": {
+                  "type": "string",
+                  "description": "the export job's state"
+                },
+                "result_url": {
+                  "type": "string",
+                  "description": "the url for the export job's results, if the job is complete"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/exports/allowlist": {
+      "post": {
+        "x-custom-config": {
+          "methodNameCamel": "allowlist",
+          "methodNameSnake": "allowlist"
+        },
+        "summary": "Export Allowlist",
+        "description": "Begins an export of your rejection allowlist. The allowlist will be exported to a zip archive containing a single file named allowlist.csv that includes the following fields: email, detail, created_at.",
+        "operationId": "postExportsAllowlist",
         "tags": ["exports"],
         "parameters": [
           {
