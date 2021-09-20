@@ -170,7 +170,7 @@
       },
       "whitelists": {
         "title": "Whitelists",
-        "description": "Add, list, or delete from your Rejection Allowlist.",
+        "description": "Add, list, or delete from your Rejection Allowlist. These endpoints have been replaced with a series of functionally identical endpoints called /allowlists.",
         "paths": ["/whitelists/add", "/whitelists/list", "/whitelists/delete"]
       }
     }
