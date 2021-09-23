@@ -2,6 +2,9 @@
 
 ## Transactional
 
+### 1.0.40
+* Added the new /allowlists/ series of endpoints and the /exports/allowlist endpoint to the API reference
+
 ### 1.0.39
 * Fixes the output directory for the Changelog for the php client library
 
