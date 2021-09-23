@@ -5315,7 +5315,7 @@
           "methodNameSnake": "check_domain"
         },
         "summary": "Check domain settings",
-        "description": "Checks the SPF and DKIM settings for a domain. If you haven't already added this domain to your account, it will be added automatically.",
+        "description": "Checks the SPF and DKIM settings for a domain, as well the domain verification. If you haven't already added this domain to your account, it will be added automatically.",
         "operationId": "postSendersCheckDomain",
         "tags": ["senders"],
         "parameters": [
