@@ -104,6 +104,12 @@ describe MailchimpMarketing do
       expect(resp['name'] == list_name).to be true
     end
 
+    it "can fail to get a list" do
+      expect {
+        resp = @client.lists.get_list(0)
+      }.to raise_error()
+    end
+
     it "can update a single list" do
       resp = @client.lists.update_list(list_id, { name: list_name_new })
       expect(resp['name'] == list_name_new).to be true
