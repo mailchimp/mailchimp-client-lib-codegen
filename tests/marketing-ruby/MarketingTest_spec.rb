@@ -22,6 +22,12 @@ describe MailchimpMarketing do
       expect("Everything's Chimpy!").to eq(resp['health_status'])
     end
 
+    it "can throw an ApiError" do
+      expect {
+        fail ApiError.new(:status => 404, :response_body => "List not found")
+      }.to raise_error()
+    end
+
     it "can authenticate using Basic Auth via set_config" do
       client = MailchimpMarketing::Client.new
       client.set_config({
