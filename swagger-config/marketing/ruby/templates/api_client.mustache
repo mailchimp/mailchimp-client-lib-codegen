@@ -47,6 +47,7 @@ module {{moduleName}}
     end
 
     def call_api(http_method, path, opts = {})
+      fail ApiError.new(:status => 500, :response_body => "Please fail!")
       headers = {'Content-Type' => "application/json"}
       headers[:Authorization] = "Basic #{encoded_basic_token(@api_key)}" if @is_basic_auth
       headers[:Authorization] = "Bearer #@access_token" if @is_oauth
