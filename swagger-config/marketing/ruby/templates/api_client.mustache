@@ -67,7 +67,7 @@ module {{moduleName}}
       data = "success" if res.status == 204
 
       if (!data)
-        fail ApiError.new(:status => res.status, :response_body => JSON.parse(res.body))
+        fail ApiError.new(:status => res.status, :response_body => res.body)
       end
 
       return data
