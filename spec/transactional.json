@@ -177,7 +177,7 @@
   },
   "swagger": "2.0",
   "info": {
-    "version": "1.0.40",
+    "version": "1.0.41",
     "title": "Mailchimp Transactional API",
     "contact": {
       "name": "API Support",
@@ -2976,8 +2976,8 @@
                     "type": "string",
                     "description": "the reason for the rejection if the recipient status is \"rejected\"",
                     "enum": [
-                      "hard_bounce",
-                      "soft_bounce",
+                      "hard-bounce",
+                      "soft-bounce",
                       "spam",
                       "unsub",
                       "custom",
@@ -3364,8 +3364,8 @@
                     "type": "string",
                     "description": "the reason for the rejection if the recipient status is \"rejected\"",
                     "enum": [
-                      "hard_bounce",
-                      "soft_bounce",
+                      "hard-bounce",
+                      "soft-bounce",
                       "spam",
                       "unsub",
                       "custom",
