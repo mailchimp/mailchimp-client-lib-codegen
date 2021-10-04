@@ -66,8 +66,7 @@ exports.prototype.setDefaultOutputFormat = function (outputFormat) {
 };
 
 exports.prototype.setDefaultTimeoutMs = function (timeoutMs) {
-  var _this = this;
-  _this.axios.defaults.timeout = timeoutMs;
+  axios.defaults.timeout = timeoutMs;
 }
 
 // The default API client implementation.
