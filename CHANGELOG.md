@@ -22,6 +22,9 @@
 
 ## Marketing
 
+### 3.0.68
+* Added handling for a `'timeout'` field in `set_config()` in the Python Marketing SDK.
+
 ### 3.0.67
 * Added a `setTimeout()` method to the configuration class in the PHP Marketing SDK, to allow manually setting the timeout for Guzzle requests.
 
