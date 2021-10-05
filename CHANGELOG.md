@@ -2,6 +2,9 @@
 
 ## Transactional
 
+### 1.0.43
+* Added a `setTimeout` method to the Configuration class in the PHP SDK.
+
 ### 1.0.42
 * Added a `setDefaultTimeoutMs` method to the node client. This allows users to override the default timeout for API requests, which is set to 5 minutes by default.
 
