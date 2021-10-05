@@ -54,7 +54,7 @@ class Configuration
 
         $this->setHost($host);
 
-        if ($config['timeout']) {
+        if (isset($config['timeout'])) {
             $this->timeout = $config['timeout'];
         }
 
