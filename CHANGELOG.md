@@ -22,6 +22,9 @@
 
 ## Marketing
 
+### 3.0.67
+* Added a `setTimeout()` method to the configuration class in the PHP Marketing SDK, to allow manually setting the timeout for Guzzle requests.
+
 ### 3.0.65
 * Added a new API endpoint, `/3.0/account-exports`, allowing users to programatically export their account information
 

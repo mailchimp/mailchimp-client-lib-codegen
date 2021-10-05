@@ -307,6 +307,10 @@ use {{invokerPackage}}\ObjectSerializer;
             }
         }
 
+        if ($this->config->getTimeout()) {
+            $options[RequestOptions::TIMEOUT] = $this->config->getTimeout();
+        }
+
         return $options;
     }
 }
