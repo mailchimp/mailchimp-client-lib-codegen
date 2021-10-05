@@ -21,6 +21,7 @@ class Configuration
     protected $apiKey = '';
     protected $requestClient;
     protected $defaultOutputFormat = '';
+    protected $timeout = 300;
 
     public static $formatList = ['json', 'xml', 'php', 'yaml'];
 
@@ -28,7 +29,7 @@ class Configuration
     {
         $this->requestClient = new RequestClient([
             'defaults' => [
-                'timeout' => 300.0
+                'timeout' => $this->timeout
             ]
         ]);
 
@@ -68,15 +69,31 @@ class Configuration
         return $this->defaultOutputFormat;
     }
 
+    public function setTimeout($timeout) {
+        $this->timeout = $timeout;
+    }
+
+    public function getTimeout() {
+        return $this->timeout;
+    }
+
+    public function getRequestOptions() {
+        return [
+            'timeout' => $this->getTimeout()
+        ];
+    }
+
     //  HTTP POST request helper
     public function post($path, $body)
     {
         // Apply API key as body param
         $body['key'] = $this->getApiKey();
 
+        $options = $this->getRequestOptions();
+
         // prepare request params
         $postUrl = $this->getHost() . $path;
-        $postBody = [ 'form_params' => $body ];
+        $options['form_params'] = $body;
 
         // set output format
         $defaultOutputFormat = $this->getDefaultOutputFormat();
@@ -99,7 +116,7 @@ class Configuration
         // send request
         try {
             $client = $this->getRequestClient();
-            $response = $client->request('POST', $postUrl, $postBody);
+            $response = $client->request('POST', $postUrl, $options);
             $resp = $response->getBody();
             $contentType = $response->getHeaderLine('content-type');
 
