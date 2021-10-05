@@ -25,6 +25,7 @@ class Configuration
     protected $debug = false;
     protected $debugFile = 'php://output';
     protected $tempFolderPath;
+    protected $timeout = 120;
 
     public function __construct()
     {
@@ -52,6 +53,10 @@ class Configuration
         }
 
         $this->setHost($host);
+
+        if ($config['timeout']) {
+            $this->timeout = $config['timeout'];
+        }
 
         return $this;
     }
@@ -168,6 +173,16 @@ class Configuration
     public function getTempFolderPath()
     {
         return $this->tempFolderPath;
+    }
+
+    public function setTimeout($timeout)
+    {
+        $this->timeout = $timeout;
+    }
+
+    public function getTimeout()
+    {
+        return $this->timeout;
     }
 
     public static function getDefaultConfiguration()
