@@ -27,3 +27,6 @@ class Client(object):
 
   def set_default_output_format(self, output_format):
     self.api_client.set_default_output_format(output_format)
+
+  def set_timeout(self, timeout):
+    self.api_client.set_timeout(timeout)
