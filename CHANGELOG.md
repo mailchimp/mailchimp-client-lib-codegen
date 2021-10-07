@@ -2,6 +2,9 @@
 
 ## Transactional
 
+### 1.0.45
+* Added a `set_timeout` method to the Client class in the Ruby SDK
+
 ### 1.0.44
 * Added a `set_timeout` method to the Client class in the Python SDK
 

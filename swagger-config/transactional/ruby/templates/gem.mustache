@@ -35,6 +35,10 @@ module {{moduleName}}
       @api_client.set_default_output_format(output_format)
     end
 
+    def set_timeout(timeout)
+      @api_client.set_timeout(timeout)
+    end
+
     {{#apiInfo}}
     {{#apis}}
     def {{classVarName}}
