@@ -35,7 +35,7 @@ module {{moduleName}}
       @api_client.set_default_output_format(output_format)
     end
 
-    def set_timeout(timeout, read: nil, write: nil, connect: nil)
+    def set_timeout(timeout=nil, read: nil, write: nil, connect: nil)
       @api_client.set_timeout(timeout, read: read, write: write, connect: connect)
     end
 
