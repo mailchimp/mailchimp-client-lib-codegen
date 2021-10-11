@@ -45,7 +45,10 @@ module {{moduleName}}
         @server = get_server_from_api_key(@api_key)
       end
 
-      @timeout = config[:timeout] || 120
+      timeout = config[:timeout] || 120
+      @write_timeout = config[:write_timeout] || timeout
+      @read_timeout = config[:read_timeout] || timeout
+      @connect_timeout = config[:connect_timeout] || timeout
     end
 
     def call_api(http_method, path, opts = {})
@@ -54,7 +57,7 @@ module {{moduleName}}
       headers[:Authorization] = "Bearer #@access_token" if @is_oauth
 
       host = @server.length > 0 ? @host.sub('server', @server) : @host
-      conn = Excon.new(host + path, :headers => headers, :read_timeout => @timeout, :write_timeout => @timeout, :connect_timeout => @timeout)
+      conn = Excon.new(host + path, :headers => headers, :read_timeout => @read_timeout, :write_timeout => @write_timeout, :connect_timeout => @connect_timeout)
 
       res = nil
       case http_method.to_sym.downcase

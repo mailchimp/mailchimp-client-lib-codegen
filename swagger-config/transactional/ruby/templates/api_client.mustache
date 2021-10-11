@@ -12,7 +12,9 @@ module {{moduleName}}
       @format_list = ['json', 'xml', 'php', 'yaml']
       @default_output_format = 'json'
       @accepts = ['application/json', 'application/xml', 'application/x-php', 'application/x-yaml; charset=utf-8']
-      @timeout = 300
+      @read_timeout = 300
+      @write_timeout = 300
+      @connect_timeout = 300
       set_api_key(api_key)
     end
 
@@ -30,8 +32,11 @@ module {{moduleName}}
       end
     end
 
-    def set_timeout(timeout)
-      @timeout = timeout
+    def set_timeout(default_timeout=nil, read: nil, write: nil, connect: nil)
+      default_timeout = default_timeout || 300
+      @read_timeout = read || default_timeout
+      @write_timeout = write || default_timeout
+      @connect_timeout = connect || default_timeout
     end
 
     def call_api(http_method, path, body = {})
@@ -60,7 +65,7 @@ module {{moduleName}}
       body[:key] = @api_key
 
       # send request
-      conn = Excon.new(url, :headers => {'Content-Type' => 'application/json'}, :read_timeout => @timeout, :write_timeout => @timeout, :connect_timeout => @timeout)
+      conn = Excon.new(url, :headers => {'Content-Type' => 'application/json'}, :read_timeout => @read_timeout, :write_timeout => @write_timeout, :connect_timeout => @connect_timeout)
       res = conn.post(:body => body.to_json)
 
       # handle response
