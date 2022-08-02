@@ -611,7 +611,7 @@ jobs:
 
       - name: Publish → PyPI → transactional-python (test)
         if: env.PUBLISH_EXTERNAL == 'true'
-        uses: pypa/gh-action-pypi-publish@master
+        uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.PYPI_TOKEN_TEST }}
           repository_url: https://test.pypi.org/legacy/
@@ -619,7 +619,7 @@ jobs:
 
       - name: Publish → PyPI → marketing-python (dist)
         if: env.PUBLISH_EXTERNAL == 'true'
-        uses: pypa/gh-action-pypi-publish@master
+        uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.PYPI_TOKEN }}
           packages_dir: transactional-python/dist
