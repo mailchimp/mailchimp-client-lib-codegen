@@ -2,6 +2,9 @@
 
 ## Transactional
 
+### 1.0.48
+* Changed description of send_at (used to schedule messages with messages/send, messages/send-template, messages/send-raw and messages/reschedule APIs) to reflect that users can only provide a timestamp within a year from the date of scheduling.
+
 ### 1.0.46
 * Added a little more granularity to the `set_timeout` method to the Client class in the Ruby SDK; now supports `read`, `write` and `connect` parameters, which will default to the `timeout` param if unspecified, or 300 seconds if `timeout` is unspecified.
 

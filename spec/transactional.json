@@ -177,7 +177,7 @@
   },
   "swagger": "2.0",
   "info": {
-    "version": "1.0.47",
+    "version": "1.0.48",
     "title": "Mailchimp Transactional API",
     "contact": {
       "name": "API Support",
@@ -2939,7 +2939,7 @@
                 },
                 "send_at": {
                   "type": "string",
-                  "description": "when this message should be sent as a UTC timestamp in YYYY-MM-DD HH:MM:SS format. If you specify a time in the past, the message will be sent immediately.",
+                  "description": "when this message should be sent as a UTC timestamp in YYYY-MM-DD HH:MM:SS format. If you specify a time in the past, the message will be sent immediately; for future dates, you're limited to one year from the date of scheduling.",
                   "format": "date-time"
                 }
               }
@@ -3333,7 +3333,7 @@
                 },
                 "send_at": {
                   "type": "string",
-                  "description": "when this message should be sent as a UTC timestamp in YYYY-MM-DD HH:MM:SS format. If you specify a time in the past, the message will be sent immediately.",
+                  "description": "when this message should be sent as a UTC timestamp in YYYY-MM-DD HH:MM:SS format. If you specify a time in the past, the message will be sent immediately; for future dates, you're limited to one year from the date of scheduling.",
                   "format": "date-time"
                 }
               }
@@ -4197,7 +4197,7 @@
                 },
                 "send_at": {
                   "type": "string",
-                  "description": "when this message should be sent as a UTC timestamp in YYYY-MM-DD HH:MM:SS format. If you specify a time in the past, the message will be sent immediately.",
+                  "description": "when this message should be sent as a UTC timestamp in YYYY-MM-DD HH:MM:SS format. If you specify a time in the past, the message will be sent immediately; for future dates, you're limited to one year from the date of scheduling.",
                   "format": "date-time"
                 },
                 "return_path_domain": {
@@ -4408,7 +4408,7 @@
                 },
                 "send_at": {
                   "type": "string",
-                  "description": "the new UTC timestamp when the message should sent. Mandrill can't time travel, so if you specify a time in past the message will be sent immediately",
+                  "description": "the new UTC timestamp when the message should sent. Mandrill can't time travel, so if you specify a time in past the message will be sent immediately; for future dates, you're limited to one year from the date of scheduling.",
                   "format": "date-time"
                 }
               }
