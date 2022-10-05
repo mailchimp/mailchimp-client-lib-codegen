@@ -4197,7 +4197,7 @@
                 },
                 "send_at": {
                   "type": "string",
-                  "description": "when this message should be sent as a UTC timestamp in YYYY-MM-DD HH:MM:SS format. If you specify a time in the past, the message will be sent immediately; for future dates, you're limited to one year from the date of scheduling; for future dates, you're limited to one year from the date of scheduling.",
+                  "description": "when this message should be sent as a UTC timestamp in YYYY-MM-DD HH:MM:SS format. If you specify a time in the past, the message will be sent immediately; for future dates, you're limited to one year from the date of scheduling.",
                   "format": "date-time"
                 },
                 "return_path_domain": {
