@@ -42,8 +42,14 @@ var ApiClient = require('../ApiClient');
     var pathParams = {<#pathParams>
       '<baseName>': <#required><paramName></required><^required>opts['<paramName>']</required><#hasMore>,</hasMore></pathParams>
     };
+    
+    /*
+     The following block building queryParams is going to look a little odd, we're going look for values in $opts with both
+     camelCase and snake_case format (which will be the same if singular word). This is because the API docs use snake_case
+     but early versions of these SDKs used camelCase. So to be backward compatible we'll use both. 
+    */
     var queryParams = {<#queryParams>
-      '<baseName>': <#collectionFormat>this.apiClient.buildCollectionParam(<#required><paramName></required><^required>opts['<paramName>']</required>, '<collectionFormat>')</collectionFormat><^collectionFormat><#required><paramName></required><^required>opts['<paramName>']</required></collectionFormat><#hasMore>,</hasMore></queryParams>
+      '<baseName>': <#collectionFormat>this.apiClient.buildCollectionParam(<#required><paramName></required><^required>opts['<paramName>'] ? opts['<paramName>'] : opts['<baseName>']</required>, '<collectionFormat>')</collectionFormat><^collectionFormat><#required><paramName></required><^required>( opts['<paramName>'] ? opts['<paramName>'] : opts['<baseName>'])</required></collectionFormat><#hasMore>,</hasMore></queryParams>
     };
     var headerParams = {<#headerParams>
       '<baseName>': <#required><paramName></required><^required>opts['<paramName>']</required><#hasMore>,</hasMore></headerParams>
