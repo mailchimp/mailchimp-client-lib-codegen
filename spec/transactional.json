@@ -2992,6 +2992,8 @@
                     "type": "string",
                     "description": "the reason for the email being queued if the response status is \"queued\"",
                     "enum": [
+                      "attachments",
+                      "multiple-recipients",
                       "free-trial-sends-exhausted",
                       "hourly-quota-exhausted",
                       "monthly-limit-reached",
@@ -3393,6 +3395,8 @@
                     "type": "string",
                     "description": "the reason for the email being queued if the response status is \"queued\"",
                     "enum": [
+                      "attachments",
+                      "multiple-recipients",
                       "free-trial-sends-exhausted",
                       "hourly-quota-exhausted",
                       "monthly-limit-reached",
