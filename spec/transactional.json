@@ -177,7 +177,7 @@
   },
   "swagger": "2.0",
   "info": {
-    "version": "1.0.49",
+    "version": "1.0.50",
     "title": "Mailchimp Transactional API",
     "contact": {
       "name": "API Support",
@@ -2988,6 +2988,19 @@
                       "rule"
                     ]
                   },
+                  "queued_reason": {
+                    "type": "string",
+                    "description": "the reason for the email being queued if the response status is \"queued\"",
+                    "enum": [
+                      "free-trial-sends-exhausted",
+                      "hourly-quota-exhausted",
+                      "monthly-limit-reached",
+                      "sending-paused",
+                      "sending-suspended",
+                      "account-suspended",
+                      "sending-backlogged"
+                    ]
+                  },
                   "_id": {
                     "type": "string",
                     "description": "the message's unique id"
@@ -3374,6 +3387,19 @@
                       "test-mode-limit",
                       "unsigned",
                       "rule"
+                    ]
+                  },
+                  "queued_reason": {
+                    "type": "string",
+                    "description": "the reason for the email being queued if the response status is \"queued\"",
+                    "enum": [
+                      "free-trial-sends-exhausted",
+                      "hourly-quota-exhausted",
+                      "monthly-limit-reached",
+                      "sending-paused",
+                      "sending-suspended",
+                      "account-suspended",
+                      "sending-backlogged"
                     ]
                   },
                   "_id": {
