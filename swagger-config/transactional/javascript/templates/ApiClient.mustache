@@ -48,7 +48,10 @@ exports.prototype.post = function post(path, body = {}) {
   }
 
   return axios
-    .post(url, body)
+    .post(url, body, {
+      maxBodyLength: Infinity,
+      maxContentLength: Infinity
+    })
     .then(function (response) {
       return response.data;
     })
