@@ -34,7 +34,10 @@ use {{invokerPackage}}\ObjectSerializer;
  */
 {{#operations}}class {{classname}}
 {
-    protected $Configuration;
+    /**
+     * @var Configuration
+     */
+    protected $config;
 
     public function __construct(Configuration $config = null)
     {
