@@ -23,6 +23,9 @@ class Configuration
     protected $defaultOutputFormat = '';
     protected $timeout = 300;
 
+    {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}{{#-first}}protected ${{#tags}}{{{name}}}{{/tags}};
+    {{/-first}}{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
+
     public static $formatList = ['json', 'xml', 'php', 'yaml'];
 
     public function __construct()
