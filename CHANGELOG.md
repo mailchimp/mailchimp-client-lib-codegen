@@ -2,6 +2,9 @@
 
 ## Transactional
 
+### 1.0.51
+* Fixed `/messages/send-template` documentation where incorrectly referenced the template name usage.
+
 ### 1.0.50
 * Added a response parameter to /messages/send and /messages/send-template called 'queued_response' that details why an email was queued.
 
