@@ -10,6 +10,7 @@
 namespace {{invokerPackage}};
 {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}{{#-first}}
 use {{invokerPackage}}\Api\{{classname}};{{/-first}}{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
+use Psr\Http\Client\ClientInterface;
 
 class Configuration
 {
@@ -26,6 +27,7 @@ class Configuration
     protected $debugFile = 'php://output';
     protected $tempFolderPath;
     protected $timeout = 120;
+    protected ?ClientInterface $client = null;
 
     public function __construct()
     {
@@ -59,6 +61,16 @@ class Configuration
         }
 
         return $this;
+    }
+
+    public function setClient(ClientInterface $client): void
+    {
+        $this->client = $client;
+    }
+
+    public function getClient(): ?ClientInterface
+    {
+        return $this->client;
     }
 
     public function setApiKey($apiKeyIdentifier, $key)
