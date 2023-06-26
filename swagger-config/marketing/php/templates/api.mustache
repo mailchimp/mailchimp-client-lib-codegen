@@ -36,6 +36,7 @@ use {{invokerPackage}}\ObjectSerializer;
     protected $client;
     protected $config;
     protected $headerSelector;
+    protected ?Client $client;
 
     public function __construct(Configuration $config = null)
     {
