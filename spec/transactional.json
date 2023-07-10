@@ -191,7 +191,6 @@
   "consumes": ["application/json"],
   "produces": [
     "application/json",
-    "application/xml",
     "application/x-php",
     "application/x-yaml; charset=utf-8"
   ],
