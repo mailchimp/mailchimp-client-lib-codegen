@@ -177,7 +177,7 @@
   },
   "swagger": "2.0",
   "info": {
-    "version": "1.0.51",
+    "version": "1.0.52",
     "title": "Mailchimp Transactional API",
     "contact": {
       "name": "API Support",
@@ -7501,6 +7501,10 @@
                   "type": "string",
                   "format": "date-time",
                   "description": "the date and time the template was last modified as a UTC string in YYYY-MM-DD HH:MM:SS format"
+                },
+                "is_broken_template": {
+                  "type": "boolean",
+                  "description": "indicates if the template is malformed or corrupt"
                 }
               }
             }
@@ -7623,6 +7627,10 @@
                   "type": "string",
                   "format": "date-time",
                   "description": "the date and time the template was last modified as a UTC string in YYYY-MM-DD HH:MM:SS format"
+                },
+                "is_broken_template": {
+                  "type": "boolean",
+                  "description": "indicates if the template is malformed or corrupt"
                 }
               }
             }
@@ -7780,6 +7788,10 @@
                   "type": "string",
                   "format": "date-time",
                   "description": "the date and time the template was last modified as a UTC string in YYYY-MM-DD HH:MM:SS format"
+                },
+                "is_broken_template": {
+                  "type": "boolean",
+                  "description": "indicates if the template is malformed or corrupt"
                 }
               }
             }
@@ -7902,6 +7914,10 @@
                   "type": "string",
                   "format": "date-time",
                   "description": "the date and time the template was last modified as a UTC string in YYYY-MM-DD HH:MM:SS format"
+                },
+                "is_broken_template": {
+                  "type": "boolean",
+                  "description": "indicates if the template is malformed or corrupt"
                 }
               }
             }
@@ -8024,6 +8040,10 @@
                   "type": "string",
                   "format": "date-time",
                   "description": "the date and time the template was last modified as a UTC string in YYYY-MM-DD HH:MM:SS format"
+                },
+                "is_broken_template": {
+                  "type": "boolean",
+                  "description": "indicates if the template is malformed or corrupt"
                 }
               }
             }
@@ -8149,6 +8169,10 @@
                     "type": "string",
                     "format": "date-time",
                     "description": "the date and time the template was last modified as a UTC string in YYYY-MM-DD HH:MM:SS format"
+                  },
+                  "is_broken_template": {
+                    "type": "boolean",
+                    "description": "indicates if the template is malformed or corrupt"
                   }
                 }
               }
