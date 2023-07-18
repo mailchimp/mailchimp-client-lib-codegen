@@ -2,6 +2,9 @@
 
 ## Transactional
 
+### 1.0.52
+* Added the `is_broken_template` response to the /template endpoints that include it
+
 ### 1.0.51
 * Fixed `/messages/send-template` documentation where incorrectly referenced the template name usage.
 
