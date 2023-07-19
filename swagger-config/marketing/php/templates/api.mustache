@@ -36,14 +36,20 @@ use {{invokerPackage}}\ObjectSerializer;
     protected $client;
     protected $config;
     protected $headerSelector;
+    protected ?Client $client;
 
     public function __construct(Configuration $config = null)
     {
-        $this->client = new Client([
-            'defaults' => [
-                'timeout' => 120.0
-            ]
-        ]);
+        $this->client = $config->getClient();
+
+        if ($this->client === null) {
+            $this->client = new Client([
+                'defaults' => [
+                    'timeout' => 120.0,
+                ],
+            ]);
+        }
+
         $this->headerSelector = new HeaderSelector();
         $this->config = $config ?: new Configuration();
     }
