@@ -2,6 +2,9 @@
 
 ## Transactional
 
+### 1.0.53
+* Fixed broken ruby SDK test, updated PHP SDK to send form data via JSON
+
 ### 1.0.52
 * Added the `is_broken_template` response to the /template endpoints that include it
 

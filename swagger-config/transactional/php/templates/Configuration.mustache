@@ -93,7 +93,7 @@ class Configuration
 
         // prepare request params
         $postUrl = $this->getHost() . $path;
-        $options['form_params'] = $body;
+        $options['json'] = $body;
 
         // set output format
         $defaultOutputFormat = $this->getDefaultOutputFormat();
