@@ -2,6 +2,9 @@
 
 ## Transactional
 
+### 1.0.54
+* Fixing a problem with Github auth token that was preventing builds from being created.
+
 ### 1.0.53
 * Fixed broken ruby SDK test, updated PHP SDK to send form data via JSON
 
