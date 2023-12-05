@@ -19,7 +19,7 @@ jobs:
     outputs:
       version: ${{ steps.set-version.outputs.version }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Cache node_modules
         uses: actions/cache@v1
         env:
@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [validate]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Initialize Cache
         id: init-cache-md
         uses: actions/cache@v1
@@ -61,7 +61,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [validate, setup-cache]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Initialize Transactional Cache
         id: init-cache-md
@@ -116,7 +116,7 @@ jobs:
     needs: [validate, setup-cache]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Initialize Transactional Cache
         id: init-cache-md
         uses: actions/cache@v1
@@ -158,7 +158,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [validate, setup-cache]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Initialize Transactional Cache
         id: init-cache-md
@@ -201,7 +201,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [validate, setup-cache]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Initialize Transactional Cache
         id: init-cache-md
@@ -244,7 +244,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [generate-node]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
@@ -277,7 +277,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [generate-php]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Initialize Transactional Cache
         id: init-cache-mc
         uses: actions/cache@v1
@@ -318,7 +318,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [generate-ruby]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Initialize Transactional Cache
         id: init-cache-mc
         uses: actions/cache@v1
@@ -362,7 +362,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [generate-python]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Initialize Transactional Cache
         id: init-cache-mc
         uses: actions/cache@v1
@@ -419,7 +419,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [validate, create-release]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
@@ -446,8 +446,8 @@ jobs:
           git clone https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-node repo # clone repo to track history
           mv repo/.git . # move cloned git history to root
           rm -rf repo
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
           git add --force .
           git commit -m "Update mailchimp-transactional-node to v${{ env.SPEC_VERSION }}"
           git push origin master --force
@@ -467,7 +467,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [validate, create-release]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Initialize Transactional Cache
         id: init-cache-md
         uses: actions/cache@v1
@@ -492,8 +492,8 @@ jobs:
           git clone https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-php repo # clone repo to track history
           mv repo/.git . # move cloned git history to root
           rm -rf repo
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
           git add --force .
           git commit -m "Update mailchimp-transactional-php to v${{ env.SPEC_VERSION }}"
           git tag -a v${{ env.SPEC_VERSION }} -m "Update v${{ env.SPEC_VERSION }}"
@@ -506,7 +506,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [validate, create-release]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Initialize Transactional Cache
         id: init-cache-md
         uses: actions/cache@v1
@@ -515,7 +515,7 @@ jobs:
           key: cache-dir
 
       - name: Install Ruby 2.6.x
-        uses: actions/setup-ruby@v1
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.6.x
 
@@ -545,8 +545,8 @@ jobs:
           git clone https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-ruby repo # clone repo to track history
           mv repo/.git . # move cloned git history to root
           rm -rf repo
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
           git add --force .
           git commit -m "Update mailchimp-transactional-ruby to v${{ env.SPEC_VERSION }}"
           git push origin master --force
@@ -564,7 +564,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [validate, create-release]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Initialize Transactional Cache
         id: init-cache-md
         uses: actions/cache@v1
@@ -600,8 +600,8 @@ jobs:
           git clone https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-python repo # clone repo to track history
           mv repo/.git . # move cloned git history to root
           rm -rf repo
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
           git add --force .
           git commit -m "Update mailchimp-transactional-python to v${{ env.SPEC_VERSION }}"
           git push origin master --force

@@ -2,6 +2,9 @@
 
 ## Transactional
 
+### 1.0.55
+* Updating github actions bot user email
+
 ### 1.0.54
 * Fixing a problem with Github auth token that was preventing builds from being created.
 
