@@ -446,7 +446,7 @@ jobs:
           git clone https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-node repo # clone repo to track history
           mv repo/.git . # move cloned git history to root
           rm -rf repo
-          git config --local user.email "action@github.com"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "GitHub Action"
           git add --force .
           git commit -m "Update mailchimp-transactional-node to v${{ env.SPEC_VERSION }}"
@@ -492,7 +492,7 @@ jobs:
           git clone https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-php repo # clone repo to track history
           mv repo/.git . # move cloned git history to root
           rm -rf repo
-          git config --local user.email "action@github.com"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "GitHub Action"
           git add --force .
           git commit -m "Update mailchimp-transactional-php to v${{ env.SPEC_VERSION }}"
@@ -515,7 +515,7 @@ jobs:
           key: cache-dir
 
       - name: Install Ruby 2.6.x
-        uses: actions/setup-ruby@v1
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.6.x
 
@@ -545,7 +545,7 @@ jobs:
           git clone https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-ruby repo # clone repo to track history
           mv repo/.git . # move cloned git history to root
           rm -rf repo
-          git config --local user.email "action@github.com"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "GitHub Action"
           git add --force .
           git commit -m "Update mailchimp-transactional-ruby to v${{ env.SPEC_VERSION }}"
@@ -600,7 +600,7 @@ jobs:
           git clone https://github:"$GITHUB_TOKEN"@github.com/mailchimp/mailchimp-transactional-python repo # clone repo to track history
           mv repo/.git . # move cloned git history to root
           rm -rf repo
-          git config --local user.email "action@github.com"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "GitHub Action"
           git add --force .
           git commit -m "Update mailchimp-transactional-python to v${{ env.SPEC_VERSION }}"
