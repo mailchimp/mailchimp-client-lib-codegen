@@ -407,7 +407,7 @@ jobs:
       - name: Create Release
         uses: actions/create-release@latest
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
         with:
           tag_name: ${{ github.ref }}
@@ -452,7 +452,7 @@ jobs:
           git commit -m "Update mailchimp-transactional-node to v${{ env.SPEC_VERSION }}"
           git push origin master --force
         env:
-          GITHUB_TOKEN: ${{ secrets.SDK_PUSH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
 
       - name: Publish → npm → transactional-node
@@ -499,7 +499,7 @@ jobs:
           git tag -a v${{ env.SPEC_VERSION }} -m "Update v${{ env.SPEC_VERSION }}"
           git push origin master --follow-tags --force
         env:
-          GITHUB_TOKEN: ${{ secrets.SDK_PUSH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
 
   publish-ruby:
@@ -551,7 +551,7 @@ jobs:
           git commit -m "Update mailchimp-transactional-ruby to v${{ env.SPEC_VERSION }}"
           git push origin master --force
         env:
-          GITHUB_TOKEN: ${{ secrets.SDK_PUSH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
 
       - name: Publish → RubyGems → transactional-ruby
@@ -606,7 +606,7 @@ jobs:
           git commit -m "Update mailchimp-transactional-python to v${{ env.SPEC_VERSION }}"
           git push origin master --force
         env:
-          GITHUB_TOKEN: ${{ secrets.SDK_PUSH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
 
       - name: Publish → PyPI → transactional-python (test)
