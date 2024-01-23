@@ -2,6 +2,9 @@
 
 ## Transactional
 
+### 1.0.56
+* Adding DMARC and DKIM2 fields to the API reference
+
 ### 1.0.55
 * Updating github actions bot user email
 
