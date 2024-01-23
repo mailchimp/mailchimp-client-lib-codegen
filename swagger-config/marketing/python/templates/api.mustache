@@ -99,7 +99,8 @@ class {{classname}}(object):
 {{#required}}
         # verify the required parameter '{{paramName}}' is set
         if ('{{paramName}}' not in params or
-                params['{{paramName}}'] is None):
+                params['{{paramName}}'] is None or
+                params['{{paramName}}'] == ''):
             raise ValueError("Missing the required parameter `{{paramName}}` when calling `{{vendorExtensions.x-custom-config.methodNameSnake}}`")  # noqa: E501
 {{/required}}
 {{/allParams}}
