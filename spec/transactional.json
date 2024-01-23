@@ -177,7 +177,7 @@
   },
   "swagger": "2.0",
   "info": {
-    "version": "1.0.55",
+    "version": "1.0.56",
     "title": "Mailchimp Transactional API",
     "contact": {
       "name": "API Support",
@@ -5188,7 +5188,26 @@
                   },
                   "dkim": {
                     "type": "object",
-                    "description": "details about the domain's DKIM record",
+                    "description": "details about the domain's Legacy DKIM record",
+                    "properties": {
+                      "valid": {
+                        "type": "boolean",
+                        "description": "whether the domain's Legacy DKIM record is valid for use with Mandrill"
+                      },
+                      "valid_after": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "when the domain's Legacy DKIM record will be considered valid for use with Mandrill as a UTC string in YYYY-MM-DD HH:MM:SS format. If set, this indicates that the record is valid now, but was previously invalid, and Mandrill will wait until the record's TTL elapses to start using it."
+                      },
+                      "error": {
+                        "type": "string",
+                        "description": "an error describing the Legacy DKIM record, or null if the record is correct"
+                      }
+                    }
+                  },
+                  "dkim2": {
+                    "type": "object",
+                    "description": "details about the domain's rotatable 2048 bit DKIM record",
                     "properties": {
                       "valid": {
                         "type": "boolean",
@@ -5202,6 +5221,20 @@
                       "error": {
                         "type": "string",
                         "description": "an error describing the DKIM record, or null if the record is correct"
+                      }
+                    }
+                  },
+                  "dmarc": {
+                    "type": "object",
+                    "description": "details about the domain's DMARC record",
+                    "properties": {
+                      "valid": {
+                        "type": "boolean",
+                        "description": "whether the domain's DMARC record is valid for use with Mandrill"
+                      },
+                      "error": {
+                        "type": "string",
+                        "description": "an error describing the DMARC record, or null if the record is correct"
                       }
                     }
                   },
@@ -5411,7 +5444,26 @@
                 },
                 "dkim": {
                   "type": "object",
-                  "description": "details about the domain's DKIM record",
+                  "description": "details about the domain's Legacy DKIM record",
+                  "properties": {
+                    "valid": {
+                      "type": "boolean",
+                      "description": "whether the domain's Legacy DKIM record is valid for use with Mandrill"
+                    },
+                    "valid_after": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "when the domain's Legacy DKIM record will be considered valid for use with Mandrill as a UTC string in YYYY-MM-DD HH:MM:SS format. If set, this indicates that the record is valid now, but was previously invalid, and Mandrill will wait until the record's TTL elapses to start using it."
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "an error describing the Legacy DKIM record, or null if the record is correct"
+                    }
+                  }
+                },
+                "dkim2": {
+                  "type": "object",
+                  "description": "details about the domain's rotatable 2048 bit DKIM record",
                   "properties": {
                     "valid": {
                       "type": "boolean",
@@ -5425,6 +5477,20 @@
                     "error": {
                       "type": "string",
                       "description": "an error describing the DKIM record, or null if the record is correct"
+                    }
+                  }
+                },
+                "dmarc": {
+                  "type": "object",
+                  "description": "details about the domain's DMARC record",
+                  "properties": {
+                    "valid": {
+                      "type": "boolean",
+                      "description": "whether the domain's DMARC record is valid for use with Mandrill"
+                    },
+                    "error": {
+                      "type": "string",
+                      "description": "an error describing the DMARC record, or null if the record is correct"
                     }
                   }
                 },
@@ -9471,7 +9537,7 @@
                   "type": "array",
                   "description": "an optional list of events that will be posted to the webhook",
                   "items": {
-                    "type": "string",
+                    "type": "object",
                     "description": "the individual event to listen for",
                     "enum": [
                       "send",
@@ -9703,7 +9769,7 @@
                   "type": "array",
                   "description": "an optional list of events that will be posted to the webhook",
                   "items": {
-                    "type": "string",
+                    "type": "object",
                     "description": "the individual event to listen for",
                     "enum": [
                       "send",
