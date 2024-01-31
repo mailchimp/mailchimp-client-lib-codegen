@@ -407,7 +407,7 @@ jobs:
       - name: Create Release
         uses: actions/create-release@latest
         env:
-          GITHUB_TOKEN: ${{ secrets.GIT_CODEGEN_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_CODEGEN_TOKEN }}  #use fresh token
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
         with:
           tag_name: ${{ github.ref }}
