@@ -177,7 +177,7 @@
   },
   "swagger": "2.0",
   "info": {
-    "version": "1.0.56",
+    "version": "1.0.57",
     "title": "Mailchimp Transactional API",
     "contact": {
       "name": "API Support",
