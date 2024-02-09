@@ -2,7 +2,8 @@ name: Validate and Generate Transactional Client Libraries
 
 on:
   pull_request:
-    types: [ labeled ]
+    types: [assigned, opened, synchronize, reopened]
+  push:
 
 jobs:
   validate:
