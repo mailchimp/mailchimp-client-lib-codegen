@@ -47,5 +47,10 @@
   },
   "devDependencies": {
     "edit-json-file": "^1.4.0"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^axios$": "axios/dist/node/axios.cjs"
+    }
   }
 }
