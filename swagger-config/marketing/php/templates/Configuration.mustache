@@ -26,6 +26,8 @@ class Configuration
     protected $debugFile = 'php://output';
     protected $tempFolderPath;
     protected $timeout = 120;
+    {{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}{{#-first}}public ${{#tags}}{{{name}}}{{/tags}};
+    {{/-first}}{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
 
     public function __construct()
     {
