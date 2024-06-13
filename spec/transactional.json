@@ -7474,7 +7474,7 @@
                 "labels": {
                   "type": "array",
                   "description": "an optional array of up to 10 labels to use for filtering templates",
-                  "maxLength": 10,
+                  "maxItems": 10,
                   "items": {
                     "type": "string",
                     "description": "a single label",
@@ -7761,7 +7761,7 @@
                 "labels": {
                   "type": "array",
                   "description": "an optional array of up to 10 labels to use for filtering templates",
-                  "maxLength": 10,
+                  "maxItems": 10,
                   "items": {
                     "type": "string",
                     "description": "a single label",
