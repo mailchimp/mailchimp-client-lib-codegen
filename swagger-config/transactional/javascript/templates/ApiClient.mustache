@@ -19,6 +19,12 @@ var exports = function (apiKey = '') {
     '{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/produces}}
   ];{{/-first}}{{/operation}}{{/operations}}{{/-first}}{{/apis}}{{/apiInfo}}
 
+  this.requestConfig = {
+    headers: {
+      'User-Agent': 'Transactional-JS/{{{projectVersion}}}',
+    },
+  };
+
   // API Routes{{#apiInfo}}{{#apis}}{{#operations}}{{#operation}}{{#-first}}
   this.{{#tags}}{{{name}}}{{/tags}} = new {{baseName}}(this);{{/-first}}{{/operation}}{{/operations}}{{/apis}}{{/apiInfo}}
 };
@@ -51,7 +57,7 @@ exports.prototype.post = function post(path, body = {}) {
   }
 
   return axiosInstance
-    .post(url, body)
+    .post(url, body, _this.requestConfig)
     .then(function (response) {
       return response.data;
     })
@@ -71,6 +77,14 @@ exports.prototype.setDefaultOutputFormat = function (outputFormat) {
 exports.prototype.setDefaultTimeoutMs = function (timeoutMs) {
   axiosInstance.defaults.timeout = timeoutMs;
 }
+
+/**
+ * @param {Object} headers Add header to request. Example: { 'User-Agent': 'custom-value' } 
+ */
+exports.prototype.setRequestHeaders = function (headers) {
+  var _this = this;
+  _this.requestConfig.headers = Object.assign(_this.requestConfig.headers, headers);
+};
 
 // The default API client implementation.
 exports.instance = function (apiKey) {
