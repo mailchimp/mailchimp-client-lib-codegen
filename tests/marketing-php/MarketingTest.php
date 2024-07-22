@@ -78,6 +78,11 @@ class MarketingTest extends \PHPUnit\Framework\TestCase
         $respA = $client->lists->getAllLists();
         $this->assertTrue(is_array($respA->lists));
 
+        // make space for a new list before creating it
+        foreach ($respA->lists as $list) {
+            $client->lists->deleteList($list->id);
+        }
+
         // 2. Create new list
         $listName = "TestListPhpA" . time();
         $respB = $client->lists->createList([
