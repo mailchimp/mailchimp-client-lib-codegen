@@ -254,7 +254,7 @@ jobs:
       - name: Prepare Build & Publishing Tools
         run: npm install
 
-      - uses: actions/download-artifact@v1
+      - uses: actions/download-artifact@v4.1.7
         with:
           name: mailchimp-marketing-node.zip
           path: zip
@@ -287,7 +287,7 @@ jobs:
           path: .cache
           key: cache-dir
 
-      - uses: actions/download-artifact@v1
+      - uses: actions/download-artifact@v4.1.7
         with:
           name: mailchimp-marketing-php.zip
           path: zip
@@ -332,7 +332,7 @@ jobs:
           path: .cache
           key: cache-dir
 
-      - uses: actions/download-artifact@v1
+      - uses: actions/download-artifact@v4.1.7
         with:
           name: mailchimp-marketing-ruby.zip
           path: zip
@@ -385,7 +385,7 @@ jobs:
         with:
           python-version: 3.7
 
-      - uses: actions/download-artifact@v1
+      - uses: actions/download-artifact@v4.1.7
         with:
           name: mailchimp-marketing-python.zip
           path: zip
@@ -443,7 +443,7 @@ jobs:
       - name: Prepare Build & Publishing Tools
         run: npm install
 
-      - uses: actions/download-artifact@v1
+      - uses: actions/download-artifact@v4.1.7
         with:
           name: mailchimp-marketing-node.zip
           path: zip
@@ -489,7 +489,7 @@ jobs:
           path: .cache
           key: cache-dir
 
-      - uses: actions/download-artifact@v1
+      - uses: actions/download-artifact@v4.1.7
         with:
           name: mailchimp-marketing-php.zip
           path: zip
@@ -542,7 +542,7 @@ jobs:
         env:
           RUBYGEMS_TOKEN: ${{ secrets.RUBYGEMS_TOKEN }}
 
-      - uses: actions/download-artifact@v1
+      - uses: actions/download-artifact@v4.1.7
         with:
           name: mailchimp-marketing-ruby.zip
           path: zip
@@ -591,7 +591,7 @@ jobs:
         with:
           python-version: 3.7
 
-      - uses: actions/download-artifact@v1
+      - uses: actions/download-artifact@v4.1.7
         with:
           name: mailchimp-marketing-python.zip
           path: zip
