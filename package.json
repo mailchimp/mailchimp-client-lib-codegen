@@ -38,7 +38,7 @@
   "homepage": "https://github.com/mailchimp/mailchimp-client-lib-codegen",
   "dependencies": {
     "@actions/core": "^1.2.4",
-    "@actions/github": "^2.2.0",
+    "@actions/github": "^6.0.0",
     "@apidevtools/swagger-cli": "^4.0.4",
     "@apidevtools/swagger-parser": "^9.0.1",
     "dotenv": "^8.2.0",
