@@ -82,9 +82,9 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v4
         with:
-          node-version: '12.x'
+          node-version: '22.x'
           registry-url: 'https://registry.npmjs.org'
           scope: '@mailchimp'
 
@@ -245,9 +245,9 @@ jobs:
     needs: [generate-node]
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v4
         with:
-          node-version: '12.x'
+          node-version: '22.x'
           registry-url: 'https://registry.npmjs.org'
           scope: '@mailchimp'
 
@@ -434,9 +434,9 @@ jobs:
     needs: [validate, create-release]
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v4
         with:
-          node-version: '12.x'
+          node-version: '22.x'
           registry-url: 'https://registry.npmjs.org'
           scope: '@mailchimp'
 
