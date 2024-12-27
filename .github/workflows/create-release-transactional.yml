@@ -106,7 +106,7 @@ jobs:
         run: zip -r mailchimp-transactional-node.zip .
 
       - name: Upload build artifact → transactional-node
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: mailchimp-transactional-node.zip
           path: swagger-out/transactional-node/mailchimp-transactional-node.zip
@@ -149,7 +149,7 @@ jobs:
         run: zip -r mailchimp-transactional-php.zip .
 
       - name: Upload build artifact → transactional-php
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: mailchimp-transactional-php.zip
           path: swagger-out/transactional-php/mailchimp-transactional-php.zip
@@ -192,7 +192,7 @@ jobs:
         run: zip -r mailchimp-transactional-ruby.zip .
 
       - name: Upload build artifact → transactional-ruby
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: mailchimp-transactional-ruby.zip
           path: swagger-out/transactional-ruby/mailchimp-transactional-ruby.zip
@@ -235,7 +235,7 @@ jobs:
         run: zip -r mailchimp-transactional-python.zip .
 
       - name: Upload build artifact → transactional-python
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: mailchimp-transactional-python.zip
           path: swagger-out/transactional-python/mailchimp-transactional-python.zip
