@@ -220,19 +220,14 @@ class Configuration
 
     public function getApiKeyWithPrefix($apiKeyIdentifier)
     {
-        $prefix = $this->getApiKeyPrefix($apiKeyIdentifier);
         $apiKey = $this->getApiKey($apiKeyIdentifier);
 
         if ($apiKey === null) {
             return null;
         }
 
-        if ($prefix === null) {
-            $keyWithPrefix = $apiKey;
-        } else {
-            $keyWithPrefix = $prefix . ' ' . $apiKey;
-        }
+        $prefix = $this->getApiKeyPrefix($apiKeyIdentifier);
 
-        return $keyWithPrefix;
+        return $prefix === null ? $apiKey : $prefix . ' ' . $apiKey;
     }
 }
