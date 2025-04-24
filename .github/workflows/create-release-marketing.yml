@@ -82,9 +82,9 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v4
         with:
-          node-version: '12.x'
+          node-version: '22.x'
           registry-url: 'https://registry.npmjs.org'
           scope: '@mailchimp'
 
@@ -106,7 +106,7 @@ jobs:
         run: zip -r mailchimp-marketing-node.zip .
 
       - name: Upload build artifact → marketing-node
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: mailchimp-marketing-node.zip
           path: swagger-out/marketing-node/mailchimp-marketing-node.zip
@@ -149,7 +149,7 @@ jobs:
         run: zip -r mailchimp-marketing-php.zip .
 
       - name: Upload build artifact → marketing-php
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: mailchimp-marketing-php.zip
           path: swagger-out/marketing-php/mailchimp-marketing-php.zip
@@ -192,7 +192,7 @@ jobs:
         run: zip -r mailchimp-marketing-ruby.zip .
 
       - name: Upload build artifact → marketing-ruby
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: mailchimp-marketing-ruby.zip
           path: swagger-out/marketing-ruby/mailchimp-marketing-ruby.zip
@@ -235,7 +235,7 @@ jobs:
         run: zip -r mailchimp-marketing-python.zip .
 
       - name: Upload build artifact → marketing-python
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: mailchimp-marketing-python.zip
           path: swagger-out/marketing-python/mailchimp-marketing-python.zip
@@ -245,9 +245,9 @@ jobs:
     needs: [generate-node]
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v4
         with:
-          node-version: '12.x'
+          node-version: '22.x'
           registry-url: 'https://registry.npmjs.org'
           scope: '@mailchimp'
 
@@ -434,9 +434,9 @@ jobs:
     needs: [validate, create-release]
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v4
         with:
-          node-version: '12.x'
+          node-version: '22.x'
           registry-url: 'https://registry.npmjs.org'
           scope: '@mailchimp'
 
