@@ -342,10 +342,10 @@ jobs:
           mkdir -p swagger-out/marketing-ruby
           unzip zip/mailchimp-marketing-ruby.zip -d swagger-out/marketing-ruby
 
-      - name: Set up Ruby 2.6
+      - name: Set up Ruby 2.7
         uses: actions/setup-ruby@v1
         with:
-          ruby-version: '2.6'
+          ruby-version: '2.7'
 
       - name: Install client dependencies
         run: gem install rspec
@@ -380,10 +380,10 @@ jobs:
           path: .cache
           key: cache-dir
 
-      - name: Install Python 3.7
+      - name: Install Python 3.11
         uses: actions/setup-python@v1
         with:
-          python-version: 3.7
+          python-version: 3.11.12
 
       - uses: actions/download-artifact@v4.1.7
         with:
