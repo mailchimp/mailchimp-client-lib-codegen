@@ -117,8 +117,8 @@ jobs:
           mkdir -p swagger-out/marketing-ruby
           unzip zip/mailchimp-marketing-ruby.zip -d swagger-out/marketing-ruby
 
-      - name: Set up Ruby 2.7
-        uses: ruby/setup-ruby@v1
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1.237.0
         with:
           ruby-version: '2.7'
           bundler-cache: false
