@@ -118,10 +118,9 @@ jobs:
           unzip zip/mailchimp-marketing-ruby.zip -d swagger-out/marketing-ruby
 
       - name: Setup Ruby
-        uses: ruby/setup-ruby@v1.237.0
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: '2.7'
-          bundler-cache: false
 
       - name: Install client dependencies
         run: gem install rspec
