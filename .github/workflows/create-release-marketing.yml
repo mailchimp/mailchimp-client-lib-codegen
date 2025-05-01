@@ -343,7 +343,7 @@ jobs:
           unzip zip/mailchimp-marketing-ruby.zip -d swagger-out/marketing-ruby
 
       - name: Set up Ruby 2.7
-        uses: actions/setup-ruby@v1
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: '2.7'
 
@@ -528,10 +528,10 @@ jobs:
           path: .cache
           key: cache-dir
 
-      - name: Install Ruby 2.6.x
-        uses: actions/setup-ruby@v1
+      - name: Install Ruby 2.7
+        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.6.x
+          ruby-version: 2.7
 
       - name: Prepare Build & Publishing Tools
         run: |
