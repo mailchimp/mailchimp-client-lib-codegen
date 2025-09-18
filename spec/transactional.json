@@ -177,7 +177,7 @@
   },
   "swagger": "2.0",
   "info": {
-    "version": "1.0.59",
+    "version": "1.0.60",
     "title": "Mailchimp Transactional API",
     "contact": {
       "name": "API Support",
@@ -10128,7 +10128,7 @@
               "properties": {
                 "email": {
                   "type": "string",
-                  "description": "the email address that was removed from the denylist"
+                  "description": "the email address that was removed from the allowlist"
                 },
                 "deleted": {
                   "type": "boolean",
