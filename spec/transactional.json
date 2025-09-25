@@ -57,6 +57,7 @@
         "description": "Send, schedule, or get information on your emails.",
         "paths": [
           "/messages/send",
+          "/messages/send-sms",
           "/messages/send-template",
           "/messages/search",
           "/messages/search-time-series",
@@ -2803,6 +2804,99 @@
           }
         },
         "deprecated": false
+      }
+    },
+    "/messages/send-sms": {
+      "post": {
+        "x-custom-config": {
+          "methodNameCamel": "sendSms",
+          "methodNameSnake": "send_sms"
+        },
+        "summary": "Send SMS message",
+        "description": "Send a new SMS message through Mandrill",
+        "operationId": "postMessagesSendSms",
+        "tags": ["messages"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["key", "message"],
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "description": "a valid api key"
+                },
+                "message": {
+                  "type": "object",
+                  "properties": {
+                    "sms": {
+                      "type": "object",
+                      "properties": {
+                        "text": {
+                          "type": "string",
+                          "description": "the full SMS content to be sent"
+                        },
+                        "to": {
+                          "type": "string",
+                          "description": "the phone number to send the SMS message to"
+                        },
+                        "consent": {
+                          "type": "string",
+                          "description": "The consent type for the message",
+                          "enum": ["onetime", "recurring", "recurring-no-confirm"]
+                        },
+                        "track_clicks": {
+                          "type": "boolean",
+                          "description": "whether or not to turn on click tracking for the message"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "description": "SMS sending results",
+              "items": {
+                "type": "object",
+                "description": "The sending results for a single SMS recipient",
+                "properties": {
+                  "to": {
+                    "type": "string",
+                    "description": "the phone number of the recipient",
+                    "example": "+10000000000"
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "the sending status of the message",
+                    "enum": ["sent", "queued", "scheduled", "rejected", "invalid"],
+                    "example": "sent"
+                  },
+                  "reject_reason": {
+                    "type": "string",
+                    "description": "The reason for the rejection if the recipient status is rejected",
+                    "example": null
+                  },
+                  "_id": {
+                    "type": "string",
+                    "description": "The message's unique id",
+                    "example": "abc123abc123abc123abc123abc123"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/messages/send": {
