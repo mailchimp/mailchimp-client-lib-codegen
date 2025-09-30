@@ -2835,6 +2835,7 @@
                   "properties": {
                     "sms": {
                       "type": "object",
+                      "required": ["text", "to", "consent", "track_clicks"],
                       "properties": {
                         "text": {
                           "type": "string",
@@ -2852,6 +2853,10 @@
                         "track_clicks": {
                           "type": "boolean",
                           "description": "whether or not to turn on click tracking for the message"
+                        },
+                        "from_number": {
+                          "type": "string",
+                          "description": "optional phone number to send the SMS from. If not provided, uses the default SMS program's messaging number"
                         }
                       }
                     }
