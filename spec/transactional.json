@@ -2835,7 +2835,7 @@
                   "properties": {
                     "sms": {
                       "type": "object",
-                      "required": ["text", "to", "consent", "track_clicks"],
+                      "required": ["text", "to", "consent", "track_clicks", "from"],
                       "properties": {
                         "text": {
                           "type": "string",
@@ -2844,6 +2844,10 @@
                         "to": {
                           "type": "string",
                           "description": "the phone number to send the SMS message to"
+                        },
+                        "from": {
+                          "type": "string",
+                          "description": "the phone number to send the SMS message from"
                         },
                         "consent": {
                           "type": "string",
