@@ -1,13 +1,13 @@
 {
     "openapi": "3.1.0",
     "info": {
-        "title": "Mandrill API",
+        "title": "Mailchimp Transactional API",
         "version": "1.1.0"
     },
     "servers": [
         {
             "url": "https://mandrillapp.com/api/1.1",
-            "description": "Mandrill API v1.1"
+            "description": "Mailchimp Transactional API v1.1"
         }
     ],
     "paths": {
