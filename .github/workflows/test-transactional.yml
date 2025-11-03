@@ -115,7 +115,7 @@ jobs:
       - name: Set up Ruby 2.7
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7'
+          ruby-version: '3.2'
 
       - name: Install client dependencies
         run: gem install rspec
@@ -147,10 +147,10 @@ jobs:
           path: .cache
           key: cache-dir
 
-      - name: Install Python 3.7
-        uses: actions/setup-python@v1
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.7
+          python-version: '3.10'
 
 
       - uses: dawidd6/action-download-artifact@b9571484721e8187f1fd08147b497129f8972c74
