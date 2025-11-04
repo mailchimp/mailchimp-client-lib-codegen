@@ -50,7 +50,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Initialize Transactional Cache
         id: init-cache-mc
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: .cache
           key: cache-dir
@@ -95,7 +95,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Initialize Transactional Cache
         id: init-cache-mc
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: .cache
           key: cache-dir
@@ -142,7 +142,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Initialize Transactional Cache
         id: init-cache-mc
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: .cache
           key: cache-dir

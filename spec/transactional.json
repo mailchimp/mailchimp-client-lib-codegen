@@ -4613,69 +4613,67 @@
           "200": {
             "description": "",
             "schema": {
-              "schema": {
-                "type": "array",
-                "description": "an array of objects for each recipient containing the key \"email\" with the email address, and details of the message status for that recipient",
-                "items": {
-                  "type": "object",
-                  "description": "the sending results for a single recipient",
-                  "properties": {
-                    "email": {
-                      "type": "string",
-                      "format": "email",
-                      "description": "the email address of the recipient",
-                      "example": "user@example.com"
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "the sending status of the recipient",
-                      "enum": [
-                        "sent",
-                        "queued",
-                        "scheduled",
-                        "rejected",
-                        "invalid"
-                      ],
-                      "example": "sent"
-                    },
-                    "reject_reason": {
-                      "type": "string",
-                      "description": "the reason for the rejection if the recipient status is \"rejected\"",
-                      "enum": [
-                        "hard-bounce",
-                        "soft-bounce",
-                        "spam",
-                        "unsub",
-                        "custom",
-                        "invalid-sender",
-                        "invalid",
-                        "test-mode-limit",
-                        "unsigned",
-                        "rule"
-                      ],
-                      "example": "hard-bounce"
-                    },
-                    "queued_reason": {
-                      "type": "string",
-                      "description": "the reason for the email being queued if the response status is \"queued\"",
-                      "enum": [
-                        "attachments",
-                        "multiple-recipients",
-                        "free-trial-sends-exhausted",
-                        "hourly-quota-exhausted",
-                        "monthly-limit-reached",
-                        "sending-paused",
-                        "sending-suspended",
-                        "account-suspended",
-                        "sending-backlogged"
-                      ],
-                      "example": "hourly-quota-exhausted"
-                    },
-                    "_id": {
-                      "type": "string",
-                      "description": "the message's unique id",
-                      "example": "a92c74e4c5d74998ba690cd535483bb7"
-                    }
+              "type": "array",
+              "description": "an array of objects for each recipient containing the key \"email\" with the email address, and details of the message status for that recipient",
+              "items": {
+                "type": "object",
+                "description": "the sending results for a single recipient",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "the email address of the recipient",
+                    "example": "user@example.com"
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "the sending status of the recipient",
+                    "enum": [
+                      "sent",
+                      "queued",
+                      "scheduled",
+                      "rejected",
+                      "invalid"
+                    ],
+                    "example": "sent"
+                  },
+                  "reject_reason": {
+                    "type": "string",
+                    "description": "the reason for the rejection if the recipient status is \"rejected\"",
+                    "enum": [
+                      "hard-bounce",
+                      "soft-bounce",
+                      "spam",
+                      "unsub",
+                      "custom",
+                      "invalid-sender",
+                      "invalid",
+                      "test-mode-limit",
+                      "unsigned",
+                      "rule"
+                    ],
+                    "example": "hard-bounce"
+                  },
+                  "queued_reason": {
+                    "type": "string",
+                    "description": "the reason for the email being queued if the response status is \"queued\"",
+                    "enum": [
+                      "attachments",
+                      "multiple-recipients",
+                      "free-trial-sends-exhausted",
+                      "hourly-quota-exhausted",
+                      "monthly-limit-reached",
+                      "sending-paused",
+                      "sending-suspended",
+                      "account-suspended",
+                      "sending-backlogged"
+                    ],
+                    "example": "hourly-quota-exhausted"
+                  },
+                  "_id": {
+                    "type": "string",
+                    "description": "the message's unique id",
+                    "example": "a92c74e4c5d74998ba690cd535483bb7"
                   }
                 }
               }
