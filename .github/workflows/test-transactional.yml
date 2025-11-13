@@ -56,7 +56,7 @@ jobs:
           key: cache-dir
 
 
-      - uses: dawidd6/action-download-artifact@b9571484721e8187f1fd08147b497129f8972c74
+      - uses: dawidd6/action-download-artifact@v11
         with:
           workflow: ${{ github.event.workflow_run.workflow_id }}
           run_id: ${{ github.event.workflow_run.id }}
@@ -100,7 +100,7 @@ jobs:
           path: .cache
           key: cache-dir
 
-      - uses: dawidd6/action-download-artifact@b9571484721e8187f1fd08147b497129f8972c74
+      - uses: dawidd6/action-download-artifact@v11
         with:
           workflow: ${{ github.event.workflow_run.workflow_id }}
           run_id: ${{ github.event.workflow_run.id }}
@@ -152,8 +152,7 @@ jobs:
         with:
           python-version: 3.9
 
-
-      - uses: dawidd6/action-download-artifact@b9571484721e8187f1fd08147b497129f8972c74
+      - uses: dawidd6/action-download-artifact@v11
         with:
           workflow: ${{ github.event.workflow_run.workflow_id }}
           run_id: ${{ github.event.workflow_run.id }}
