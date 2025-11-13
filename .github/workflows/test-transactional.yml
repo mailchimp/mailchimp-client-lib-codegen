@@ -21,10 +21,8 @@ jobs:
       - name: Prepare Build & Publishing Tools
         run: npm install
 
-      - uses: dawidd6/action-download-artifact@b9571484721e8187f1fd08147b497129f8972c74
+      - uses: actions/download-artifact@v4
         with:
-          workflow: ${{ github.event.workflow_run.workflow_id }}
-          run_id: ${{ github.event.workflow_run.id }}
           name: mailchimp-transactional-node.zip
           path: zip
 
@@ -147,10 +145,10 @@ jobs:
           path: .cache
           key: cache-dir
 
-      - name: Install Python 3.7
+      - name: Install Python 3.9
         uses: actions/setup-python@v1
         with:
-          python-version: 3.7
+          python-version: 3.9
 
 
       - uses: dawidd6/action-download-artifact@b9571484721e8187f1fd08147b497129f8972c74
