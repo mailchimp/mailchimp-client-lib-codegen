@@ -21,8 +21,10 @@ jobs:
       - name: Prepare Build & Publishing Tools
         run: npm install
 
-      - uses: actions/download-artifact@v4
+      - uses: dawidd6/action-download-artifact@v11
         with:
+          workflow: ${{ github.event.workflow_run.workflow_id }}
+          run_id: ${{ github.event.workflow_run.id }}
           name: mailchimp-transactional-node.zip
           path: zip
 
