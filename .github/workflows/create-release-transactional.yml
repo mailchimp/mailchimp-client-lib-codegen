@@ -336,10 +336,10 @@ jobs:
           mkdir -p swagger-out/transactional-ruby
           unzip zip/mailchimp-transactional-ruby.zip -d swagger-out/transactional-ruby
 
-      - name: Set up Ruby 2.6
+      - name: Set up Ruby 2.7
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.6'
+          ruby-version: '2.7'
 
       - name: Install client dependencies
         run: gem install rspec
@@ -370,10 +370,10 @@ jobs:
           path: .cache
           key: cache-dir
 
-      - name: Install Python 3.7
+      - name: Install Python 3.9
         uses: actions/setup-python@v1
         with:
-          python-version: 3.7
+          python-version: 3.9
 
       - uses: actions/download-artifact@v4.1.7
         with:
@@ -407,7 +407,7 @@ jobs:
       - name: Create Release
         uses: actions/create-release@latest
         env:
-          GITHUB_TOKEN: ${{ secrets.GIT_CODEGEN_TOKEN }}  #use fresh token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # token automatically provided
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
         with:
           tag_name: ${{ github.ref }}
