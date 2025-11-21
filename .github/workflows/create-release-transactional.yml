@@ -572,10 +572,10 @@ jobs:
           path: .cache
           key: cache-dir
 
-      - name: Install Python 3.7
+      - name: Install Python 3.9
         uses: actions/setup-python@v1
         with:
-          python-version: 3.7
+          python-version: 3.9
 
       - uses: actions/download-artifact@v4.1.7
         with:
