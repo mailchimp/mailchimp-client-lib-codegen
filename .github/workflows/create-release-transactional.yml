@@ -616,6 +616,7 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         env:
           url: https://pypi.org/p/mailchimp-transactional/
+          name: testpypi
         with:
           repository_url: https://test.pypi.org/legacy/
           packages_dir: transactional-python/dist
@@ -625,5 +626,6 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         env:
           url: https://pypi.org/p/mailchimp-transactional/
+          name: pypi
         with:
           packages_dir: transactional-python/dist
