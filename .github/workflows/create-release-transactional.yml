@@ -614,18 +614,16 @@ jobs:
       - name: Publish → PyPI → transactional-python (test)
         if: env.PUBLISH_EXTERNAL == 'true'
         uses: pypa/gh-action-pypi-publish@release/v1
-        env:
-          url: https://pypi.org/p/mailchimp-transactional/
-          name: testpypi
         with:
+          password: ${{ secrets.PYPI_TOKEN_TEST }}
           repository_url: https://test.pypi.org/legacy/
           packages_dir: transactional-python/dist
+          attestations: false
 
       - name: Publish → PyPI → marketing-python (dist)
         if: env.PUBLISH_EXTERNAL == 'true'
         uses: pypa/gh-action-pypi-publish@release/v1
-        env:
-          url: https://pypi.org/p/mailchimp-transactional/
-          name: pypi
         with:
+          password: ${{ secrets.PYPI_TOKEN_TEST }}
           packages_dir: transactional-python/dist
+          attestations: false
