@@ -64,8 +64,13 @@ module {{moduleName}}
       # apply api key
       body[:key] = @api_key
 
+      headers = {
+        'Content-Type' => 'application/json',
+        'User-Agent' => 'MailchimpTransactional-Ruby/{{artifactVersion}}'
+      }
+      
       # send request
-      conn = Excon.new(url, :headers => {'Content-Type' => 'application/json'}, :read_timeout => @read_timeout, :write_timeout => @write_timeout, :connect_timeout => @connect_timeout)
+      conn = Excon.new(url, :headers => headers, :read_timeout => @read_timeout, :write_timeout => @write_timeout, :connect_timeout => @connect_timeout)
       res = conn.post(:body => body.to_json)
 
       # handle response
