@@ -14,7 +14,7 @@ class ApiClientError(Exception):
 class ApiClient(object):
     def __init__(self):
         self.host = "{{{basePath}}}"
-        self.user_agent = '{{#httpUserAgent}}{{{.}}}{{/httpUserAgent}}{{^httpUserAgent}}Swagger-Codegen/{{{packageVersion}}}/python{{/httpUserAgent}}'
+        self.user_agent = '{{#httpUserAgent}}{{{.}}}{{/httpUserAgent}}{{^httpUserAgent}}MailchimpTransactional-python/{{{packageVersion}}}{{/httpUserAgent}}'
         self.format_list = ['json', 'xml', 'php', 'yaml']
         self.content_type = 'application/json'
         self.default_output_format = 'json'
