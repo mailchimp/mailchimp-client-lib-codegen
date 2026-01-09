@@ -418,6 +418,8 @@ jobs:
   publish-node:
     runs-on: ubuntu-latest
     needs: [validate, create-release]
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -458,16 +460,11 @@ jobs:
       - name: Publish → npm → transactional-node
         if: env.PUBLISH_EXTERNAL == 'true'
         working-directory: transactional-node
-        run: |
-          npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public
 
   publish-php:
     runs-on: ubuntu-latest
     needs: [validate, create-release]
-    permissions:
-      id-token: write
     steps:
       - uses: actions/checkout@v4
       - name: Initialize Transactional Cache
