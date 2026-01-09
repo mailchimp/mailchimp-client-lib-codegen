@@ -178,7 +178,7 @@
   },
   "swagger": "2.0",
   "info": {
-    "version": "1.1.2",
+    "version": "1.2.0",
     "title": "Mailchimp Transactional API",
     "contact": {
       "name": "API Support",
@@ -1159,8 +1159,8 @@
           "methodNameCamel": "routes",
           "methodNameSnake": "routes"
         },
-        "summary": "List mailbox routes",
-        "description": "List the mailbox routes defined for an inbound domain.",
+        "summary": "List routes",
+        "description": "List the routes defined for an inbound domain or SMS program. Provide either domain or phone (not both).",
         "operationId": "postInboundRoutes",
         "tags": ["inbound"],
         "parameters": [
@@ -1171,7 +1171,7 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "domain"],
+              "required": ["key"],
               "properties": {
                 "key": {
                   "type": "string",
@@ -1179,7 +1179,11 @@
                 },
                 "domain": {
                   "type": "string",
-                  "description": "the domain to check"
+                  "description": "The domain to check (required if phone is not provided)"
+                },
+                "phone": {
+                  "type": "string",
+                  "description": "The SMS program phone number (required if domain is not provided)"
                 }
               }
             }
@@ -1224,8 +1228,8 @@
           "methodNameCamel": "addRoute",
           "methodNameSnake": "add_route"
         },
-        "summary": "Add mailbox route",
-        "description": "Add a new mailbox route to an inbound domain.",
+        "summary": "Add route",
+        "description": "Add a new route to an inbound domain or SMS program. Provide either domain or phone (not both).",
         "operationId": "postInboundAddRoute",
         "tags": ["inbound"],
         "parameters": [
@@ -1236,7 +1240,7 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "domain", "pattern", "url"],
+              "required": ["key", "url"],
               "properties": {
                 "key": {
                   "type": "string",
@@ -1244,11 +1248,15 @@
                 },
                 "domain": {
                   "type": "string",
-                  "description": "an existing inbound domain"
+                  "description": "An existing inbound domain (required if phone is not provided)"
+                },
+                "phone": {
+                    "description": "The SMS program phone number - the TO number that receives inbound SMS (required if domain is not provided)",
+                    "type": "string"
                 },
                 "pattern": {
                   "type": "string",
-                  "description": "the search pattern that the mailbox name should match"
+                  "description": "For email: the mailbox pattern (e.g., \"mailbox-*\"). For SMS: not used, the phone number is the pattern."
                 },
                 "url": {
                   "type": "string",
@@ -1317,7 +1325,7 @@
                 },
                 "pattern": {
                   "type": "string",
-                  "description": "the search pattern that the mailbox name should match"
+                  "description": "For email: The search pattern that the mailbox name should match. For SMS: the sender's phone number (FROM number).  Null to leave unchanged"
                 },
                 "url": {
                   "type": "string",

@@ -2,12 +2,12 @@
     "openapi": "3.1.0",
     "info": {
         "title": "Mailchimp Transactional API",
-        "version": "1.1.0"
+        "version": "1.2.0"
     },
     "servers": [
         {
-            "url": "https://mandrillapp.com/api/1.1",
-            "description": "Mailchimp Transactional API v1.1"
+            "url": "https://mandrillapp.com/api/1.2",
+            "description": "Mailchimp Transactional API v1.2"
         }
     ],
     "paths": {
@@ -194,7 +194,7 @@
                 ],
                 "summary": "Get export job information",
                 "description": "Returns information about an export job including status and download URL when complete.",
-                "operationId": "exports_info",
+                "operationId": "exports/info",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -264,7 +264,7 @@
                 ],
                 "summary": "List export jobs",
                 "description": "Returns a list of all export jobs for the account.",
-                "operationId": "exports_list",
+                "operationId": "exports/list",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -310,7 +310,7 @@
                 ],
                 "summary": "Export rejection blacklist",
                 "description": "Begins an export of your rejection blacklist. The blacklist will be exported to a zip archive containing a single file named rejects.csv.",
-                "operationId": "exports_rejects",
+                "operationId": "exports/rejects",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -342,7 +342,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ExportJob"
+                                    "$ref": "#/components/schemas/ExportResponse"
                                 }
                             }
                         }
@@ -367,7 +367,7 @@
                 ],
                 "summary": "Export rejection allowlist (legacy)",
                 "description": "Begins an export of your rejection allowlist. The allowlist will be exported to a zip archive containing a single file named allowlist.csv.",
-                "operationId": "exports_whitelist",
+                "operationId": "exports/whitelist",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -399,7 +399,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ExportJob"
+                                    "$ref": "#/components/schemas/ExportResponse"
                                 }
                             }
                         }
@@ -424,7 +424,7 @@
                 ],
                 "summary": "Export rejection allowlist",
                 "description": "Begins an export of your rejection allowlist. The allowlist will be exported to a zip archive containing a single file named allowlist.csv.",
-                "operationId": "exports_allowlist",
+                "operationId": "exports/allowlist",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -456,7 +456,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ExportJob"
+                                    "$ref": "#/components/schemas/ExportResponse"
                                 }
                             }
                         }
@@ -481,7 +481,7 @@
                 ],
                 "summary": "Export activity history",
                 "description": "Begins an export of your activity history. The activity will be exported to a zip archive containing a single file named activity.csv with message details and custom metadata fields.",
-                "operationId": "exports_activity",
+                "operationId": "exports/activity",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -498,7 +498,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ExportJob"
+                                    "$ref": "#/components/schemas/ExportResponse"
                                 }
                             }
                         }
@@ -523,7 +523,7 @@
                 ],
                 "summary": "List dedicated IPs",
                 "description": "Lists your dedicated IPs.",
-                "operationId": "ips_list",
+                "operationId": "ips/list",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -569,7 +569,7 @@
                 ],
                 "summary": "Get dedicated IP information",
                 "description": "Retrieves information about a single dedicated IP.",
-                "operationId": "ips_info",
+                "operationId": "ips/info",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -629,7 +629,7 @@
                 ],
                 "summary": "Request dedicated IP provisioning",
                 "description": "Requests an additional dedicated IP for your account. Accounts may have one outstanding request at any time, and provisioning requests are processed within 24 hours.",
-                "operationId": "ips_provision",
+                "operationId": "ips/provision",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -727,7 +727,7 @@
                 ],
                 "summary": "Start IP warmup process",
                 "description": "Begins the warmup process for a dedicated IP. During the warmup process, Mandrill will gradually increase the percentage of your mail that is sent over the warming-up IP, over a period of roughly 30 days. The rest of your mail will be sent over shared IPs or other dedicated IPs in the same pool.",
-                "operationId": "ips_start_warmup",
+                "operationId": "ips/start-warmup",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -796,7 +796,7 @@
                 ],
                 "summary": "Cancel IP warmup process",
                 "description": "Cancels the warmup process for a dedicated IP.",
-                "operationId": "ips_cancel_warmup",
+                "operationId": "ips/cancel-warmup",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -865,7 +865,7 @@
                 ],
                 "summary": "Move IP to different pool",
                 "description": "Moves a dedicated IP to a different pool.",
-                "operationId": "ips_set_pool",
+                "operationId": "ips/set-pool",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -955,7 +955,7 @@
                 ],
                 "summary": "Delete dedicated IP",
                 "description": "Deletes a dedicated IP. This is permanent and cannot be undone.",
-                "operationId": "ips_delete",
+                "operationId": "ips/delete",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1014,7 +1014,7 @@
                 ],
                 "summary": "List dedicated IP pools",
                 "description": "Lists your dedicated IP pools.",
-                "operationId": "ips_list_pools",
+                "operationId": "ips/list-pools",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1060,7 +1060,7 @@
                 ],
                 "summary": "Get pool information",
                 "description": "Describes a single dedicated IP pool.",
-                "operationId": "ips_pool_info",
+                "operationId": "ips/pool-info",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1130,7 +1130,7 @@
                 ],
                 "summary": "Create dedicated IP pool",
                 "description": "Creates a pool and returns it. If a pool already exists with this name, no action will be performed.",
-                "operationId": "ips_create_pool",
+                "operationId": "ips/create-pool",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1189,7 +1189,7 @@
                 ],
                 "summary": "Delete dedicated IP pool",
                 "description": "Deletes a pool. A pool must be empty before you can delete it, and you cannot delete your default pool.",
-                "operationId": "ips_delete_pool",
+                "operationId": "ips/delete-pool",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1268,7 +1268,7 @@
                 ],
                 "summary": "Test custom DNS configuration",
                 "description": "Tests whether a domain name is valid for use as the custom reverse DNS for a dedicated IP.",
-                "operationId": "ips_check_custom_dns",
+                "operationId": "ips/check-custom-dns",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1343,7 +1343,7 @@
                 ],
                 "summary": "Configure custom DNS for IP",
                 "description": "Configures the custom DNS name for a dedicated IP.",
-                "operationId": "ips_set_custom_dns",
+                "operationId": "ips/set-custom-dns",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1410,665 +1410,6 @@
                     },
                     "404": {
                         "description": "Unknown IP",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/inbound/domains": {
-            "post": {
-                "tags": [
-                    "Inbound"
-                ],
-                "summary": "List inbound domains",
-                "description": "List the domains that have been configured for inbound delivery.",
-                "operationId": "inbound_domains",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ApiKey"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "The inbound domains associated with the account",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/InboundDomain"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Invalid API key",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/inbound/add-domain": {
-            "post": {
-                "tags": [
-                    "Inbound"
-                ],
-                "summary": "Add inbound domain",
-                "description": "Add an inbound domain to your account.",
-                "operationId": "inbound_add_domain",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "allOf": [
-                                    {
-                                        "$ref": "#/components/schemas/ApiKey"
-                                    },
-                                    {
-                                        "required": [
-                                            "domain"
-                                        ],
-                                        "properties": {
-                                            "domain": {
-                                                "description": "A domain name for inbound email delivery",
-                                                "type": "string",
-                                                "example": "inbound.example.com"
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Information about the domain",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/InboundDomain"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Invalid API key",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/inbound/check-domain": {
-            "post": {
-                "tags": [
-                    "Inbound"
-                ],
-                "summary": "Check domain settings",
-                "description": "Check the MX settings for an inbound domain. The domain must have already been added with the add-domain call.",
-                "operationId": "inbound_check_domain",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "allOf": [
-                                    {
-                                        "$ref": "#/components/schemas/ApiKey"
-                                    },
-                                    {
-                                        "required": [
-                                            "domain"
-                                        ],
-                                        "properties": {
-                                            "domain": {
-                                                "description": "An existing inbound domain",
-                                                "type": "string",
-                                                "example": "inbound.example.com"
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Information about the inbound domain",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/InboundDomain"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Invalid API key",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Unknown inbound domain",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/inbound/delete-domain": {
-            "post": {
-                "tags": [
-                    "Inbound"
-                ],
-                "summary": "Delete inbound domain",
-                "description": "Delete an inbound domain from the account. All mail will stop routing for this domain immediately.",
-                "operationId": "inbound_delete_domain",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "allOf": [
-                                    {
-                                        "$ref": "#/components/schemas/ApiKey"
-                                    },
-                                    {
-                                        "required": [
-                                            "domain"
-                                        ],
-                                        "properties": {
-                                            "domain": {
-                                                "description": "An existing inbound domain",
-                                                "type": "string",
-                                                "example": "inbound.example.com"
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Information about the deleted domain",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/InboundDomain"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Invalid API key",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Unknown inbound domain",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/inbound/routes": {
-            "post": {
-                "tags": [
-                    "Inbound"
-                ],
-                "summary": "List mailbox routes",
-                "description": "List the mailbox routes defined for an inbound domain.",
-                "operationId": "inbound_routes",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "allOf": [
-                                    {
-                                        "$ref": "#/components/schemas/ApiKey"
-                                    },
-                                    {
-                                        "required": [
-                                            "domain"
-                                        ],
-                                        "properties": {
-                                            "domain": {
-                                                "description": "The domain to check",
-                                                "type": "string",
-                                                "example": "inbound.example.com"
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "The routes associated with the domain",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/InboundRoute"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Invalid API key",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Unknown inbound domain",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/inbound/add-route": {
-            "post": {
-                "tags": [
-                    "Inbound"
-                ],
-                "summary": "Add mailbox route",
-                "description": "Add a new mailbox route to an inbound domain.",
-                "operationId": "inbound_add_route",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "allOf": [
-                                    {
-                                        "$ref": "#/components/schemas/ApiKey"
-                                    },
-                                    {
-                                        "required": [
-                                            "domain",
-                                            "pattern",
-                                            "url"
-                                        ],
-                                        "properties": {
-                                            "domain": {
-                                                "description": "An existing inbound domain",
-                                                "type": "string",
-                                                "example": "inbound.example.com"
-                                            },
-                                            "pattern": {
-                                                "description": "The search pattern that the mailbox name should match",
-                                                "type": "string",
-                                                "example": "mailbox-*"
-                                            },
-                                            "url": {
-                                                "description": "The webhook URL where the inbound messages will be published",
-                                                "type": "string",
-                                                "format": "uri",
-                                                "example": "https://example.com/webhook-url"
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "The added mailbox route information",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/InboundRoute"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Invalid API key",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Unknown inbound domain",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/inbound/update-route": {
-            "post": {
-                "tags": [
-                    "Inbound"
-                ],
-                "summary": "Update mailbox route",
-                "description": "Update the pattern or webhook of an existing inbound mailbox route. If null is provided for any fields, the values will remain unchanged.",
-                "operationId": "inbound_update_route",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "allOf": [
-                                    {
-                                        "$ref": "#/components/schemas/ApiKey"
-                                    },
-                                    {
-                                        "required": [
-                                            "id"
-                                        ],
-                                        "properties": {
-                                            "id": {
-                                                "description": "The unique identifier of an existing mailbox route",
-                                                "type": "string",
-                                                "example": "88.2144614"
-                                            },
-                                            "pattern": {
-                                                "description": "The search pattern that the mailbox name should match (null to leave unchanged)",
-                                                "type": [
-                                                    "string",
-                                                    null
-                                                ],
-                                                "example": "*.*"
-                                            },
-                                            "url": {
-                                                "description": "The webhook URL where the inbound messages will be published (null to leave unchanged)",
-                                                "type": [
-                                                    "string",
-                                                    null
-                                                ],
-                                                "format": "uri",
-                                                "example": "https://example.com/webhook-url"
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "The updated mailbox route information",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/InboundRoute"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Invalid API key",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Unknown inbound route",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/inbound/delete-route": {
-            "post": {
-                "tags": [
-                    "Inbound"
-                ],
-                "summary": "Delete mailbox route",
-                "description": "Delete an existing inbound mailbox route.",
-                "operationId": "inbound_delete_route",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "allOf": [
-                                    {
-                                        "$ref": "#/components/schemas/ApiKey"
-                                    },
-                                    {
-                                        "required": [
-                                            "id"
-                                        ],
-                                        "properties": {
-                                            "id": {
-                                                "description": "The unique identifier of an existing route",
-                                                "type": "string",
-                                                "example": "88.214614"
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "The deleted mailbox route information",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/InboundRoute"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Invalid API key",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Unknown inbound route",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/inbound/send-raw": {
-            "post": {
-                "tags": [
-                    "Inbound"
-                ],
-                "summary": "Send mime document",
-                "description": "Take a raw MIME document destined for a domain with inbound domains set up, and send it to the inbound hook exactly as if it had been sent over SMTP.",
-                "operationId": "inbound_send_raw",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "allOf": [
-                                    {
-                                        "$ref": "#/components/schemas/ApiKey"
-                                    },
-                                    {
-                                        "required": [
-                                            "raw_message"
-                                        ],
-                                        "properties": {
-                                            "raw_message": {
-                                                "description": "The full MIME document of an email message",
-                                                "type": "string",
-                                                "example": "From: sender@example.com\\nTo: mailbox-123@inbound.example.com\\nSubject: Some Subject\\n\\nSome content."
-                                            },
-                                            "to": {
-                                                "description": "Optionally define the recipients to receive the message - otherwise we'll use the To, Cc, and Bcc headers provided in the document",
-                                                "type": [
-                                                    "array",
-                                                    null
-                                                ],
-                                                "items": {
-                                                    "type": "string",
-                                                    "format": "email"
-                                                },
-                                                "example": [
-                                                    "mailbox-123@inbound.example.com"
-                                                ]
-                                            },
-                                            "mail_from": {
-                                                "description": "The address specified in the MAIL FROM stage of the SMTP conversation",
-                                                "type": [
-                                                    "string",
-                                                    null
-                                                ],
-                                                "format": "email",
-                                                "example": "sender@example.com"
-                                            },
-                                            "helo": {
-                                                "description": "The hostname provided during HELO",
-                                                "type": [
-                                                    "string",
-                                                    null
-                                                ],
-                                                "example": "sender.example.com"
-                                            },
-                                            "client_address": {
-                                                "description": "The remote host's IP address",
-                                                "type": [
-                                                    "string",
-                                                    null
-                                                ],
-                                                "example": "192.168.1.100"
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Processing results for each recipient or null if no recipients processed",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/SendRawResponse"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Invalid API key",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Unknown inbound domain",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2583,7 +1924,7 @@
                 ],
                 "summary": "List senders used by this account",
                 "description": "Return the senders that have tried to use this account.",
-                "operationId": "senders_list",
+                "operationId": "senders/list",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2629,7 +1970,7 @@
                 ],
                 "summary": "List sender domains",
                 "description": "Returns the sender domains that have been added to this account.",
-                "operationId": "senders_domains",
+                "operationId": "senders/domains",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2675,7 +2016,7 @@
                 ],
                 "summary": "Add a sender domain",
                 "description": "Adds a sender domain to your account. Sender domains are added automatically as you send, but you can add them ahead of time.",
-                "operationId": "senders_addDomain",
+                "operationId": "senders/add-domain",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2717,7 +2058,7 @@
                 ],
                 "summary": "Check domain SPF and DKIM",
                 "description": "Checks the SPF and DKIM settings for a domain. If it isn't already added to your account, it will be added automatically.",
-                "operationId": "senders_checkDomain",
+                "operationId": "senders/check-domain",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2759,7 +2100,7 @@
                 ],
                 "summary": "Verify a sender domain by email",
                 "description": "Sends a verification email in order to verify ownership of a domain.",
-                "operationId": "senders_verifyDomain",
+                "operationId": "senders/verify-domain",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2824,7 +2165,7 @@
                 ],
                 "summary": "Get detailed information for a sender",
                 "description": "Return more detailed information about a single sender, including aggregates of recent stats.",
-                "operationId": "senders_info",
+                "operationId": "senders/info",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2894,7 +2235,7 @@
                 ],
                 "summary": "Get hourly stats for a sender",
                 "description": "Return the recent history (hourly stats for the last 30 days) for a sender.",
-                "operationId": "senders_timeSeries",
+                "operationId": "senders/time-series",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2967,7 +2308,7 @@
                 ],
                 "summary": "List subaccounts",
                 "description": "Get the list of subaccounts defined for the account, optionally filtered by a prefix. Returns up to a maximum of 1,000 subaccounts.",
-                "operationId": "subaccounts_list",
+                "operationId": "subaccounts/list",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -3038,7 +2379,7 @@
                 ],
                 "summary": "Add a new subaccount",
                 "description": "Create a new subaccount with the specified configuration. The subaccount can be used to organize and track sending for different customers or purposes.",
-                "operationId": "subaccounts_add",
+                "operationId": "subaccounts/add",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -3154,7 +2495,7 @@
                 ],
                 "summary": "Get subaccount information",
                 "description": "Retrieve detailed information about a specific subaccount including sending statistics and configuration.",
-                "operationId": "subaccounts_info",
+                "operationId": "subaccounts/info",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -3232,7 +2573,7 @@
                 ],
                 "summary": "Update an existing subaccount",
                 "description": "Update the configuration of an existing subaccount including name, notes, and custom quota settings.",
-                "operationId": "subaccounts_update",
+                "operationId": "subaccounts/update",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -3347,7 +2688,7 @@
                 ],
                 "summary": "Delete a subaccount",
                 "description": "Delete an existing subaccount. Any email related to the subaccount will be saved, but stats will be removed and any future sending calls to this subaccount will fail.",
-                "operationId": "subaccounts_delete",
+                "operationId": "subaccounts/delete",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -3425,7 +2766,7 @@
                 ],
                 "summary": "Pause a subaccount",
                 "description": "Pause a subaccount's sending. Any future emails delivered to this subaccount will be queued for a maximum of 3 days until the subaccount is resumed.",
-                "operationId": "subaccounts_pause",
+                "operationId": "subaccounts/pause",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -3503,7 +2844,7 @@
                 ],
                 "summary": "Resume a paused subaccount",
                 "description": "Resume a paused subaccount's sending. The subaccount will return to active status and queued emails will be processed.",
-                "operationId": "subaccounts_resume",
+                "operationId": "subaccounts/resume",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -3581,7 +2922,7 @@
                 ],
                 "summary": "List all user-defined tags",
                 "description": "Return all of the user-defined tag information",
-                "operationId": "tags_list",
+                "operationId": "tags/list",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -3627,7 +2968,7 @@
                 ],
                 "summary": "Delete a tag permanently",
                 "description": "Deletes a tag permanently. Deleting a tag removes the tag from any messages that have been sent, and also deletes the tag's stats. There is no way to undo this operation, so use it carefully.",
-                "operationId": "tags_delete",
+                "operationId": "tags/delete",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -3679,7 +3020,7 @@
                 ],
                 "summary": "Get detailed information about a tag",
                 "description": "Return more detailed information about a single tag, including aggregates of recent stats",
-                "operationId": "tags_info",
+                "operationId": "tags/info",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -3732,7 +3073,7 @@
                 ],
                 "summary": "Get time series data for a specific tag",
                 "description": "Return the recent history (hourly stats for the last 30 days) for a tag",
-                "operationId": "tags_time_series",
+                "operationId": "tags/time-series",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -3788,7 +3129,7 @@
                 ],
                 "summary": "Get time series data for all tags",
                 "description": "Return the recent history (hourly stats for the last 30 days) for all tags",
-                "operationId": "tags_all_time_series",
+                "operationId": "tags/all-time-series",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -3834,7 +3175,7 @@
                 ],
                 "summary": "Add a new template",
                 "description": "Creates a new email template with the specified content and settings.",
-                "operationId": "templates_add",
+                "operationId": "templates/add",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -3992,7 +3333,7 @@
                 ],
                 "summary": "Get template information",
                 "description": "Retrieves information for an existing template.",
-                "operationId": "templates_info",
+                "operationId": "templates/info",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -4072,7 +3413,7 @@
                 ],
                 "summary": "Update an existing template",
                 "description": "Updates the code for an existing template. If null is provided for any fields, the values will remain unchanged.",
-                "operationId": "templates_update",
+                "operationId": "templates/update",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -4237,7 +3578,7 @@
                 ],
                 "summary": "Publish a template",
                 "description": "Publishes the content for the template. Any new messages sent using this template will start using the content that was previously in draft.",
-                "operationId": "templates_publish",
+                "operationId": "templates/publish",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -4316,7 +3657,7 @@
                 ],
                 "summary": "Delete a template",
                 "description": "Deletes an existing template.",
-                "operationId": "templates_delete",
+                "operationId": "templates/delete",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -4395,7 +3736,7 @@
                 ],
                 "summary": "List all templates",
                 "description": "Returns a list of all templates available to this user.",
-                "operationId": "templates_list",
+                "operationId": "templates/list",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -4472,7 +3813,7 @@
                 ],
                 "summary": "Get template time series data",
                 "description": "Returns the recent history (hourly stats for the last 30 days) for a template.",
-                "operationId": "templates_time_series",
+                "operationId": "templates/time-series",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -4555,7 +3896,7 @@
                 ],
                 "summary": "Render a template",
                 "description": "Injects content and merge variables into a template, returning the HTML that results.",
-                "operationId": "templates_render",
+                "operationId": "templates/render",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -4659,7 +4000,7 @@
                 ],
                 "summary": "Get most clicked URLs (DEPRECATED)",
                 "description": "Due to changes to our infrastructure, we no longer support URL tracking reports in Mandrill.",
-                "operationId": "urls_list",
+                "operationId": "urls/list",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -4712,7 +4053,7 @@
                 ],
                 "summary": "Search clicked URLs (DEPRECATED)",
                 "description": "Due to changes to our infrastructure, we no longer support URL tracking reports in Mandrill.",
-                "operationId": "urls_search",
+                "operationId": "urls/search",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -4745,7 +4086,7 @@
                 ],
                 "summary": "Get URL time series (DEPRECATED)",
                 "description": "Due to changes to our infrastructure, we no longer support URL tracking reports in Mandrill.",
-                "operationId": "urls_time_series",
+                "operationId": "urls/time-series",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -4798,7 +4139,7 @@
                 ],
                 "summary": "Get tracking domains",
                 "description": "Get the list of tracking domains set up for your account",
-                "operationId": "urls_tracking_domains",
+                "operationId": "urls/tracking-domains",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -4843,7 +4184,7 @@
                 ],
                 "summary": "Add tracking domain",
                 "description": "Add a tracking domain to your account",
-                "operationId": "urls_add_tracking_domain",
+                "operationId": "urls/add-tracking-domain",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -4911,7 +4252,7 @@
                 ],
                 "summary": "Check tracking domain",
                 "description": "Checks the CNAME settings for a tracking domain. The domain must have been added already with the add-tracking-domain call",
-                "operationId": "urls_check_tracking_domain",
+                "operationId": "urls/check-tracking-domain",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -4980,7 +4321,7 @@
                 ],
                 "summary": "Return the information about the API-connected user",
                 "description": "Returns user account information including username, reputation, quota, and historical sending stats",
-                "operationId": "users_info",
+                "operationId": "users/info",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -5023,7 +4364,7 @@
                 ],
                 "summary": "Validate an API key and respond to a ping",
                 "description": "Returns 'PONG!'.",
-                "operationId": "users_ping",
+                "operationId": "users/ping",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -5067,7 +4408,7 @@
                 ],
                 "summary": "Validate an API key and respond to a ping (strict JSON parser version)",
                 "description": "Validate an API key and respond to a ping (strict JSON parser version)",
-                "operationId": "users_ping2",
+                "operationId": "users/ping2",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -5112,7 +4453,7 @@
                 ],
                 "summary": "Return the senders that have tried to use this account",
                 "description": "Returns an array of sender data for each sending address used by the account, both verified and unverified",
-                "operationId": "users_senders",
+                "operationId": "users/senders",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -5151,49 +4492,6 @@
                 "x-readonly": true
             }
         },
-        "/users/test503": {
-            "post": {
-                "tags": [
-                    "Users"
-                ],
-                "summary": "Test endpoint for 503 Service Unavailable response",
-                "description": "This API call can be used for testing 503 Service Unavailable responses",
-                "operationId": "users_test503",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ApiKey"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "503": {
-                        "description": "Service Unavailable (test response)",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Invalid API key",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    }
-                },
-                "x-readonly": true
-            }
-        },
         "/webhooks/list": {
             "post": {
                 "tags": [
@@ -5201,7 +4499,7 @@
                 ],
                 "summary": "Get the list of all webhooks",
                 "description": "Get the list of all webhooks defined for this account",
-                "operationId": "webhooks_list",
+                "operationId": "webhooks/list",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -5247,7 +4545,7 @@
                 ],
                 "summary": "Add a new webhook",
                 "description": "Create a new webhook to receive event notifications",
-                "operationId": "webhooks_add",
+                "operationId": "webhooks/add",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -5289,7 +4587,7 @@
                 ],
                 "summary": "Get webhook information",
                 "description": "Get the data about an existing webhook",
-                "operationId": "webhooks_info",
+                "operationId": "webhooks/info",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -5342,7 +4640,7 @@
                 ],
                 "summary": "Update an existing webhook",
                 "description": "Update the configuration of an existing webhook",
-                "operationId": "webhooks_update",
+                "operationId": "webhooks/update",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -5394,7 +4692,7 @@
                 ],
                 "summary": "Delete an existing webhook",
                 "description": "Remove a webhook from the account",
-                "operationId": "webhooks_delete",
+                "operationId": "webhooks/delete",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -5615,14 +4913,14 @@
                 }
             }
         },
-        "/messages/send.json": {
+        "/messages/send": {
             "post": {
                 "tags": [
                     "Messages"
                 ],
                 "summary": "Send a new transactional message through the Transactional API.",
                 "description": "Send a new transactional message through Mandrill\n\n<table class=\"simple top30 errors\">\n     <thead><tr><th colspan=\"1\">Note</th></tr></thead>\n     <tbody>\n         <tr>\n             <td class=\"param-desc\">\n                 If you signed up for a Mandrill account on or after December 1st, 2015, you must add SPF and DKIM records and verify ownership of your sending domains before you can send email through your account. Mandrill will not send any email from unverified domains or domains without valid SPF and DKIM records, including public domains like gmail.com, yahoo.com, and more.<br><br>Custom signing domains are only available to Mandrill accounts created before December 1st, 2015. If you signed up for a new Mandrill account on or after December 1st, 2015, the signing_domain parameter will be ignored.<br><br>Mail sent from unverified domains or domains without valid SPF and DKIM records will be rejected with the reject_reason, unsigned.<br><br>Learn more about <a href=\"https://mandrill.zendesk.com/hc/en-us/articles/360039236053-About-SPF-and-DKIM\">SPF and DKIM</a>, and <a href=\"https://mandrill.zendesk.com/hc/en-us/articles/360039236193-About-Domain-Verification\">domain verification</a>\n             </td>\n         </tr>\n     </tbody>\n </table>",
-                "operationId": "messages_send",
+                "operationId": "messages/send",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -5680,14 +4978,14 @@
                 }
             }
         },
-        "/messages/send-template.json": {
+        "/messages/send-template": {
             "post": {
                 "tags": [
                     "Messages"
                 ],
                 "summary": "Send a new transactional message using a template",
                 "description": "Send a new transactional message using a template. If you signed up for a Mandrill account on or after December 1st, 2015, you must add SPF and DKIM records and verify ownership of your sending domains before you can send email through your account. Mandrill will not send any email from unverified domains or domains without valid SPF and DKIM records, including public domains like gmail.com, yahoo.com, and more. Custom signing domains are only available to Mandrill accounts created before December 1st, 2015. If you signed up for a new Mandrill account on or after December 1st, 2015, the signing_domain parameter will be ignored. Mail sent from unverified domains or domains without valid SPF and DKIM records will be rejected with the reject_reason, unsigned.",
-                "operationId": "messages_send_template",
+                "operationId": "messages/send-template",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -5755,14 +5053,14 @@
                 "x-readonly": true
             }
         },
-        "/messages/search.json": {
+        "/messages/search": {
             "post": {
                 "tags": [
                     "Messages"
                 ],
                 "summary": "Search recently sent messages",
                 "description": "Search recently sent messages and optionally narrow by date range, tags, senders, and API keys. Results can include both email and SMS messages. If no date range is specified, results within the last 7 days are returned.",
-                "operationId": "messages_search",
+                "operationId": "messages/search",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -5819,14 +5117,14 @@
                 }
             }
         },
-        "/messages/search-time-series.json": {
+        "/messages/search-time-series": {
             "post": {
                 "tags": [
                     "Messages"
                 ],
                 "summary": "Get time series data for message search",
                 "description": "Search the content of recently sent messages and return the aggregated hourly stats for matching messages.",
-                "operationId": "messages_search_time_series",
+                "operationId": "messages/search-time-series",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -5875,14 +5173,14 @@
                 "x-readonly": true
             }
         },
-        "/messages/info.json": {
+        "/messages/info": {
             "post": {
                 "tags": [
                     "Messages"
                 ],
                 "summary": "Get information about a single sent message",
                 "description": "Returns detailed information about a single sent message. Can return either email or SMS message information depending on the message type.",
-                "operationId": "messages_info",
+                "operationId": "messages/info",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -5937,14 +5235,14 @@
                 "x-readonly": true
             }
         },
-        "/messages/content.json": {
+        "/messages/content": {
             "post": {
                 "tags": [
                     "Messages"
                 ],
                 "summary": "Get the full content of a sent message",
                 "description": "Returns the full content of a recently sent message. For email messages, includes HTML, text, and attachments. For SMS messages, includes text content and SMS-specific fields.",
-                "operationId": "messages_content",
+                "operationId": "messages/content",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -5999,14 +5297,14 @@
                 "x-readonly": true
             }
         },
-        "/messages/parse.json": {
+        "/messages/parse": {
             "post": {
                 "tags": [
                     "Messages"
                 ],
                 "summary": "Parse a MIME message",
                 "description": "Parse the full MIME document for an email message, returning the content of the message broken into its constituent pieces.",
-                "operationId": "messages_parse",
+                "operationId": "messages/parse",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -6052,14 +5350,14 @@
                 "x-readonly": true
             }
         },
-        "/messages/send-raw.json": {
+        "/messages/send-raw": {
             "post": {
                 "tags": [
                     "Messages"
                 ],
                 "summary": "Send a raw MIME message through Mandrill",
                 "description": "Send a raw MIME document for a message, and send it exactly as if it were sent through Mandrill's SMTP servers.",
-                "operationId": "messages_send_raw",
+                "operationId": "messages/send-raw",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -6118,14 +5416,14 @@
                 "x-readonly": true
             }
         },
-        "/messages/list-scheduled.json": {
+        "/messages/list-scheduled": {
             "post": {
                 "tags": [
                     "Messages"
                 ],
                 "summary": "Get scheduled emails",
                 "description": "Queries your scheduled emails.",
-                "operationId": "messages_list_scheduled",
+                "operationId": "messages/list-scheduled",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -6164,14 +5462,14 @@
                 "x-readonly": true
             }
         },
-        "/messages/cancel-scheduled.json": {
+        "/messages/cancel-scheduled": {
             "post": {
                 "tags": [
                     "Messages"
                 ],
                 "summary": "Cancel a scheduled email",
                 "description": "Cancels a scheduled email.",
-                "operationId": "messages_cancel_scheduled",
+                "operationId": "messages/cancel-scheduled",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -6216,14 +5514,14 @@
                 }
             }
         },
-        "/messages/reschedule.json": {
+        "/messages/reschedule": {
             "post": {
                 "tags": [
                     "Messages"
                 ],
                 "summary": "Reschedule a scheduled email",
                 "description": "Reschedules a scheduled email.",
-                "operationId": "messages_reschedule",
+                "operationId": "messages/reschedule",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -6268,14 +5566,14 @@
                 }
             }
         },
-        "/messages/send-sms.json": {
+        "/messages/send-sms": {
             "post": {
                 "tags": [
                     "Messages"
                 ],
                 "summary": "Send SMS message",
                 "description": "Send a new SMS message through Mandrill",
-                "operationId": "messages_send_sms",
+                "operationId": "messages/send-sms",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -6312,6 +5610,670 @@
                     },
                     "400": {
                         "description": "Unknown_Subaccount: Unknown subaccount",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/inbound/domains": {
+            "post": {
+                "tags": [
+                    "Inbound"
+                ],
+                "summary": "List inbound domains",
+                "description": "List the domains that have been configured for inbound delivery.",
+                "operationId": "inbound/domains",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ApiKey"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The inbound domains associated with the account",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/InboundDomain"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid API key",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/inbound/add-domain": {
+            "post": {
+                "tags": [
+                    "Inbound"
+                ],
+                "summary": "Add inbound domain",
+                "description": "Add an inbound domain to your account.",
+                "operationId": "inbound/add-domain",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/ApiKey"
+                                    },
+                                    {
+                                        "required": [
+                                            "domain"
+                                        ],
+                                        "properties": {
+                                            "domain": {
+                                                "description": "A domain name for inbound email delivery",
+                                                "type": "string",
+                                                "example": "inbound.example.com"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Information about the domain",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InboundDomain"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid API key",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/inbound/check-domain": {
+            "post": {
+                "tags": [
+                    "Inbound"
+                ],
+                "summary": "Check domain settings",
+                "description": "Check the MX settings for an inbound domain. The domain must have already been added with the add-domain call.",
+                "operationId": "inbound/check-domain",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/ApiKey"
+                                    },
+                                    {
+                                        "required": [
+                                            "domain"
+                                        ],
+                                        "properties": {
+                                            "domain": {
+                                                "description": "An existing inbound domain",
+                                                "type": "string",
+                                                "example": "inbound.example.com"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Information about the inbound domain",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InboundDomain"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid API key",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Unknown inbound domain",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/inbound/delete-domain": {
+            "post": {
+                "tags": [
+                    "Inbound"
+                ],
+                "summary": "Delete inbound domain",
+                "description": "Delete an inbound domain from the account. All mail will stop routing for this domain immediately.",
+                "operationId": "inbound/delete-domain",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/ApiKey"
+                                    },
+                                    {
+                                        "required": [
+                                            "domain"
+                                        ],
+                                        "properties": {
+                                            "domain": {
+                                                "description": "An existing inbound domain",
+                                                "type": "string",
+                                                "example": "inbound.example.com"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Information about the deleted domain",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InboundDomain"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid API key",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Unknown inbound domain",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/inbound/routes": {
+            "post": {
+                "tags": [
+                    "Inbound"
+                ],
+                "summary": "List routes",
+                "description": "List the routes defined for an inbound domain or SMS program. Provide either domain or phone (not both).",
+                "operationId": "inbound/routes",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/ApiKey"
+                                    },
+                                    {
+                                        "properties": {
+                                            "domain": {
+                                                "description": "The domain to check (required if phone is not provided)",
+                                                "type": "string",
+                                                "example": "inbound.example.com"
+                                            },
+                                            "phone": {
+                                                "description": "The SMS program phone number (required if domain is not provided)",
+                                                "type": "string",
+                                                "example": "+16505551234"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The routes associated with the domain or phone",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/InboundRoute"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid API key",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Unknown inbound domain or SMS program",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/inbound/add-route": {
+            "post": {
+                "tags": [
+                    "Inbound"
+                ],
+                "summary": "Add route",
+                "description": "Add a new route to an inbound domain or SMS program. Provide either domain or phone (not both).",
+                "operationId": "inbound/add-route",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/ApiKey"
+                                    },
+                                    {
+                                        "required": [
+                                            "url"
+                                        ],
+                                        "properties": {
+                                            "domain": {
+                                                "description": "An existing inbound domain (required if phone is not provided)",
+                                                "type": "string",
+                                                "example": "inbound.example.com"
+                                            },
+                                            "phone": {
+                                                "description": "The SMS program phone number - the TO number that receives inbound SMS (required if domain is not provided)",
+                                                "type": "string",
+                                                "example": "+16505551234"
+                                            },
+                                            "pattern": {
+                                                "description": "For email: the mailbox pattern (e.g., \"mailbox-*\"). For SMS: not used, the phone number is the pattern.",
+                                                "type": "string",
+                                                "example": "mailbox-*"
+                                            },
+                                            "url": {
+                                                "description": "The webhook URL where the inbound messages will be published",
+                                                "type": "string",
+                                                "format": "uri",
+                                                "example": "https://example.com/webhook-url"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The added route information",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InboundRoute"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid API key",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Unknown inbound domain or SMS program",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/inbound/update-route": {
+            "post": {
+                "tags": [
+                    "Inbound"
+                ],
+                "summary": "Update mailbox route",
+                "description": "Update the pattern or webhook of an existing inbound mailbox route. If null is provided for any fields, the values will remain unchanged.",
+                "operationId": "inbound/update-route",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/ApiKey"
+                                    },
+                                    {
+                                        "required": [
+                                            "id"
+                                        ],
+                                        "properties": {
+                                            "id": {
+                                                "description": "The unique identifier of an existing mailbox route",
+                                                "type": "string",
+                                                "example": "88.2144614"
+                                            },
+                                            "pattern": {
+                                                "description": "For email: The search pattern that the mailbox name should match. For SMS: the sender's phone number (FROM number).  Null to leave unchanged",
+                                                "type": [
+                                                    "string",
+                                                    null
+                                                ],
+                                                "example": "*.*"
+                                            },
+                                            "url": {
+                                                "description": "The webhook URL where the inbound messages will be published (null to leave unchanged)",
+                                                "type": [
+                                                    "string",
+                                                    null
+                                                ],
+                                                "format": "uri",
+                                                "example": "https://example.com/webhook-url"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The updated mailbox route information",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InboundRoute"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid API key",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Unknown inbound route",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/inbound/delete-route": {
+            "post": {
+                "tags": [
+                    "Inbound"
+                ],
+                "summary": "Delete mailbox route",
+                "description": "Delete an existing inbound mailbox route.",
+                "operationId": "inbound/delete-route",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/ApiKey"
+                                    },
+                                    {
+                                        "required": [
+                                            "id"
+                                        ],
+                                        "properties": {
+                                            "id": {
+                                                "description": "The unique identifier of an existing route",
+                                                "type": "string",
+                                                "example": "88.214614"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The deleted mailbox route information",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InboundRoute"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid API key",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Unknown inbound route",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/inbound/send-raw": {
+            "post": {
+                "tags": [
+                    "Inbound"
+                ],
+                "summary": "Send mime document",
+                "description": "Take a raw MIME document destined for a domain with inbound domains set up, and send it to the inbound hook exactly as if it had been sent over SMTP.",
+                "operationId": "inbound/send-raw",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/ApiKey"
+                                    },
+                                    {
+                                        "required": [
+                                            "raw_message"
+                                        ],
+                                        "properties": {
+                                            "raw_message": {
+                                                "description": "The full MIME document of an email message",
+                                                "type": "string",
+                                                "example": "From: sender@example.com\\nTo: mailbox-123@inbound.example.com\\nSubject: Some Subject\\n\\nSome content."
+                                            },
+                                            "to": {
+                                                "description": "Optionally define the recipients to receive the message - otherwise we'll use the To, Cc, and Bcc headers provided in the document",
+                                                "type": [
+                                                    "array",
+                                                    null
+                                                ],
+                                                "items": {
+                                                    "type": "string",
+                                                    "format": "email"
+                                                },
+                                                "example": [
+                                                    "mailbox-123@inbound.example.com"
+                                                ]
+                                            },
+                                            "mail_from": {
+                                                "description": "The address specified in the MAIL FROM stage of the SMTP conversation",
+                                                "type": [
+                                                    "string",
+                                                    null
+                                                ],
+                                                "format": "email",
+                                                "example": "sender@example.com"
+                                            },
+                                            "helo": {
+                                                "description": "The hostname provided during HELO",
+                                                "type": [
+                                                    "string",
+                                                    null
+                                                ],
+                                                "example": "sender.example.com"
+                                            },
+                                            "client_address": {
+                                                "description": "The remote host's IP address",
+                                                "type": [
+                                                    "string",
+                                                    null
+                                                ],
+                                                "example": "192.168.1.100"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Processing results for each recipient or null if no recipients processed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SendRawResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid API key",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Unknown inbound domain",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -8490,84 +8452,6 @@
                     }
                 ]
             },
-            "ExportJob": {
-                "description": "Export job creation response with initial status information",
-                "required": [
-                    "id",
-                    "created_at",
-                    "type",
-                    "state"
-                ],
-                "properties": {
-                    "id": {
-                        "description": "Unique identifier for this export job. Use this identifier when checking the export job status",
-                        "type": "string",
-                        "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d+$",
-                        "example": "2013-01-01 12:20:28.13842"
-                    },
-                    "created_at": {
-                        "description": "Date and time the export job was created in UTC YYYY-MM-DD HH:MM:SS format",
-                        "type": "string",
-                        "example": "2013-01-01 12:30:28"
-                    },
-                    "type": {
-                        "description": "Type of export job that was started",
-                        "type": "string",
-                        "enum": [
-                            "reject",
-                            "whitelist",
-                            "allowlist",
-                            "activity"
-                        ],
-                        "example": "reject"
-                    },
-                    "finished_at": {
-                        "description": "Date and time the export job finished in UTC YYYY-MM-DD HH:MM:SS format, or null for jobs that have not run",
-                        "type": "string",
-                        "example": null,
-                        "oneOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
-                    },
-                    "state": {
-                        "description": "Current state of the export job",
-                        "type": "string",
-                        "enum": [
-                            "waiting",
-                            "working",
-                            "complete",
-                            "error"
-                        ],
-                        "example": "waiting"
-                    },
-                    "result_url": {
-                        "description": "URL to download the export results when job is complete, or null if not ready",
-                        "type": "string",
-                        "example": null,
-                        "oneOf": [
-                            {
-                                "type": "string",
-                                "format": "uri"
-                            },
-                            {
-                                "type": "null"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
-                    }
-                },
-                "type": "object"
-            },
             "ExportResponse": {
                 "description": "Export job information including status and download URL when complete",
                 "required": [
@@ -9882,15 +9766,17 @@
                     "name": {
                         "description": "Optional display name for the subaccount",
                         "type": "string",
-                        "oneOf": [
-                            {
-                                "type": "string"
-                            },
-                            {}
-                        ]
+                        "maxLength": 255,
+                        "example": "My Subaccount"
                     },
                     "created_at": {
                         "description": "Date and time the subaccount was created in UTC YYYY-MM-DD HH:MM:SS format",
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$",
+                        "example": "2025-08-29 18:48:02.82578"
+                    },
+                    "first_sent_at": {
+                        "description": "Date and time that the subaccount first sent as a UTC string in YYYY-MM-DD HH:MM:SS format",
                         "type": "string",
                         "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$",
                         "example": "2025-08-29 18:48:02.82578"
@@ -9928,14 +9814,7 @@
                     "custom_quota": {
                         "description": "Optional manual hourly quota for the subaccount. Only present when explicitly set during creation/update",
                         "type": "integer",
-                        "example": 100,
-                        "oneOf": [
-                            {
-                                "type": "integer",
-                                "minimum": 1
-                            },
-                            {}
-                        ]
+                        "minimum": 1
                     }
                 },
                 "type": "object"
@@ -10681,7 +10560,7 @@
                         "minimum": 0
                     },
                     "hourly_quota": {
-                        "description": "Maximum emails delivered per hour",
+                        "description": "Maximum emails delivered per hour. Any emails beyond that will be accepted and queued for later delivery. Users with higher reputations will have higher hourly quotas",
                         "type": "integer"
                     },
                     "backlog": {
@@ -11209,10 +11088,6 @@
             "description": "Operations for managing dedicated IPs, IP pools, warmup processes, and custom DNS configuration"
         },
         {
-            "name": "Inbound",
-            "description": "Operations for managing inbound email domains and routing"
-        },
-        {
             "name": "Metadata",
             "description": "Operations for managing custom metadata fields"
         },
@@ -11255,6 +11130,10 @@
         {
             "name": "Messages",
             "description": "Operations related to sending and managing messages"
+        },
+        {
+            "name": "Inbound",
+            "description": "Operations for managing inbound email domains and SMS program routing"
         }
     ]
 }
