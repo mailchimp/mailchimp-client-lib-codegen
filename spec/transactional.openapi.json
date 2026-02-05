@@ -2,12 +2,12 @@
     "openapi": "3.1.0",
     "info": {
         "title": "Mailchimp Transactional API",
-        "version": "1.2.0"
+        "version": "1.3.0"
     },
     "servers": [
         {
-            "url": "https://mandrillapp.com/api/1.2",
-            "description": "Mailchimp Transactional API v1.2"
+            "url": "https://mandrillapp.com/api/1.3",
+            "description": "Mailchimp Transactional API v1.3"
         }
     ],
     "paths": {
@@ -4913,6 +4913,284 @@
                 }
             }
         },
+        "/mctemplates/info": {
+            "post": {
+                "tags": [
+                    "Mailchimp Transactional Templates"
+                ],
+                "summary": "Get Mailchimp Transactional template information",
+                "description": "Returns complete information about a Mailchimp Transactional template including draft and published versions",
+                "operationId": "mctemplates/info",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "key",
+                                    "mc_template_id"
+                                ],
+                                "properties": {
+                                    "key": {
+                                        "description": "Valid API key",
+                                        "type": "string",
+                                        "example": "12345"
+                                    },
+                                    "mc_template_id": {
+                                        "description": "Mailchimp template ID",
+                                        "type": "integer",
+                                        "example": 12345
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Template information retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/McTemplateResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid API key"
+                    },
+                    "404": {
+                        "description": "Template not found"
+                    }
+                }
+            }
+        },
+        "/mctemplates/list": {
+            "post": {
+                "tags": [
+                    "Mailchimp Transactional Templates"
+                ],
+                "summary": "List Mailchimp Transactional templates",
+                "description": "Returns a list of all Mailchimp Transactional templates for the authenticated user",
+                "operationId": "mctemplates/list",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "key"
+                                ],
+                                "properties": {
+                                    "key": {
+                                        "description": "Valid API key",
+                                        "type": "string",
+                                        "example": "\"\""
+                                    },
+                                    "search_query": {
+                                        "description": "Optional search query to filter templates",
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "example": "\"\""
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "List of templates retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/McTemplateResponse"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid API key"
+                    }
+                }
+            }
+        },
+        "/mctemplates/render": {
+            "post": {
+                "tags": [
+                    "Mailchimp Transactional Templates"
+                ],
+                "summary": "Render a Mailchimp Transactional template",
+                "description": "Renders a Mailchimp Transactional template with optional merge variables",
+                "operationId": "mctemplates/render",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "key",
+                                    "mc_template_id"
+                                ],
+                                "properties": {
+                                    "key": {
+                                        "description": "Valid API key",
+                                        "type": "string",
+                                        "example": "12345"
+                                    },
+                                    "mc_template_id": {
+                                        "description": "Mailchimp template ID",
+                                        "type": "integer",
+                                        "example": 12345
+                                    },
+                                    "mc_template_version": {
+                                        "description": "Template version - \"published\" or \"draft\". Note: requesting \"published\" when the template has not been published will return a 404 error.",
+                                        "type": "string",
+                                        "default": "published",
+                                        "enum": [
+                                            "published",
+                                            "draft"
+                                        ],
+                                        "example": "12345"
+                                    },
+                                    "merge_vars": {
+                                        "description": "Merge variables to inject into template",
+                                        "type": [
+                                            "array",
+                                            "null"
+                                        ],
+                                        "items": {
+                                            "properties": {
+                                                "name": {
+                                                    "description": "Variable name",
+                                                    "type": "string",
+                                                    "example": "FIRSTNAME"
+                                                },
+                                                "content": {
+                                                    "description": "Variable value",
+                                                    "type": "string",
+                                                    "example": "John"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "example": "12345"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Template rendered successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/McTemplateRenderResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "MC_Exception_ValidationError: Invalid mc_template_version parameter",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid_Key: Invalid API key",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Unknown_Template: Template not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/mctemplates/time-series": {
+            "post": {
+                "tags": [
+                    "Mailchimp Transactional Templates"
+                ],
+                "summary": "Get Mailchimp Transactional template time series",
+                "description": "Returns hourly stats for the last 30 days for a Mailchimp Transactional template. Returns an empty array if the template exists but has never been used to send messages.",
+                "operationId": "mctemplates/time-series",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "key",
+                                    "mc_template_id"
+                                ],
+                                "properties": {
+                                    "key": {
+                                        "description": "Valid API key",
+                                        "type": "string",
+                                        "example": "12345"
+                                    },
+                                    "mc_template_id": {
+                                        "description": "Mailchimp template ID",
+                                        "type": "integer",
+                                        "example": 12345
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Time series data retrieved successfully (may be empty array if template never used)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TagTimeSeries"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid API key"
+                    },
+                    "404": {
+                        "description": "Template not found"
+                    }
+                }
+            }
+        },
         "/messages/send": {
             "post": {
                 "tags": [
@@ -5006,6 +5284,91 @@
                                     "items": {
                                         "$ref": "#/components/schemas/MessagesSendResponse"
                                     }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid_Key: Invalid API key",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "402": {
+                        "description": "MC_Exception_PaymentRequired: Payment required",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Error 404",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ErrorResponse",
+                                            "description": "Unknown_Template: Template not found"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/ErrorResponse",
+                                            "description": "Unknown_Subaccount: Subaccount not found"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-readonly": true
+            }
+        },
+        "/messages/send-mc-template": {
+            "post": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Send a new transactional message using a Mailchimp Transactional template",
+                "description": "Send a new transactional message using a Mailchimp Transactional template. If you signed up for a Mandrill account on or after December 1st, 2015, you must add SPF and DKIM records and verify ownership of your sending domains before you can send email through your account.",
+                "operationId": "messages/send-mc-template",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MessagesSendMcTemplateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Per-recipient send results",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/MessagesSendResponse"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "MC_Exception_ValidationError: Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
                                 }
                             }
                         }
@@ -6274,6 +6637,147 @@
                     },
                     "404": {
                         "description": "Unknown inbound domain",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/senders/delete-domain": {
+            "post": {
+                "tags": [
+                    "Senders"
+                ],
+                "summary": "Delete a sender domain",
+                "description": "Deletes an unverified sender domain from your account. Verified domains cannot be deleted via API and require login confirmation.",
+                "operationId": "senders/delete-domain",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DomainRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Information about the deleted sender domain",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SenderDomain"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid API key",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Cannot delete verified domain - please login to confirm deletion",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Unknown domain",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/urls/delete-tracking-domain": {
+            "post": {
+                "tags": [
+                    "URLs"
+                ],
+                "summary": "Delete a tracking domain",
+                "description": "Deletes an unverified tracking domain from your account. Valid tracking domains cannot be deleted via API and require login confirmation.",
+                "operationId": "urls/delete-tracking-domain",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "key",
+                                    "domain"
+                                ],
+                                "properties": {
+                                    "key": {
+                                        "description": "A valid API key",
+                                        "type": "string",
+                                        "example": "\"track.example.com\""
+                                    },
+                                    "domain": {
+                                        "description": "An existing tracking domain name",
+                                        "type": "string",
+                                        "format": "hostname",
+                                        "example": "track.example.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Information about the deleted tracking domain",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TrackingDomain"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid API key",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Cannot delete verified tracking domain - please login to confirm deletion",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Unknown tracking domain",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -10749,6 +11253,62 @@
                 },
                 "type": "object"
             },
+            "MessagesSendMcTemplateRequest": {
+                "description": "Request body for messages/send-mc-template",
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ApiKey"
+                    },
+                    {
+                        "required": [
+                            "mc_template_id",
+                            "message"
+                        ],
+                        "properties": {
+                            "mc_template_id": {
+                                "description": "the Mailchimp Transactional template ID from the user's account",
+                                "type": "integer",
+                                "example": 12345
+                            },
+                            "mc_template_version": {
+                                "description": "which version of the template to use - \"draft\" for draft content or \"published\" for published content. Defaults to \"published\". Note: requesting \"published\" when the template has not been published will return a 404 error.",
+                                "type": "string",
+                                "enum": [
+                                    "draft",
+                                    "published"
+                                ],
+                                "example": "published"
+                            },
+                            "message": {
+                                "$ref": "#/components/schemas/RequestComponent",
+                                "description": "the other information on the message to send - same as /messages/send"
+                            },
+                            "async": {
+                                "description": "enable a background sending mode that is optimized for bulk sending. In async mode, messages/send will immediately return a status of \"queued\" for every recipient. To handle rejections when sending in async mode, set up a webhook for the 'reject' event. Defaults to false for messages with no more than 10 recipients; messages with more than 10 recipients are always sent asynchronously, regardless of the value of async.",
+                                "oneOf": [
+                                    {
+                                        "type": "boolean"
+                                    },
+                                    {
+                                        "type": "null"
+                                    }
+                                ]
+                            },
+                            "ip_pool": {
+                                "description": "the name of the dedicated ip pool that should be used to send the message. If you do not have any dedicated IPs, this parameter has no effect. If you specify a pool that does not exist, your default pool will be used instead.",
+                                "type": "string"
+                            },
+                            "send_at": {
+                                "description": "when this message should be sent as a UTC timestamp in YYYY-MM-DD HH:MM:SS format. If you specify a time in the past, the message will be sent immediately; for future dates, you're limited to one year from the date of scheduling.",
+                                "type": "string",
+                                "format": "date-time"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
             "SmsSendRequest": {
                 "description": "Request body for messages/send-sms",
                 "type": "object",
@@ -10806,6 +11366,43 @@
                                             }
                                         },
                                         "type": "object"
+                                    },
+                                    "merge": {
+                                        "description": "Whether to evaluate merge tags in the message. Will automatically be set to true if either merge_vars or global_merge_vars are provided.",
+                                        "type": "boolean"
+                                    },
+                                    "merge_language": {
+                                        "description": "the merge tag language to use when evaluating merge tags, either mailchimp or handlebars Possible values: \"mailchimp\" or \"handlebars\".",
+                                        "type": "string"
+                                    },
+                                    "global_merge_vars": {
+                                        "description": "global merge variables to use for all recipients. You can override these per recipient.",
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/MergeVar"
+                                        }
+                                    },
+                                    "merge_vars": {
+                                        "description": "per-recipient merge variables, which override global merge variables with the same name.",
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "rcpt": {
+                                                    "description": "Phone number of the recipient",
+                                                    "type": "string",
+                                                    "pattern": "^\\+[1-9]\\d{1,14}$",
+                                                    "example": "+11234567890"
+                                                },
+                                                "vars": {
+                                                    "description": "Recipient-specific merge variables",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/MergeVar"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
                                     }
                                 },
                                 "type": "object"
@@ -10814,6 +11411,125 @@
                         "type": "object"
                     }
                 ]
+            },
+            "McTemplateRenderResponse": {
+                "description": "Rendered Mailchimp Transactional template with merge variables applied",
+                "required": [
+                    "html"
+                ],
+                "properties": {
+                    "html": {
+                        "description": "Rendered HTML with merge variables applied",
+                        "type": "string",
+                        "example": "<div>Welcome, John!</div>"
+                    }
+                },
+                "type": "object"
+            },
+            "McTemplateResponse": {
+                "description": "Mailchimp Transactional template information including content, metadata, and settings",
+                "required": [
+                    "mc_template_id",
+                    "mc_template_name",
+                    "labels",
+                    "code",
+                    "subject",
+                    "from_email",
+                    "from_name",
+                    "text",
+                    "publish_code",
+                    "publish_text",
+                    "published_at",
+                    "created_at",
+                    "updated_at",
+                    "draft_updated_at",
+                    "is_broken_template"
+                ],
+                "properties": {
+                    "mc_template_id": {
+                        "description": "Mailchimp template ID",
+                        "type": "integer",
+                        "example": 12345
+                    },
+                    "mc_template_name": {
+                        "description": "Template name",
+                        "type": "string",
+                        "example": "Welcome Email"
+                    },
+                    "labels": {
+                        "description": "Array of labels (always empty for transactional templates)",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "example": []
+                    },
+                    "code": {
+                        "description": "Template HTML (draft version)",
+                        "type": "string",
+                        "example": "<div>Welcome!</div>"
+                    },
+                    "subject": {
+                        "description": "Default subject line",
+                        "type": "string",
+                        "example": "Welcome to our service"
+                    },
+                    "from_email": {
+                        "description": "Default sending address",
+                        "type": "string",
+                        "example": "support@example.com"
+                    },
+                    "from_name": {
+                        "description": "Default from name",
+                        "type": "string",
+                        "example": "Support Team"
+                    },
+                    "text": {
+                        "description": "Template text (draft version)",
+                        "type": "string",
+                        "example": "Welcome to our service!"
+                    },
+                    "publish_code": {
+                        "description": "Template HTML (published version)",
+                        "type": "string",
+                        "example": "<div>Welcome!</div>"
+                    },
+                    "publish_text": {
+                        "description": "Template text (published version)",
+                        "type": "string",
+                        "example": "Welcome to our service!"
+                    },
+                    "published_at": {
+                        "description": "Date and time when template was published in UTC YYYY-MM-DD HH:MM:SS format",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-08-29 18:47:40"
+                    },
+                    "created_at": {
+                        "description": "Date and time when template was created in UTC YYYY-MM-DD HH:MM:SS format",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-08-29 18:47:40.26276"
+                    },
+                    "updated_at": {
+                        "description": "Date and time when template was last updated in UTC YYYY-MM-DD HH:MM:SS format",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-08-29 18:47:40.26277"
+                    },
+                    "draft_updated_at": {
+                        "description": "Date and time when template draft was last updated in UTC YYYY-MM-DD HH:MM:SS format",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-08-29 18:47:40"
+                    },
+                    "is_broken_template": {
+                        "description": "Whether template has rendering errors",
+                        "type": "boolean",
+                        "example": false
+                    }
+                },
+                "type": "object"
             },
             "SmsContentResponse": {
                 "title": "SmsContentResponse",
@@ -11128,12 +11844,16 @@
             "description": "Operations for managing email whitelist (legacy naming for allowlist functionality)"
         },
         {
-            "name": "Messages",
-            "description": "Operations related to sending and managing messages"
-        },
-        {
             "name": "Inbound",
             "description": "Operations for managing inbound email domains and SMS program routing"
+        },
+        {
+            "name": "Mailchimp Transactional Templates",
+            "description": "Operations for managing and rendering Mailchimp Transactional templates"
+        },
+        {
+            "name": "Messages",
+            "description": "Operations related to sending and managing messages"
         }
     ]
 }
