@@ -461,7 +461,7 @@ jobs:
       - name: Publish → npm → transactional-node
         if: env.PUBLISH_EXTERNAL == 'true'
         working-directory: transactional-node
-        run: npm publish --access public
+        run: NODE_AUTH_TOKEN="" npm publish --access public
         continue-on-error: true # temp
         
       - name: Upload NPM logs
