@@ -139,7 +139,7 @@
         ]
       },
       "mctemplates": {
-        "title": "(MC) Templates",
+        "title": "Templates (MC)",
         "description": "Manage templates created via the Mailchimp UI.",
         "paths": [
           "/mctemplates/info",
