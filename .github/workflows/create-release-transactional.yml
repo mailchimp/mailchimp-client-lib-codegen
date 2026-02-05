@@ -456,6 +456,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
+        continue-on-error: true # temp
 
       - name: Publish → npm → transactional-node
         if: env.PUBLISH_EXTERNAL == 'true'
@@ -463,6 +464,12 @@ jobs:
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: '' # we use OIDC instead of a token, prevent a token from being pulled in from elsewhere, otherwise npm publish fails
+        
+      - name: Upload NPM logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-logs
+          path: /home/runner/.npm/_logs/
 
   publish-php:
     runs-on: ubuntu-latest
