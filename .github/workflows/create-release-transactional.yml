@@ -373,7 +373,7 @@ jobs:
       - name: Install Python 3.10
         uses: actions/setup-python@v1
         with:
-          python-version: 3.10
+          python-version: "3.10"
 
       - uses: actions/download-artifact@v4.1.7
         with:
@@ -576,7 +576,7 @@ jobs:
       - name: Install Python 3.10
         uses: actions/setup-python@v1
         with:
-          python-version: 3.10
+          python-version: "3.10"
 
       - uses: actions/download-artifact@v4.1.7
         with:
