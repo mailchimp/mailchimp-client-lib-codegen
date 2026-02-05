@@ -461,9 +461,7 @@ jobs:
       - name: Publish → npm → transactional-node
         if: env.PUBLISH_EXTERNAL == 'true'
         working-directory: transactional-node
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: '' # we use OIDC instead of a token, prevent a token from being pulled in from elsewhere, otherwise npm publish fails
+        run: NODE_AUTH_TOKEN="" npm publish --access public
         continue-on-error: true # temp
         
       - name: Upload NPM logs
