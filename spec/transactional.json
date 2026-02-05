@@ -6820,20 +6820,75 @@
                     "format": "date-time"
                 },
                 "spf": {
-                    "$ref": "#/components/schemas/VerificationDetail",
-                    "description": "Details about the domain's SPF record."
+                  "description": "Details about the domain's SPF record.",
+                    "properties": {
+                    "valid": {
+                        "description": "Whether this verification is valid.",
+                        "type": "boolean"
+                    },
+                    "valid_after": {
+                        "description": "The date and time that this verification was last tested.",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "error": {
+                        "description": "An error message indicating why the verification failed.",
+                        "type": "string"
+                    }
+                  },
+                  "type": "object"
                 },
                 "dkim": {
-                    "$ref": "#/components/schemas/VerificationDetail",
-                    "description": "Details about the domain's DKIM record."
+                  "description": "Details about the domain's DKIM record.",
+                  "properties": {
+                    "valid": {
+                        "description": "Whether this verification is valid.",
+                        "type": "boolean"
+                    },
+                    "valid_after": {
+                        "description": "The date and time that this verification was last tested.",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "error": {
+                        "description": "An error message indicating why the verification failed.",
+                        "type": "string"
+                    }
+                  },
+                  "type": "object"
                 },
                 "dkim2": {
-                    "$ref": "#/components/schemas/VerificationDetail",
-                    "description": "Details about the domain's second DKIM record."
+                  "description": "Details about the domain's second DKIM record.",
+                  "properties": {
+                    "valid": {
+                      "description": "Whether this verification is valid.",
+                      "type": "boolean"
+                    },
+                    "valid_after": {
+                      "description": "The date and time that this verification was last tested.",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "error": {
+                      "description": "An error message indicating why the verification failed.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
                 },
                 "dmarc": {
-                    "$ref": "#/components/schemas/DmarcDetail",
-                    "description": "Details about the domain's DMARC record."
+                  "description": "Details about the domain's DMARC record.",
+                  "properties": {
+                    "valid": {
+                        "description": "Whether this verification is valid.",
+                        "type": "boolean"
+                    },
+                    "error": {
+                        "description": "An error message indicating why the verification failed.",
+                        "type": "string"
+                    }
+                  },
+                  "type": "object"
                 },
                 "verified_at": {
                     "description": "The date and time that the sending domain was verified.",
