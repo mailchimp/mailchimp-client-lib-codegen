@@ -427,8 +427,6 @@ jobs:
           node-version: '22.x'
           registry-url: 'https://registry.npmjs.org'
           scope: '@mailchimp'
-        env:
-          NODE_AUTH_TOKEN: "" # we use OIDC instead of a token for npm publish, prevent a token from being pulled in from elsewhere
 
       - name: Prepare Build & Publishing Tools
         run: npm ci
@@ -463,6 +461,8 @@ jobs:
         if: env.PUBLISH_EXTERNAL == 'true'
         working-directory: transactional-node
         run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: '' # we use OIDC instead of a token, prevent a token from being pulled in from elsewhere, otherwise npm publish fails
 
   publish-php:
     runs-on: ubuntu-latest
