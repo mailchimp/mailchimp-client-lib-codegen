@@ -429,7 +429,7 @@ jobs:
           scope: '@mailchimp'
 
       - name: Prepare Build & Publishing Tools
-        run: npm install
+        run: npm ci
 
       - uses: actions/download-artifact@v4.1.7
         with:
