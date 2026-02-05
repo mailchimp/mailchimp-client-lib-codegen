@@ -10813,13 +10813,7 @@
                         },
                         "error": {
                             "description": "an error describing the CNAME record, or null if the record is correct",
-                            "example": " does not match the required CNAME target of mandrillapp.com. Please verify that the target was entered exactly as requested and try again.",
-                            "oneOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {}
-                            ]
+                            "example": " does not match the required CNAME target of mandrillapp.com. Please verify that the target was entered exactly as requested and try again."
                         }
                     },
                     "type": "object"
