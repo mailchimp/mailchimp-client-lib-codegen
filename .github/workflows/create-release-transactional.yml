@@ -456,19 +456,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SPEC_VERSION: ${{ needs.validate.outputs.version }}
-        continue-on-error: true # temp
 
       - name: Publish → npm → transactional-node
         if: env.PUBLISH_EXTERNAL == 'true'
         working-directory: transactional-node
-        run: NODE_AUTH_TOKEN="" npm publish --access public
-        continue-on-error: true # temp
-        
-      - name: Upload NPM logs
-        uses: actions/upload-artifact@v4
-        with:
-          name: npm-logs
-          path: /home/runner/.npm/_logs/
+        run: NODE_AUTH_TOKEN="" npm publish --access public # must set token to empty string to use OIDC. See https://github.com/actions/setup-node/issues/1440
 
   publish-php:
     runs-on: ubuntu-latest
