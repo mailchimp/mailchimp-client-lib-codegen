@@ -59,6 +59,7 @@
           "/messages/send",
           "/messages/send-sms",
           "/messages/send-template",
+          "/messages/send-mc-template",
           "/messages/search",
           "/messages/search-time-series",
           "/messages/info",
@@ -92,6 +93,7 @@
           "/senders/list",
           "/senders/domains",
           "/senders/add-domain",
+          "/senders/delete-domain",
           "/senders/check-domain",
           "/senders/verify-domain",
           "/senders/info",
@@ -124,7 +126,7 @@
       },
       "templates": {
         "title": "Templates",
-        "description": "Manage the Templates in your account.",
+        "description": "Manage templates created via the Mandrill UI or through the /templates endpoint.",
         "paths": [
           "/templates/add",
           "/templates/info",
@@ -136,6 +138,16 @@
           "/templates/render"
         ]
       },
+      "mctemplates": {
+        "title": "Templates (MC)",
+        "description": "Manage templates created via the Mailchimp UI.",
+        "paths": [
+          "/mctemplates/info",
+          "/mctemplates/list",
+          "/mctemplates/time-series",
+          "/mctemplates/render"
+        ]
+      },
       "urls": {
         "title": "URLs",
         "description": "Manage your tracking domains. Some of these endpoints may be deprecated.",
@@ -145,6 +157,7 @@
           "/urls/time-series",
           "/urls/tracking-domains",
           "/urls/add-tracking-domain",
+          "/urls/delete-tracking-domain",
           "/urls/check-tracking-domain"
         ]
       },
@@ -178,7 +191,7 @@
   },
   "swagger": "2.0",
   "info": {
-    "version": "1.1.2",
+    "version": "1.3.3",
     "title": "Mailchimp Transactional API",
     "contact": {
       "name": "API Support",
@@ -187,7 +200,7 @@
     "x-permalink": "https://github.com/mailchimp/mailchimp-client-lib-codegen/blob/main/spec/transactional.openapi.json"
   },
   "host": "mandrillapp.com",
-  "basePath": "/api/1.0",
+  "basePath": "/api/1.3",
   "schemes": ["https"],
   "consumes": ["application/json"],
   "produces": [
@@ -1159,8 +1172,8 @@
           "methodNameCamel": "routes",
           "methodNameSnake": "routes"
         },
-        "summary": "List mailbox routes",
-        "description": "List the mailbox routes defined for an inbound domain.",
+        "summary": "List routes",
+        "description": "List the routes defined for an inbound domain or SMS program. Provide either domain or phone (not both).",
         "operationId": "postInboundRoutes",
         "tags": ["inbound"],
         "parameters": [
@@ -1171,7 +1184,7 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "domain"],
+              "required": ["key"],
               "properties": {
                 "key": {
                   "type": "string",
@@ -1179,7 +1192,11 @@
                 },
                 "domain": {
                   "type": "string",
-                  "description": "the domain to check"
+                  "description": "The domain to check (required if phone is not provided)"
+                },
+                "phone": {
+                  "type": "string",
+                  "description": "The SMS program phone number (required if domain is not provided)"
                 }
               }
             }
@@ -1224,8 +1241,8 @@
           "methodNameCamel": "addRoute",
           "methodNameSnake": "add_route"
         },
-        "summary": "Add mailbox route",
-        "description": "Add a new mailbox route to an inbound domain.",
+        "summary": "Add route",
+        "description": "Add a new route to an inbound domain or SMS program. Provide either domain or phone (not both).",
         "operationId": "postInboundAddRoute",
         "tags": ["inbound"],
         "parameters": [
@@ -1236,7 +1253,7 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "domain", "pattern", "url"],
+              "required": ["key", "url"],
               "properties": {
                 "key": {
                   "type": "string",
@@ -1244,11 +1261,15 @@
                 },
                 "domain": {
                   "type": "string",
-                  "description": "an existing inbound domain"
+                  "description": "An existing inbound domain (required if phone is not provided)"
+                },
+                "phone": {
+                    "description": "The SMS program phone number - the TO number that receives inbound SMS (required if domain is not provided)",
+                    "type": "string"
                 },
                 "pattern": {
                   "type": "string",
-                  "description": "the search pattern that the mailbox name should match"
+                  "description": "For email: the mailbox pattern (e.g., \"mailbox-*\"). For SMS: not used, the phone number is the pattern."
                 },
                 "url": {
                   "type": "string",
@@ -1317,7 +1338,7 @@
                 },
                 "pattern": {
                   "type": "string",
-                  "description": "the search pattern that the mailbox name should match"
+                  "description": "For email: The search pattern that the mailbox name should match. For SMS: the sender's phone number (FROM number).  Null to leave unchanged"
                 },
                 "url": {
                   "type": "string",
@@ -2806,6 +2827,453 @@
         "deprecated": false
       }
     },
+    "/mctemplates/info": {
+      "post": {
+        "x-custom-config": {
+          "methodNameCamel": "mcTemplatesInfo",
+          "methodNameSnake": "mc_templates_info"
+        },
+        "summary": "Get Mailchimp Template info",
+        "description": "Get information about a Mailchimp Transactional template in your account.",
+        "operationId": "postMcTemplatesInfo",
+        "tags": ["mctemplates"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["key", "mc_template_id"],
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "description": "a valid api key"
+                },
+                "mc_template_id": {
+                  "type": "integer",
+                  "description": "the id of the Mailchimp template"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "description": "Information about the Mailchimp Transactional template",
+              "properties": {
+                "mc_template_id": {
+                    "description": "Mailchimp template ID",
+                    "type": "integer",
+                    "example": 12345
+                },
+                "mc_template_name": {
+                    "description": "Template name",
+                    "type": "string",
+                    "example": "Welcome Email"
+                },
+                "labels": {
+                    "description": "Array of labels (always empty for transactional templates)",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": []
+                },
+                "code": {
+                    "description": "Template HTML (draft version)",
+                    "type": "string",
+                    "example": "<div>Welcome!</div>"
+                },
+                "subject": {
+                    "description": "Default subject line",
+                    "type": "string",
+                    "example": "Welcome to our service"
+                },
+                "from_email": {
+                    "description": "Default sending address",
+                    "type": "string",
+                    "example": "support@example.com"
+                },
+                "from_name": {
+                    "description": "Default from name",
+                    "type": "string",
+                    "example": "Support Team"
+                },
+                "text": {
+                    "description": "Template text (draft version)",
+                    "type": "string",
+                    "example": "Welcome to our service!"
+                },
+                "publish_code": {
+                    "description": "Template HTML (published version)",
+                    "type": "string",
+                    "example": "<div>Welcome!</div>"
+                },
+                "publish_text": {
+                    "description": "Template text (published version)",
+                    "type": "string",
+                    "example": "Welcome to our service!"
+                },
+                "published_at": {
+                    "description": "Date and time when template was published in UTC YYYY-MM-DD HH:MM:SS format",
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2025-08-29 18:47:40"
+                },
+                "created_at": {
+                    "description": "Date and time when template was created in UTC YYYY-MM-DD HH:MM:SS format",
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2025-08-29 18:47:40.26276"
+                },
+                "updated_at": {
+                    "description": "Date and time when template was last updated in UTC YYYY-MM-DD HH:MM:SS format",
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2025-08-29 18:47:40.26277"
+                },
+                "draft_updated_at": {
+                    "description": "Date and time when template draft was last updated in UTC YYYY-MM-DD HH:MM:SS format",
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2025-08-29 18:47:40"
+                },
+                "is_broken_template": {
+                    "description": "Whether template has rendering errors",
+                    "type": "boolean",
+                    "example": false
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/mctemplates/list": {
+      "post": {
+        "x-custom-config": {
+          "methodNameCamel": "mcTemplatesList",
+          "methodNameSnake": "mc_templates_list"
+        },
+        "summary": "List Mailchimp Transactional Templates",
+        "description": "Return a list of all Mailchimp Transactional templates available to this user.",
+        "operationId": "postMcTemplatesList",
+        "tags": ["mctemplates"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["key"],
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "description": "a valid api key"
+                },
+                "search_query": {
+                  "description": "Optional search query to filter templates",
+                  "type": [
+                      "string",
+                      "null"
+                  ],
+                  "example": "\"\""
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "description": "Array of Mailchimp Transactional templates",
+              "items": {
+                "type": "object",
+                "description": "Information about the Mailchimp Transactional template",
+                "properties": {
+                  "mc_template_id": {
+                      "description": "Mailchimp template ID",
+                      "type": "integer",
+                      "example": 12345
+                  },
+                  "mc_template_name": {
+                      "description": "Template name",
+                      "type": "string",
+                      "example": "Welcome Email"
+                  },
+                  "labels": {
+                      "description": "Array of labels (always empty for transactional templates)",
+                      "type": "array",
+                      "items": {
+                          "type": "string"
+                      },
+                      "example": []
+                  },
+                  "code": {
+                      "description": "Template HTML (draft version)",
+                      "type": "string",
+                      "example": "<div>Welcome!</div>"
+                  },
+                  "subject": {
+                      "description": "Default subject line",
+                      "type": "string",
+                      "example": "Welcome to our service"
+                  },
+                  "from_email": {
+                      "description": "Default sending address",
+                      "type": "string",
+                      "example": "support@example.com"
+                  },
+                  "from_name": {
+                      "description": "Default from name",
+                      "type": "string",
+                      "example": "Support Team"
+                  },
+                  "text": {
+                      "description": "Template text (draft version)",
+                      "type": "string",
+                      "example": "Welcome to our service!"
+                  },
+                  "publish_code": {
+                      "description": "Template HTML (published version)",
+                      "type": "string",
+                      "example": "<div>Welcome!</div>"
+                  },
+                  "publish_text": {
+                      "description": "Template text (published version)",
+                      "type": "string",
+                      "example": "Welcome to our service!"
+                  },
+                  "published_at": {
+                      "description": "Date and time when template was published in UTC YYYY-MM-DD HH:MM:SS format",
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2025-08-29 18:47:40"
+                  },
+                  "created_at": {
+                      "description": "Date and time when template was created in UTC YYYY-MM-DD HH:MM:SS format",
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2025-08-29 18:47:40.26276"
+                  },
+                  "updated_at": {
+                      "description": "Date and time when template was last updated in UTC YYYY-MM-DD HH:MM:SS format",
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2025-08-29 18:47:40.26277"
+                  },
+                  "draft_updated_at": {
+                      "description": "Date and time when template draft was last updated in UTC YYYY-MM-DD HH:MM:SS format",
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2025-08-29 18:47:40"
+                  },
+                  "is_broken_template": {
+                      "description": "Whether template has rendering errors",
+                      "type": "boolean",
+                      "example": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/mctemplates/render": {
+      "post": {
+        "x-custom-config": {
+          "methodNameCamel": "mcTemplatesRender",
+          "methodNameSnake": "mc_templates_render"
+        },
+        "summary": "Render Mailchimp Transactional Template",
+        "description": "Render a Mailchimp Transactional template with optional merge variables.",
+        "operationId": "postMcTemplatesRender",
+        "tags": ["mctemplates"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["key", "mc_template_id"],
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "description": "a valid api key"
+                },
+                "mc_template_id": {
+                  "type": "integer",
+                  "description": "the id of the Mailchimp template to render"
+                },
+                "mc_template_version": {
+                    "description": "Template version - \"published\" or \"draft\". Note: requesting \"published\" when the template has not been published will return a 404 error.",
+                    "type": "string",
+                    "default": "published",
+                    "enum": [
+                        "published",
+                        "draft"
+                    ],
+                    "example": "published"
+                },
+                "merge_vars": {
+                  "type": "array",
+                  "description": "an array of merge variables to inject into the template",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "the merge variable name"
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "the merge variable value"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "description": "The rendered HTML template",
+              "properties": {
+                "html": {
+                  "description": "The rendered HTML content with merge variables applied",
+                  "type": "string",
+                  "example": "<html><body>Welcome John!</body></html>"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/mctemplates/time-series": {
+      "post": {
+        "x-custom-config": {
+          "methodNameCamel": "mcTemplatesTimeSeries",
+          "methodNameSnake": "mc_templates_time_series"
+        },
+        "summary": "Get Mailchimp Transactional Template Time Series",
+        "description": "Return the recent history (hourly stats for the last 30 days) for a Mailchimp Transactional template. Returns an empty array if the template exists but has never been used to send messages.",
+        "operationId": "postMcTemplatesTimeSeries",
+        "tags": ["mctemplates"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["key", "mc_template_id"],
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "description": "a valid api key"
+                },
+                "mc_template_id": {
+                  "type": "integer",
+                  "description": "the id of the Mailchimp template to get time series data for"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "description": "Array of hourly stats for the template",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "time": {
+                    "description": "The hour as a UTC date string in YYYY-MM-DD HH:00:00 format",
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2013-01-01 15:00:00"
+                  },
+                  "sent": {
+                    "description": "The number of emails sent during the time period",
+                    "type": "integer",
+                    "example": 42
+                  },
+                  "hard_bounces": {
+                    "description": "The number of emails hard bounced during the time period",
+                    "type": "integer",
+                    "example": 42
+                  },
+                  "soft_bounces": {
+                    "description": "The number of emails soft bounced during the time period",
+                    "type": "integer",
+                    "example": 42
+                  },
+                  "rejects": {
+                    "description": "The number of emails rejected during the time period",
+                    "type": "integer",
+                    "example": 42
+                  },
+                  "complaints": {
+                    "description": "The number of spam complaints received during the time period",
+                    "type": "integer",
+                    "example": 42
+                  },
+                  "unsubs": {
+                    "description": "The number of unsubscribes during the time period",
+                    "type": "integer",
+                    "example": 42
+                  },
+                  "opens": {
+                    "description": "The number of emails opened during the time period",
+                    "type": "integer",
+                    "example": 42
+                  },
+                  "unique_opens": {
+                    "description": "The number of unique opens during the time period",
+                    "type": "integer",
+                    "example": 42
+                  },
+                  "clicks": {
+                    "description": "The number of URLs clicked during the time period",
+                    "type": "integer",
+                    "example": 42
+                  },
+                  "unique_clicks": {
+                    "description": "The number of unique clicks during the time period",
+                    "type": "integer",
+                    "example": 42
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
     "/messages/send-sms": {
       "post": {
         "x-custom-config": {
@@ -2842,8 +3310,13 @@
                           "description": "the full SMS content to be sent"
                         },
                         "to": {
-                          "type": "string",
-                          "description": "the phone number to send the SMS message to"
+                          "type": "array",
+                          "description": "the phone numbers to send the SMS message to",
+                          "items": {
+                            "type": "string",
+                            "description": "a single recipient's phone number",
+                            "example": "+10000000000"
+                          }
                         },
                         "from": {
                           "type": "string",
@@ -2861,6 +3334,10 @@
                       }
                     }
                   }
+                },
+                "async": {
+                  "type": "boolean",
+                  "description": "enable a background sending mode that is optimized for bulk sending. In async mode, messages/send-sms will immediately return a status of \"queued\" for every recipient. To handle rejections when sending in async mode, set up a webhook for the 'reject' event. Defaults to false for messages with no more than 10 recipients; messages with more than 10 recipients are always sent asynchronously, regardless of the value of async."
                 }
               }
             }
@@ -2894,8 +3371,29 @@
                   },
                   "reject_reason": {
                     "type": "string",
-                    "description": "The reason for the rejection if the recipient status is rejected",
-                    "example": null
+                    "description": "the reason for the rejection if the recipient status is \"rejected\"",
+                    "enum": [
+                      "hard-bounce",
+                      "soft-bounce",
+                      "spam",
+                      "unsub",
+                      "custom",
+                      "invalid-sender",
+                      "invalid",
+                      "test-mode-limit",
+                      "unsigned",
+                      "rule"
+                    ],
+                    "example": "hard-bounce"
+                  },
+                  "queue_reason": {
+                    "type": "string",
+                    "description": "The reason for the queueing if the recipient status is queued",
+                    "enum": [
+                      "multiple recipients",
+                      "async requested by user"
+                    ],
+                    "example": "multiple recipients"
                   },
                   "_id": {
                     "type": "string",
@@ -3350,6 +3848,404 @@
                 "message": {
                   "type": "object",
                   "description": "the other information on the message to send - same as /messages/send, but without the html content",
+                  "properties": {
+                    "html": {
+                      "type": "string",
+                      "description": "optional full HTML content to be sent if not in template"
+                    },
+                    "text": {
+                      "type": "string",
+                      "description": "optional full text content to be sent"
+                    },
+                    "subject": {
+                      "type": "string",
+                      "description": "the message subject"
+                    },
+                    "from_email": {
+                      "type": "string",
+                      "description": "the sender email address",
+                      "format": "email"
+                    },
+                    "from_name": {
+                      "type": "string",
+                      "description": "optional from name to be used"
+                    },
+                    "to": {
+                      "type": "array",
+                      "description": "an array of recipient information.",
+                      "items": {
+                        "type": "object",
+                        "description": "a single recipient's information",
+                        "required": ["email"],
+                        "properties": {
+                          "email": {
+                            "type": "string",
+                            "description": "the email address of the recipient",
+                            "format": "email"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "the optional display name to use for the recipient"
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "the header type to use for the recipient, defaults to \"to\" if not provided",
+                            "enum": ["to", "cc", "bcc"]
+                          }
+                        }
+                      }
+                    },
+                    "headers": {
+                      "type": "object",
+                      "description": "optional extra headers to add to the message (most headers are allowed)"
+                    },
+                    "important": {
+                      "type": "boolean",
+                      "description": "whether or not this message is important, and should be delivered ahead of non-important messages"
+                    },
+                    "track_opens": {
+                      "type": "boolean",
+                      "description": "whether or not to turn on open tracking for the message"
+                    },
+                    "track_clicks": {
+                      "type": "boolean",
+                      "description": "whether or not to turn on click tracking for the message"
+                    },
+                    "auto_text": {
+                      "type": "boolean",
+                      "description": "whether or not to automatically generate a text part for messages that are not given text"
+                    },
+                    "auto_html": {
+                      "type": "boolean",
+                      "description": "whether or not to automatically generate an HTML part for messages that are not given HTML"
+                    },
+                    "inline_css": {
+                      "type": "boolean",
+                      "description": "whether or not to automatically inline all CSS styles provided in the message HTML - only for HTML documents less than 256KB in size"
+                    },
+                    "url_strip_qs": {
+                      "type": "boolean",
+                      "description": "whether or not to strip the query string from URLs when aggregating tracked URL data"
+                    },
+                    "preserve_recipients": {
+                      "type": "boolean",
+                      "description": "whether or not to expose all recipients in to \"To\" header for each email"
+                    },
+                    "view_content_link": {
+                      "type": "boolean",
+                      "description": "set to false to remove content logging for sensitive emails"
+                    },
+                    "bcc_address": {
+                      "type": "string",
+                      "description": "an optional address to receive an exact copy of each recipient's email",
+                      "format": "email"
+                    },
+                    "tracking_domain": {
+                      "type": "string",
+                      "description": "a custom domain to use for tracking opens and clicks instead of mandrillapp.com"
+                    },
+                    "signing_domain": {
+                      "type": "string",
+                      "description": "a custom domain to use for SPF/DKIM signing instead of mandrill (for \"via\" or \"on behalf of\" in email clients)"
+                    },
+                    "return_path_domain": {
+                      "type": "string",
+                      "description": "a custom domain to use for the messages's return-path"
+                    },
+                    "merge": {
+                      "type": "boolean",
+                      "description": "whether to evaluate merge tags in the message. Will automatically be set to true if either merge_vars or global_merge_vars are provided."
+                    },
+                    "merge_language": {
+                      "type": "string",
+                      "description": "the merge tag language to use when evaluating merge tags, either mailchimp or handlebars",
+                      "enum": ["mailchimp", "handlebars"]
+                    },
+                    "global_merge_vars": {
+                      "type": "array",
+                      "description": "global merge variables to use for all recipients. You can override these per recipient.",
+                      "items": {
+                        "type": "object",
+                        "description": "a single global merge variable",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "the global merge variable's name. Merge variable names are case-insensitive and may not start with _"
+                          },
+                          "content": {
+                            "type": "string",
+                            "description": "the global merge variable's content"
+                          }
+                        }
+                      }
+                    },
+                    "merge_vars": {
+                      "type": "array",
+                      "description": "per-recipient merge variables, which override global merge variables with the same name.",
+                      "items": {
+                        "type": "object",
+                        "description": "per-recipient merge variables",
+                        "required": ["rcpt"],
+                        "properties": {
+                          "rcpt": {
+                            "type": "string",
+                            "description": "the email address of the recipient that the merge variables should apply to",
+                            "format": "email"
+                          },
+                          "vars": {
+                            "type": "array",
+                            "description": "the recipient's merge variables",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string",
+                                  "description": "the merge variable's name. Merge variable names are case-insensitive and may not start with _"
+                                },
+                                "content": {
+                                  "type": "string",
+                                  "description": "the merge variable's content"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "tags": {
+                      "type": "array",
+                      "description": "an array of string to tag the message with. Stats are accumulated using tags, though we only store the first 100 we see, so this should not be unique or change frequently. Tags should be 50 characters or less. Any tags starting with an underscore are reserved for internal use and will cause errors.",
+                      "items": {
+                        "type": "string",
+                        "description": "a single tag - must not start with an underscore"
+                      }
+                    },
+                    "subaccount": {
+                      "type": "string",
+                      "description": "the unique id of a subaccount for this message - must already exist or will fail with an error"
+                    },
+                    "google_analytics_domains": {
+                      "type": "array",
+                      "description": "an array of strings indicating for which any matching URLs will automatically have Google Analytics parameters appended to their query string automatically.",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "google_analytics_campaign": {
+                      "type": "string",
+                      "description": "optional string indicating the value to set for the utm_campaign tracking parameter. If this isn't provided the email's from address will be used instead.",
+                      "format": "email"
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "description": "metadata an associative array of user metadata. Mandrill will store this metadata and make it available for retrieval. In addition, you can select up to 10 metadata fields to index and make searchable using the Mandrill search api.",
+                      "properties": {
+                        "website": {
+                          "type": "string",
+                          "description": "a valid website url"
+                        }
+                      }
+                    },
+                    "recipient_metadata": {
+                      "type": "array",
+                      "description": "Per-recipient metadata that will override the global values specified in the metadata parameter.",
+                      "items": {
+                        "type": "object",
+                        "description": "metadata for a single recipient",
+                        "properties": {
+                          "rcpt": {
+                            "type": "string",
+                            "description": "the email address of the recipient that the metadata is associated with",
+                            "format": "email"
+                          },
+                          "values": {
+                            "type": "object",
+                            "description": "an associated array containing the recipient's unique metadata. If a key exists in both the per-recipient metadata and the global metadata, the per-recipient metadata will be used.",
+                            "properties": {
+                              "user_id": {
+                                "type": "integer",
+                                "description": ""
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "attachments": {
+                      "type": "array",
+                      "description": "an array of supported attachments to add to the message",
+                      "items": {
+                        "type": "object",
+                        "description": "a single supported attachment",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "description": "the MIME type of the attachment"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "the file name of the attachment"
+                          },
+                          "content": {
+                            "type": "string",
+                            "description": "the content of the attachment as a base64-encoded string"
+                          }
+                        }
+                      }
+                    },
+                    "images": {
+                      "type": "array",
+                      "description": "an array of embedded images to add to the message",
+                      "items": {
+                        "type": "object",
+                        "description": "a single embedded image",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "description": "the MIME type of the image - must start with \"image/\""
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "the Content ID of the image - use <img src=\"cid:THIS_VALUE\"> to reference the image in your HTML content"
+                          },
+                          "content": {
+                            "type": "string",
+                            "description": "the content of the image as a base64-encoded string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "async": {
+                  "type": "boolean",
+                  "description": "enable a background sending mode that is optimized for bulk sending. In async mode, messages/send will immediately return a status of \"queued\" for every recipient. To handle rejections when sending in async mode, set up a webhook for the 'reject' event. Defaults to false for messages with no more than 10 recipients; messages with more than 10 recipients are always sent asynchronously, regardless of the value of async."
+                },
+                "ip_pool": {
+                  "type": "string",
+                  "description": "the name of the dedicated ip pool that should be used to send the message. If you do not have any dedicated IPs, this parameter has no effect. If you specify a pool that does not exist, your default pool will be used instead."
+                },
+                "send_at": {
+                  "type": "string",
+                  "description": "when this message should be sent as a UTC timestamp in YYYY-MM-DD HH:MM:SS format. If you specify a time in the past, the message will be sent immediately; for future dates, you're limited to one year from the date of scheduling.",
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "description": "an array of objects for each recipient containing the key \"email\" with the email address, and details of the message status for that recipient",
+              "items": {
+                "type": "object",
+                "description": "the sending results for a single recipient",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "the email address of the recipient",
+                    "example": "user@example.com"
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "the sending status of the recipient",
+                    "enum": ["sent", "queued", "rejected", "invalid"],
+                    "example": "sent"
+                  },
+                  "reject_reason": {
+                    "type": "string",
+                    "description": "the reason for the rejection if the recipient status is \"rejected\"",
+                    "enum": [
+                      "hard-bounce",
+                      "soft-bounce",
+                      "spam",
+                      "unsub",
+                      "custom",
+                      "invalid-sender",
+                      "invalid",
+                      "test-mode-limit",
+                      "unsigned",
+                      "rule"
+                    ],
+                    "example": "hard-bounce"
+                  },
+                  "queued_reason": {
+                    "type": "string",
+                    "description": "the reason for the email being queued if the response status is \"queued\"",
+                    "enum": [
+                      "attachments",
+                      "multiple-recipients",
+                      "free-trial-sends-exhausted",
+                      "hourly-quota-exhausted",
+                      "monthly-limit-reached",
+                      "sending-paused",
+                      "sending-suspended",
+                      "account-suspended",
+                      "sending-backlogged"
+                    ],
+                    "example": "attachments"
+                  },
+                  "_id": {
+                    "type": "string",
+                    "description": "the message's unique id",
+                    "example": "a92c74e4c5d74998ba690cd535483bb7"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/messages/send-mc-template": {
+      "post": {
+        "x-custom-config": {
+          "methodNameCamel": "sendMcTemplate",
+          "methodNameSnake": "send_mc_template"
+        },
+        "summary": "Send using Mailchimp template",
+        "description": "Send a new transactional message through Mandrill using a Mailchimp Transactional template.",
+        "operationId": "postMessagesSendMcTemplate",
+        "tags": ["messages"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "key",
+                "mc_template_id",
+                "message"
+              ],
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "description": "a valid api key"
+                },
+                "mc_template_id": {
+                  "type": "integer",
+                  "description": "the id of the Mailchimp template to send"
+                },
+                "mc_template_version": {
+                    "description": "which version of the template to use - \"draft\" for draft content or \"published\" for published content. Defaults to \"published\". Note: requesting \"published\" when the template has not been published will return a 404 error.",
+                    "type": "string",
+                    "enum": [
+                        "draft",
+                        "published"
+                    ],
+                    "example": "published"
+                },
+                "message": {
+                  "type": "object",
+                  "description": "the other information on the message to send - same as /messages/send",
                   "properties": {
                     "html": {
                       "type": "string",
@@ -5891,6 +6787,151 @@
                   "type": "string",
                   "description": "a unique key used to verify a domain by adding a TXT record. Append this key to 'mandrill_verify.' and add it to your domain's TXT records to verify",
                   "example": "wtwm-d3lEsGLX6yeb24weA"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/senders/delete-domain": {
+      "post": {
+        "x-custom-config": {
+          "methodNameCamel": "deleteDomain",
+          "methodNameSnake": "delete_domain"
+        },
+        "summary": "Delete sender domain",
+        "description": "Deletes an unverified sender domain from your account. Verified domains cannot be deleted via API and require login confirmation.",
+        "operationId": "postSendersDeleteDomain",
+        "tags": ["senders"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["key", "domain"],
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "description": "a valid api key"
+                },
+                "domain": {
+                  "type": "string",
+                  "description": "the domain name to delete"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "description": "Information about the deleted domain",
+              "properties": {
+                "domain": {
+                    "type": "string",
+                    "format": "hostname",
+                    "example": "example.com"
+                },
+                "created_at": {
+                    "description": "The date and time that the sending domain was first seen.",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "last_tested_at": {
+                    "description": "The date and time that the sending domain was last tested.",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "spf": {
+                  "description": "Details about the domain's SPF record.",
+                    "properties": {
+                    "valid": {
+                        "description": "Whether this verification is valid.",
+                        "type": "boolean"
+                    },
+                    "valid_after": {
+                        "description": "The date and time that this verification was last tested.",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "error": {
+                        "description": "An error message indicating why the verification failed.",
+                        "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
+                "dkim": {
+                  "description": "Details about the domain's DKIM record.",
+                  "properties": {
+                    "valid": {
+                        "description": "Whether this verification is valid.",
+                        "type": "boolean"
+                    },
+                    "valid_after": {
+                        "description": "The date and time that this verification was last tested.",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "error": {
+                        "description": "An error message indicating why the verification failed.",
+                        "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
+                "dkim2": {
+                  "description": "Details about the domain's second DKIM record.",
+                  "properties": {
+                    "valid": {
+                      "description": "Whether this verification is valid.",
+                      "type": "boolean"
+                    },
+                    "valid_after": {
+                      "description": "The date and time that this verification was last tested.",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "error": {
+                      "description": "An error message indicating why the verification failed.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
+                "dmarc": {
+                  "description": "Details about the domain's DMARC record.",
+                  "properties": {
+                    "valid": {
+                        "description": "Whether this verification is valid.",
+                        "type": "boolean"
+                    },
+                    "error": {
+                        "description": "An error message indicating why the verification failed.",
+                        "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
+                "verified_at": {
+                    "description": "The date and time that the sending domain was verified.",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "valid_signing": {
+                    "description": "Whether this domain can be used to sign messages.",
+                    "type": "boolean"
+                },
+                "verify_txt_key": {
+                    "description": "The key for the TXT record used to verify the domain.",
+                    "type": "string"
                 }
               }
             }
@@ -9717,6 +10758,100 @@
                   "type": "boolean",
                   "description": "whether this domain can be used as a tracking domain for email.",
                   "example": false
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/urls/delete-tracking-domain": {
+      "post": {
+        "x-custom-config": {
+          "methodNameCamel": "deleteTrackingDomain",
+          "methodNameSnake": "delete_tracking_domain"
+        },
+        "summary": "Delete tracking domain",
+        "description": "Deletes an unverified tracking domain from your account. Valid tracking domains cannot be deleted via API and require login confirmation.",
+        "operationId": "postUrlsDeleteTrackingDomain",
+        "tags": ["urls"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["key", "domain"],
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "description": "a valid api key"
+                },
+                "domain": {
+                  "type": "string",
+                  "description": "the tracking domain name to delete"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "description": "Information about the deleted tracking domain",
+              "properties": {
+                "domain": {
+                    "description": "The tracking domain name",
+                    "type": "string",
+                    "format": "hostname",
+                    "example": "track.example.com"
+                },
+                "created_at": {
+                    "description": "When the domain was added to the account (UTC YYYY-MM-DD HH:MM:SS.microseconds)",
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d+$",
+                    "example": "2025-08-15 17:01:12.34214"
+                },
+                "last_tested_at": {
+                    "description": "When the domain was last tested for CNAME configuration (UTC YYYY-MM-DD HH:MM:SS.microseconds)",
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d+$",
+                    "example": "2025-08-15 17:01:12.39638"
+                },
+                "cname": {
+                    "description": "CNAME record verification status and details",
+                    "required": [
+                        "valid",
+                        "valid_after",
+                        "error"
+                    ],
+                    "properties": {
+                        "valid": {
+                            "description": "Whether the CNAME record is properly configured",
+                            "type": "boolean",
+                            "example": false
+                        },
+                        "valid_after": {
+                            "description": "When the CNAME will be valid (if applicable)",
+                            "type": "string",
+                            "example": null
+                        },
+                        "error": {
+                            "description": "an error describing the CNAME record, or null if the record is correct",
+                            "example": " does not match the required CNAME target of mandrillapp.com. Please verify that the target was entered exactly as requested and try again."
+                        }
+                    },
+                    "type": "object"
+                },
+                "valid_tracking": {
+                    "description": "Whether this domain is ready to be used for tracking",
+                    "type": "boolean",
+                    "example": false
                 }
               }
             }

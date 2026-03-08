@@ -86,7 +86,10 @@ class Configuration
 
     public function getRequestOptions() {
         return [
-            'timeout' => $this->getTimeout()
+            'timeout' => $this->getTimeout(),
+            'headers' => [
+                'User-Agent' => 'MailchimpTransactional-PHP/{{artifactVersion}}'
+            ]
         ];
     }
 
