@@ -312,7 +312,7 @@
           "methodNameCamel": "list",
           "methodNameSnake": "list"
         },
-        "summary": "List allowlisted emails",
+        "summary": "List allowlist entries",
         "description": "Retrieves your email rejection allowlist. You can provide an email address or search prefix to limit the results. Returns up to 1000 results.",
         "operationId": "postAllowlistsList",
         "tags": [
@@ -478,8 +478,8 @@
           "methodNameCamel": "info",
           "methodNameSnake": "info"
         },
-        "summary": "View export info",
-        "description": "Returns information about an export job. If the export job's state is 'complete', the returned data will include a URL you can use to fetch the results. Every export job produces a zip archive, but the format of the archive is distinct for each job type. The api calls that initiate exports include more details about the output format for that job type.",
+        "summary": "Get export job information",
+        "description": "Returns information about an export job including status and download URL when complete.",
         "operationId": "postExportsInfo",
         "tags": [
           "exports"
@@ -584,8 +584,8 @@
           "methodNameCamel": "list",
           "methodNameSnake": "list"
         },
-        "summary": "List exports",
-        "description": "Returns a list of your exports.",
+        "summary": "List export jobs",
+        "description": "Returns a list of all export jobs for the account.",
         "operationId": "postExportsList",
         "tags": [
           "exports"
@@ -691,8 +691,8 @@
           "methodNameCamel": "rejects",
           "methodNameSnake": "rejects"
         },
-        "summary": "Export denylist",
-        "description": "Begins an export of your rejection denylist. The denylist will be exported to a zip archive containing a single file named rejects.csv that includes the following fields: email, reason, detail, created_at, expires_at, last_event_at, expires_at.",
+        "summary": "Export rejection blacklist",
+        "description": "Begins an export of your rejection blacklist. The blacklist will be exported to a zip archive containing a single file named rejects.csv.",
         "operationId": "postExportsRejects",
         "tags": [
           "exports"
@@ -797,8 +797,8 @@
           "methodNameCamel": "whitelist",
           "methodNameSnake": "whitelist"
         },
-        "summary": "Export Allowlist",
-        "description": "Begins an export of your rejection allowlist. The allowlist will be exported to a zip archive containing a single file named allowlist.csv that includes the following fields: email, detail, created_at.",
+        "summary": "Export rejection allowlist (legacy)",
+        "description": "Begins an export of your rejection allowlist. The allowlist will be exported to a zip archive containing a single file named allowlist.csv.",
         "operationId": "postExportsWhitelist",
         "tags": [
           "exports"
@@ -903,8 +903,8 @@
           "methodNameCamel": "allowlist",
           "methodNameSnake": "allowlist"
         },
-        "summary": "Export Allowlist",
-        "description": "Begins an export of your rejection allowlist. The allowlist will be exported to a zip archive containing a single file named allowlist.csv that includes the following fields: email, detail, created_at.",
+        "summary": "Export rejection allowlist",
+        "description": "Begins an export of your rejection allowlist. The allowlist will be exported to a zip archive containing a single file named allowlist.csv.",
         "operationId": "postExportsAllowlist",
         "tags": [
           "exports"
@@ -1010,7 +1010,7 @@
           "methodNameSnake": "activity"
         },
         "summary": "Export activity history",
-        "description": "Begins an export of your activity history. The activity will be exported to a zip archive containing a single file named activity.csv in the same format as you would be able to export from your account's activity view. It includes the following fields: Date, Email Address, Sender, Subject, Status, Tags, Opens, Clicks, Bounce Detail. If you have configured any custom metadata fields, they will be included in the exported data.",
+        "description": "Begins an export of your activity history. The activity will be exported to a zip archive containing a single file named activity.csv with message details and custom metadata fields.",
         "operationId": "postExportsActivity",
         "tags": [
           "exports"
@@ -1949,7 +1949,7 @@
           "methodNameCamel": "list",
           "methodNameSnake": "list"
         },
-        "summary": "List ip addresses",
+        "summary": "List dedicated IPs",
         "description": "Lists your dedicated IPs.",
         "operationId": "postIpsList",
         "tags": [
@@ -2103,7 +2103,7 @@
           "methodNameCamel": "info",
           "methodNameSnake": "info"
         },
-        "summary": "Get ip info",
+        "summary": "Get dedicated IP information",
         "description": "Retrieves information about a single dedicated IP.",
         "operationId": "postIpsInfo",
         "tags": [
@@ -2256,7 +2256,7 @@
           "methodNameCamel": "provision",
           "methodNameSnake": "provision"
         },
-        "summary": "Request additional ip",
+        "summary": "Request dedicated IP provisioning",
         "description": "Requests an additional dedicated IP for your account. Accounts may have one outstanding request at any time, and provisioning requests are processed within 24 hours.",
         "operationId": "postIpsProvision",
         "tags": [
@@ -2326,8 +2326,8 @@
           "methodNameCamel": "startWarmup",
           "methodNameSnake": "start_warmup"
         },
-        "summary": "Start ip warmup",
-        "description": "Begins the warmup process for a dedicated IP. During the warmup process, the Transactional API will gradually increase the percentage of your mail that is sent over the warming-up IP, over a period of roughly 30 days. The rest of your mail will be sent over shared IPs or other dedicated IPs in the same pool.",
+        "summary": "Start IP warmup process",
+        "description": "Begins the warmup process for a dedicated IP. During the warmup process, Mandrill will gradually increase the percentage of your mail that is sent over the warming-up IP, over a period of roughly 30 days. The rest of your mail will be sent over shared IPs or other dedicated IPs in the same pool.",
         "operationId": "postIpsStartWarmup",
         "tags": [
           "ips"
@@ -2479,7 +2479,7 @@
           "methodNameCamel": "cancelWarmup",
           "methodNameSnake": "cancel_warmup"
         },
-        "summary": "Cancel ip warmup",
+        "summary": "Cancel IP warmup process",
         "description": "Cancels the warmup process for a dedicated IP.",
         "operationId": "postIpsCancelWarmup",
         "tags": [
@@ -2632,7 +2632,7 @@
           "methodNameCamel": "setPool",
           "methodNameSnake": "set_pool"
         },
-        "summary": "Move ip to different pool",
+        "summary": "Move IP to different pool",
         "description": "Moves a dedicated IP to a different pool.",
         "operationId": "postIpsSetPool",
         "tags": [
@@ -2796,7 +2796,7 @@
           "methodNameCamel": "delete",
           "methodNameSnake": "delete"
         },
-        "summary": "Delete ip address",
+        "summary": "Delete dedicated IP",
         "description": "Deletes a dedicated IP. This is permanent and cannot be undone.",
         "operationId": "postIpsDelete",
         "tags": [
@@ -2868,7 +2868,7 @@
           "methodNameCamel": "listPools",
           "methodNameSnake": "list_pools"
         },
-        "summary": "List ip pools",
+        "summary": "List dedicated IP pools",
         "description": "Lists your dedicated IP pools.",
         "operationId": "postIpsListPools",
         "tags": [
@@ -3069,7 +3069,7 @@
           "methodNameCamel": "poolInfo",
           "methodNameSnake": "pool_info"
         },
-        "summary": "Get ip pool info",
+        "summary": "Get pool information",
         "description": "Describes a single dedicated IP pool.",
         "operationId": "postIpsPoolInfo",
         "tags": [
@@ -3269,7 +3269,7 @@
           "methodNameCamel": "createPool",
           "methodNameSnake": "create_pool"
         },
-        "summary": "Add ip pool",
+        "summary": "Create dedicated IP pool",
         "description": "Creates a pool and returns it. If a pool already exists with this name, no action will be performed.",
         "operationId": "postIpsCreatePool",
         "tags": [
@@ -3469,7 +3469,7 @@
           "methodNameCamel": "deletePool",
           "methodNameSnake": "delete_pool"
         },
-        "summary": "Delete ip pool",
+        "summary": "Delete dedicated IP pool",
         "description": "Deletes a pool. A pool must be empty before you can delete it, and you cannot delete your default pool.",
         "operationId": "postIpsDeletePool",
         "tags": [
@@ -3541,7 +3541,7 @@
           "methodNameCamel": "checkCustomDns",
           "methodNameSnake": "check_custom_dns"
         },
-        "summary": "Test custom dns",
+        "summary": "Test custom DNS configuration",
         "description": "Tests whether a domain name is valid for use as the custom reverse DNS for a dedicated IP.",
         "operationId": "postIpsCheckCustomDns",
         "tags": [
@@ -3618,7 +3618,7 @@
           "methodNameCamel": "setCustomDns",
           "methodNameSnake": "set_custom_dns"
         },
-        "summary": "Set custom dns",
+        "summary": "Configure custom DNS for IP",
         "description": "Configures the custom DNS name for a dedicated IP.",
         "operationId": "postIpsSetCustomDns",
         "tags": [
@@ -3777,8 +3777,8 @@
           "methodNameCamel": "mcTemplatesInfo",
           "methodNameSnake": "mc_templates_info"
         },
-        "summary": "Get Mailchimp Template info",
-        "description": "Get information about a Mailchimp Transactional template in your account.",
+        "summary": "Get Mailchimp Transactional template information",
+        "description": "Returns complete information about a Mailchimp Transactional template including draft and published versions",
         "operationId": "postMcTemplatesInfo",
         "tags": [
           "mctemplates"
@@ -3929,8 +3929,8 @@
           "methodNameCamel": "mcTemplatesList",
           "methodNameSnake": "mc_templates_list"
         },
-        "summary": "List Mailchimp Transactional Templates",
-        "description": "Return a list of all Mailchimp Transactional templates available to this user.",
+        "summary": "List Mailchimp Transactional templates",
+        "description": "Returns a list of all Mailchimp Transactional templates for the authenticated user",
         "operationId": "postMcTemplatesList",
         "tags": [
           "mctemplates"
@@ -4083,8 +4083,8 @@
           "methodNameCamel": "mcTemplatesRender",
           "methodNameSnake": "mc_templates_render"
         },
-        "summary": "Render Mailchimp Transactional Template",
-        "description": "Render a Mailchimp Transactional template with optional merge variables.",
+        "summary": "Render a Mailchimp Transactional template",
+        "description": "Renders a Mailchimp Transactional template with optional merge variables",
         "operationId": "postMcTemplatesRender",
         "tags": [
           "mctemplates"
@@ -4174,8 +4174,8 @@
           "methodNameCamel": "mcTemplatesTimeSeries",
           "methodNameSnake": "mc_templates_time_series"
         },
-        "summary": "Get Mailchimp Transactional Template Time Series",
-        "description": "Return the recent history (hourly stats for the last 30 days) for a Mailchimp Transactional template. Returns an empty array if the template exists but has never been used to send messages.",
+        "summary": "Get Mailchimp Transactional template time series",
+        "description": "Returns hourly stats for the last 30 days for a Mailchimp Transactional template. Returns an empty array if the template exists but has never been used to send messages.",
         "operationId": "postMcTemplatesTimeSeries",
         "tags": [
           "mctemplates"
@@ -4525,8 +4525,8 @@
           "methodNameCamel": "send",
           "methodNameSnake": "send"
         },
-        "summary": "Send new message",
-        "description": "Send a new transactional message through the Transactional API.",
+        "summary": "Send a new transactional message through the Transactional API.",
+        "description": "Send a new transactional message through Mandrill\n\n<table class=\"simple top30 errors\">\n     <thead><tr><th colspan=\"1\">Note</th></tr></thead>\n     <tbody>\n         <tr>\n             <td class=\"param-desc\">\n                 If you signed up for a Mandrill account on or after December 1st, 2015, you must add SPF and DKIM records and verify ownership of your sending domains before you can send email through your account. Mandrill will not send any email from unverified domains or domains without valid SPF and DKIM records, including public domains like gmail.com, yahoo.com, and more.<br><br>Custom signing domains are only available to Mandrill accounts created before December 1st, 2015. If you signed up for a new Mandrill account on or after December 1st, 2015, the signing_domain parameter will be ignored.<br><br>Mail sent from unverified domains or domains without valid SPF and DKIM records will be rejected with the reject_reason, unsigned.<br><br>Learn more about <a href=\"https://mandrill.zendesk.com/hc/en-us/articles/360039236053-About-SPF-and-DKIM\">SPF and DKIM</a>, and <a href=\"https://mandrill.zendesk.com/hc/en-us/articles/360039236193-About-Domain-Verification\">domain verification</a>\n             </td>\n         </tr>\n     </tbody>\n </table>",
         "operationId": "postMessagesSend",
         "tags": [
           "messages"
@@ -4907,8 +4907,8 @@
           "methodNameCamel": "sendTemplate",
           "methodNameSnake": "send_template"
         },
-        "summary": "Send using message template",
-        "description": "Send a new transactional message through the Transactional API using a template.",
+        "summary": "Send a new transactional message using a template",
+        "description": "Send a new transactional message using a template. If you signed up for a Mandrill account on or after December 1st, 2015, you must add SPF and DKIM records and verify ownership of your sending domains before you can send email through your account. Mandrill will not send any email from unverified domains or domains without valid SPF and DKIM records, including public domains like gmail.com, yahoo.com, and more. Custom signing domains are only available to Mandrill accounts created before December 1st, 2015. If you signed up for a new Mandrill account on or after December 1st, 2015, the signing_domain parameter will be ignored. Mail sent from unverified domains or domains without valid SPF and DKIM records will be rejected with the reject_reason, unsigned.",
         "operationId": "postMessagesSendTemplate",
         "tags": [
           "messages"
@@ -5312,8 +5312,8 @@
           "methodNameCamel": "sendMcTemplate",
           "methodNameSnake": "send_mc_template"
         },
-        "summary": "Send using Mailchimp template",
-        "description": "Send a new transactional message through Mandrill using a Mailchimp Transactional template.",
+        "summary": "Send a new transactional message using a Mailchimp Transactional template",
+        "description": "Send a new transactional message using a Mailchimp Transactional template. If you signed up for a Mandrill account on or after December 1st, 2015, you must add SPF and DKIM records and verify ownership of your sending domains before you can send email through your account.",
         "operationId": "postMessagesSendMcTemplate",
         "tags": [
           "messages"
@@ -5709,8 +5709,8 @@
           "methodNameCamel": "search",
           "methodNameSnake": "search"
         },
-        "summary": "Search messages by date",
-        "description": "Search recently sent messages and optionally narrow by date range, tags, senders, and API keys. If no date range is specified, results within the last 7 days are returned. This method may be called up to 20 times per minute. If you need the data more often, you can use /messages/info.json to get the information for a single message, or webhooks to push activity to your own application for querying.",
+        "summary": "Search recently sent messages",
+        "description": "Search recently sent messages and optionally narrow by date range, tags, senders, and API keys. Results can include both email and SMS messages. If no date range is specified, results within the last 7 days are returned.",
         "operationId": "postMessagesSearch",
         "tags": [
           "messages"
@@ -5799,7 +5799,7 @@
           "methodNameCamel": "searchTimeSeries",
           "methodNameSnake": "search_time_series"
         },
-        "summary": "Search messages by hour",
+        "summary": "Get time series data for message search",
         "description": "Search the content of recently sent messages and return the aggregated hourly stats for matching messages.",
         "operationId": "postMessagesSearchTimeSeries",
         "tags": [
@@ -5949,8 +5949,8 @@
           "methodNameCamel": "info",
           "methodNameSnake": "info"
         },
-        "summary": "Get message info",
-        "description": "Get the information for a single recently sent message.",
+        "summary": "Get information about a single sent message",
+        "description": "Returns detailed information about a single sent message. Can return either email or SMS message information depending on the message type.",
         "operationId": "postMessagesInfo",
         "tags": [
           "messages"
@@ -5998,8 +5998,8 @@
           "methodNameCamel": "content",
           "methodNameSnake": "content"
         },
-        "summary": "Get message content",
-        "description": "Get the full content of a recently sent message.",
+        "summary": "Get the full content of a sent message",
+        "description": "Returns the full content of a recently sent message. For email messages, includes HTML, text, and attachments. For SMS messages, includes text content and SMS-specific fields.",
         "operationId": "postMessagesContent",
         "tags": [
           "messages"
@@ -6047,7 +6047,7 @@
           "methodNameCamel": "parse",
           "methodNameSnake": "parse"
         },
-        "summary": "Parse mime document",
+        "summary": "Parse a MIME message",
         "description": "Parse the full MIME document for an email message, returning the content of the message broken into its constituent pieces.",
         "operationId": "postMessagesParse",
         "tags": [
@@ -6185,8 +6185,8 @@
           "methodNameCamel": "sendRaw",
           "methodNameSnake": "send_raw"
         },
-        "summary": "Send mime document",
-        "description": "Take a raw MIME document for a message, and send it exactly as if it were sent through the Transactional API's SMTP servers.",
+        "summary": "Send a raw MIME message through Mandrill",
+        "description": "Send a raw MIME document for a message, and send it exactly as if it were sent through Mandrill's SMTP servers.",
         "operationId": "postMessagesSendRaw",
         "tags": [
           "messages"
@@ -6316,7 +6316,7 @@
           "methodNameCamel": "listScheduled",
           "methodNameSnake": "list_scheduled"
         },
-        "summary": "List scheduled emails",
+        "summary": "Get scheduled emails",
         "description": "Queries your scheduled emails.",
         "operationId": "postMessagesListScheduled",
         "tags": [
@@ -6412,7 +6412,7 @@
           "methodNameCamel": "cancelScheduled",
           "methodNameSnake": "cancel_scheduled"
         },
-        "summary": "Cancel scheduled email",
+        "summary": "Cancel a scheduled email",
         "description": "Cancels a scheduled email.",
         "operationId": "postMessagesCancelScheduled",
         "tags": [
@@ -6505,7 +6505,7 @@
           "methodNameCamel": "reschedule",
           "methodNameSnake": "reschedule"
         },
-        "summary": "Reschedule email",
+        "summary": "Reschedule a scheduled email",
         "description": "Reschedules a scheduled email.",
         "operationId": "postMessagesReschedule",
         "tags": [
@@ -6605,8 +6605,8 @@
           "methodNameCamel": "list",
           "methodNameSnake": "list"
         },
-        "summary": "List metadata fields",
-        "description": "Get the list of custom metadata fields indexed for the account.",
+        "summary": "List custom metadata fields",
+        "description": "Get the list of custom metadata fields indexed for the account",
         "operationId": "postMetadataList",
         "tags": [
           "metadata"
@@ -6693,8 +6693,8 @@
           "methodNameCamel": "add",
           "methodNameSnake": "add"
         },
-        "summary": "Add metadata field",
-        "description": "Add a new custom metadata field to be indexed for the account.",
+        "summary": "Add custom metadata field",
+        "description": "Add a new custom metadata field to be indexed for the account",
         "operationId": "postMetadataAdd",
         "tags": [
           "metadata"
@@ -6771,8 +6771,8 @@
           "methodNameCamel": "update",
           "methodNameSnake": "update"
         },
-        "summary": "Update metadata field",
-        "description": "Update an existing custom metadata field.",
+        "summary": "Update custom metadata field",
+        "description": "Update an existing custom metadata field",
         "operationId": "postMetadataUpdate",
         "tags": [
           "metadata"
@@ -6853,8 +6853,8 @@
           "methodNameCamel": "delete",
           "methodNameSnake": "delete"
         },
-        "summary": "Delete metadata field",
-        "description": "Delete an existing custom metadata field. Deletion isn't instataneous, and /metadata/list will continue to return the field until the asynchronous deletion process is complete.",
+        "summary": "Delete custom metadata field",
+        "description": "Delete an existing custom metadata field. Deletion is not instantaneous, and /metadata/list will continue to return the field until the asynchronous deletion process is complete.",
         "operationId": "postMetadataDelete",
         "tags": [
           "metadata"
@@ -6941,8 +6941,8 @@
           "methodNameCamel": "add",
           "methodNameSnake": "add"
         },
-        "summary": "Add email to denylist",
-        "description": "Adds an email to your email rejection denylist. Addresses that you add manually will never expire and there is no reputation penalty for removing them from your denylist. Attempting to denylist an address that has been added to the allowlist will have no effect.",
+        "summary": "Add email to rejection blacklist",
+        "description": "Adds an email to your email rejection blacklist. Addresses that you add manually will never expire and there is no reputation penalty for removing them from your blacklist. Attempting to blacklist an address that has been whitelisted will have no effect.",
         "operationId": "postRejectsAdd",
         "tags": [
           "rejects"
@@ -7027,8 +7027,8 @@
           "methodNameCamel": "list",
           "methodNameSnake": "list"
         },
-        "summary": "List denylisted emails",
-        "description": "Retrieves your email rejection denylist. You can provide an email address to limit the results. Returns up to 1000 results. By default, entries that have expired are excluded from the results; set include_expired to true to include them.",
+        "summary": "List rejection blacklist entries",
+        "description": "Retrieves your email rejection blacklist. You can provide an email address to limit the results. Returns up to 1000 results. By default, entries that have expired are excluded from the results; set include_expired to true to include them.",
         "operationId": "postRejectsList",
         "tags": [
           "rejects"
@@ -7236,8 +7236,8 @@
           "methodNameCamel": "delete",
           "methodNameSnake": "delete"
         },
-        "summary": "Delete email from denylist",
-        "description": "Deletes an email rejection. There is no limit to how many rejections you can remove from your denylist, but keep in mind that each deletion has an affect on your reputation.",
+        "summary": "Delete email from rejection blacklist",
+        "description": "Deletes an email rejection. There is no limit to how many rejections you can remove from your blacklist, but keep in mind that each deletion has an affect on your reputation.",
         "operationId": "postRejectsDelete",
         "tags": [
           "rejects"
@@ -7323,7 +7323,7 @@
           "methodNameCamel": "list",
           "methodNameSnake": "list"
         },
-        "summary": "List account senders",
+        "summary": "List senders used by this account",
         "description": "Return the senders that have tried to use this account.",
         "operationId": "postSendersList",
         "tags": [
@@ -7584,8 +7584,8 @@
           "methodNameCamel": "addDomain",
           "methodNameSnake": "add_domain"
         },
-        "summary": "Add sender domain",
-        "description": "Adds a sender domain to your account. Sender domains are added automatically as you send, but you can use this call to add them ahead of time.",
+        "summary": "Add a sender domain",
+        "description": "Adds a sender domain to your account. Sender domains are added automatically as you send, but you can add them ahead of time.",
         "operationId": "postSendersAddDomain",
         "tags": [
           "senders"
@@ -7738,7 +7738,7 @@
           "methodNameCamel": "deleteDomain",
           "methodNameSnake": "delete_domain"
         },
-        "summary": "Delete sender domain",
+        "summary": "Delete a sender domain",
         "description": "Deletes an unverified sender domain from your account. Verified domains cannot be deleted via API and require login confirmation.",
         "operationId": "postSendersDeleteDomain",
         "tags": [
@@ -7892,8 +7892,8 @@
           "methodNameCamel": "checkDomain",
           "methodNameSnake": "check_domain"
         },
-        "summary": "Check domain settings",
-        "description": "Checks the SPF and DKIM settings for a domain, as well the domain verification. If you haven't already added this domain to your account, it will be added automatically.",
+        "summary": "Check domain SPF and DKIM",
+        "description": "Checks the SPF and DKIM settings for a domain. If it isn't already added to your account, it will be added automatically.",
         "operationId": "postSendersCheckDomain",
         "tags": [
           "senders"
@@ -8046,8 +8046,8 @@
           "methodNameCamel": "verifyDomain",
           "methodNameSnake": "verify_domain"
         },
-        "summary": "Verify domain",
-        "description": "Sends a verification email in order to verify ownership of a domain. Domain verification is a required step to confirm ownership of a domain. Once a domain has been verified in a Transactional API account, other accounts may not have their messages signed by that domain unless they also verify the domain. This prevents other Transactional API accounts from sending mail signed by your domain.",
+        "summary": "Verify a sender domain by email",
+        "description": "Sends a verification email in order to verify ownership of a domain.",
         "operationId": "postSendersVerifyDomain",
         "tags": [
           "senders"
@@ -8131,7 +8131,7 @@
           "methodNameCamel": "info",
           "methodNameSnake": "info"
         },
-        "summary": "Get sender info",
+        "summary": "Get detailed information for a sender",
         "description": "Return more detailed information about a single sender, including aggregates of recent stats.",
         "operationId": "postSendersInfo",
         "tags": [
@@ -8477,7 +8477,7 @@
           "methodNameCamel": "timeSeries",
           "methodNameSnake": "time_series"
         },
-        "summary": "View sender history",
+        "summary": "Get hourly stats for a sender",
         "description": "Return the recent history (hourly stats for the last 30 days) for a sender.",
         "operationId": "postSendersTimeSeries",
         "tags": [
@@ -8568,7 +8568,7 @@
           "methodNameSnake": "list"
         },
         "summary": "List subaccounts",
-        "description": "Get the list of subaccounts defined for the account, optionally filtered by a prefix.",
+        "description": "Get the list of subaccounts defined for the account, optionally filtered by a prefix. Returns up to a maximum of 1,000 subaccounts.",
         "operationId": "postSubaccountsList",
         "tags": [
           "subaccounts"
@@ -8690,8 +8690,8 @@
           "methodNameCamel": "add",
           "methodNameSnake": "add"
         },
-        "summary": "Add subaccount",
-        "description": "Add a new subaccount.",
+        "summary": "Add a new subaccount",
+        "description": "Create a new subaccount with the specified configuration. The subaccount can be used to organize and track sending for different customers or purposes.",
         "operationId": "postSubaccountsAdd",
         "tags": [
           "subaccounts"
@@ -8828,8 +8828,8 @@
           "methodNameCamel": "info",
           "methodNameSnake": "info"
         },
-        "summary": "Get subaccount info",
-        "description": "Given the ID of an existing subaccount, return the data about it.",
+        "summary": "Get subaccount information",
+        "description": "Retrieve detailed information about a specific subaccount including sending statistics and configuration.",
         "operationId": "postSubaccountsInfo",
         "tags": [
           "subaccounts"
@@ -9013,8 +9013,8 @@
           "methodNameCamel": "update",
           "methodNameSnake": "update"
         },
-        "summary": "Update subaccount",
-        "description": "Update an existing subaccount.",
+        "summary": "Update an existing subaccount",
+        "description": "Update the configuration of an existing subaccount including name, notes, and custom quota settings.",
         "operationId": "postSubaccountsUpdate",
         "tags": [
           "subaccounts"
@@ -9150,7 +9150,7 @@
           "methodNameCamel": "delete",
           "methodNameSnake": "delete"
         },
-        "summary": "Delete subaccount",
+        "summary": "Delete a subaccount",
         "description": "Delete an existing subaccount. Any email related to the subaccount will be saved, but stats will be removed and any future sending calls to this subaccount will fail.",
         "operationId": "postSubaccountsDelete",
         "tags": [
@@ -9271,7 +9271,7 @@
           "methodNameCamel": "pause",
           "methodNameSnake": "pause"
         },
-        "summary": "Pause subaccount",
+        "summary": "Pause a subaccount",
         "description": "Pause a subaccount's sending. Any future emails delivered to this subaccount will be queued for a maximum of 3 days until the subaccount is resumed.",
         "operationId": "postSubaccountsPause",
         "tags": [
@@ -9392,8 +9392,8 @@
           "methodNameCamel": "resume",
           "methodNameSnake": "resume"
         },
-        "summary": "Resume subaccount",
-        "description": "Resume a paused subaccount's sending.",
+        "summary": "Resume a paused subaccount",
+        "description": "Resume a paused subaccount's sending. The subaccount will return to active status and queued emails will be processed.",
         "operationId": "postSubaccountsResume",
         "tags": [
           "subaccounts"
@@ -9513,8 +9513,8 @@
           "methodNameCamel": "list",
           "methodNameSnake": "list"
         },
-        "summary": "List tags",
-        "description": "Return all of the user-defined tag information.",
+        "summary": "List all user-defined tags",
+        "description": "Return all of the user-defined tag information",
         "operationId": "postTagsList",
         "tags": [
           "tags"
@@ -9661,7 +9661,7 @@
           "methodNameCamel": "delete",
           "methodNameSnake": "delete"
         },
-        "summary": "Delete tag",
+        "summary": "Delete a tag permanently",
         "description": "Deletes a tag permanently. Deleting a tag removes the tag from any messages that have been sent, and also deletes the tag's stats. There is no way to undo this operation, so use it carefully.",
         "operationId": "postTagsDelete",
         "tags": [
@@ -9781,8 +9781,8 @@
           "methodNameCamel": "info",
           "methodNameSnake": "info"
         },
-        "summary": "Get tag info",
-        "description": "Return more detailed information about a single tag, including aggregates of recent stats.",
+        "summary": "Get detailed information about a tag",
+        "description": "Return more detailed information about a single tag, including aggregates of recent stats",
         "operationId": "postTagsInfo",
         "tags": [
           "tags"
@@ -10150,8 +10150,8 @@
           "methodNameCamel": "timeSeries",
           "methodNameSnake": "time_series"
         },
-        "summary": "View tag history",
-        "description": "Return the recent history (hourly stats for the last 30 days) for a tag.",
+        "summary": "Get time series data for a specific tag",
+        "description": "Return the recent history (hourly stats for the last 30 days) for a tag",
         "operationId": "postTagsTimeSeries",
         "tags": [
           "tags"
@@ -10267,8 +10267,8 @@
           "methodNameCamel": "allTimeSeries",
           "methodNameSnake": "all_time_series"
         },
-        "summary": "View all tags history",
-        "description": "Return the recent history (hourly stats for the last 30 days) for all tags.",
+        "summary": "Get time series data for all tags",
+        "description": "Return the recent history (hourly stats for the last 30 days) for all tags",
         "operationId": "postTagsAllTimeSeries",
         "tags": [
           "tags"
@@ -10404,8 +10404,8 @@
           "methodNameCamel": "add",
           "methodNameSnake": "add"
         },
-        "summary": "Add template",
-        "description": "Add a new template.",
+        "summary": "Add a new template",
+        "description": "Creates a new email template with the specified content and settings.",
         "operationId": "postTemplatesAdd",
         "tags": [
           "templates"
@@ -10629,8 +10629,8 @@
           "methodNameCamel": "info",
           "methodNameSnake": "info"
         },
-        "summary": "Get template info",
-        "description": "Get the information for an existing template.",
+        "summary": "Get template information",
+        "description": "Retrieves information for an existing template.",
         "operationId": "postTemplatesInfo",
         "tags": [
           "templates"
@@ -10810,8 +10810,8 @@
           "methodNameCamel": "update",
           "methodNameSnake": "update"
         },
-        "summary": "Update template",
-        "description": "Update the code for an existing template. If null is provided for any fields, the values will remain unchanged.",
+        "summary": "Update an existing template",
+        "description": "Updates the code for an existing template. If null is provided for any fields, the values will remain unchanged.",
         "operationId": "postTemplatesUpdate",
         "tags": [
           "templates"
@@ -11035,8 +11035,8 @@
           "methodNameCamel": "publish",
           "methodNameSnake": "publish"
         },
-        "summary": "Publish template content",
-        "description": "Publish the content for the template. Any new messages sent using this template will start using the content that was previously in draft.",
+        "summary": "Publish a template",
+        "description": "Publishes the content for the template. Any new messages sent using this template will start using the content that was previously in draft.",
         "operationId": "postTemplatesPublish",
         "tags": [
           "templates"
@@ -11216,8 +11216,8 @@
           "methodNameCamel": "delete",
           "methodNameSnake": "delete"
         },
-        "summary": "Delete template",
-        "description": "Delete a template.",
+        "summary": "Delete a template",
+        "description": "Deletes an existing template.",
         "operationId": "postTemplatesDelete",
         "tags": [
           "templates"
@@ -11397,8 +11397,8 @@
           "methodNameCamel": "list",
           "methodNameSnake": "list"
         },
-        "summary": "List templates",
-        "description": "Return a list of all the templates available to this user.",
+        "summary": "List all templates",
+        "description": "Returns a list of all templates available to this user.",
         "operationId": "postTemplatesList",
         "tags": [
           "templates"
@@ -11580,8 +11580,8 @@
           "methodNameCamel": "timeSeries",
           "methodNameSnake": "time_series"
         },
-        "summary": "Get template history",
-        "description": "Return the recent history (hourly stats for the last 30 days) for a template.",
+        "summary": "Get template time series data",
+        "description": "Returns the recent history (hourly stats for the last 30 days) for a template.",
         "operationId": "postTemplatesTimeSeries",
         "tags": [
           "templates"
@@ -11709,8 +11709,8 @@
           "methodNameCamel": "render",
           "methodNameSnake": "render"
         },
-        "summary": "Render html template",
-        "description": "Inject content and optionally merge fields into a template, returning the HTML that results.",
+        "summary": "Render a template",
+        "description": "Injects content and merge variables into a template, returning the HTML that results.",
         "operationId": "postTemplatesRender",
         "tags": [
           "templates"
@@ -11815,8 +11815,8 @@
           "methodNameCamel": "list",
           "methodNameSnake": "list"
         },
-        "summary": "List most clicked urls",
-        "description": "Get the 100 most clicked URLs.",
+        "summary": "Get most clicked URLs (DEPRECATED)",
+        "description": "Due to changes to our infrastructure, we no longer support URL tracking reports in Mandrill.",
         "operationId": "postUrlsList",
         "tags": [
           "urls"
@@ -11887,8 +11887,8 @@
           "methodNameCamel": "search",
           "methodNameSnake": "search"
         },
-        "summary": "Search most clicked urls",
-        "description": "Return the 100 most clicked URLs that match the search query given.",
+        "summary": "Search clicked URLs (DEPRECATED)",
+        "description": "Due to changes to our infrastructure, we no longer support URL tracking reports in Mandrill.",
         "operationId": "postUrlsSearchDeprecated",
         "tags": [
           "urls"
@@ -11959,8 +11959,8 @@
           "methodNameCamel": "timeSeries",
           "methodNameSnake": "time_series"
         },
-        "summary": "Get url history",
-        "description": "Return the recent history (hourly stats for the last 30 days) for a URL",
+        "summary": "Get URL time series (DEPRECATED)",
+        "description": "Due to changes to our infrastructure, we no longer support URL tracking reports in Mandrill.",
         "operationId": "postUrlsTimeSeries",
         "tags": [
           "urls"
@@ -12032,8 +12032,8 @@
           "methodNameCamel": "trackingDomains",
           "methodNameSnake": "tracking_domains"
         },
-        "summary": "List tracking domains",
-        "description": "Get the list of tracking domains set up for this account.",
+        "summary": "Get tracking domains",
+        "description": "Get the list of tracking domains set up for your account",
         "operationId": "postUrlsTrackingDomains",
         "tags": [
           "urls"
@@ -12153,8 +12153,8 @@
           "methodNameCamel": "addTrackingDomain",
           "methodNameSnake": "add_tracking_domain"
         },
-        "summary": "Add tracking domains",
-        "description": "Add a tracking domain to your account.",
+        "summary": "Add tracking domain",
+        "description": "Add a tracking domain to your account",
         "operationId": "postUrlsAddTrackingDomain",
         "tags": [
           "urls"
@@ -12272,7 +12272,7 @@
           "methodNameCamel": "deleteTrackingDomain",
           "methodNameSnake": "delete_tracking_domain"
         },
-        "summary": "Delete tracking domain",
+        "summary": "Delete a tracking domain",
         "description": "Deletes an unverified tracking domain from your account. Valid tracking domains cannot be deleted via API and require login confirmation.",
         "operationId": "postUrlsDeleteTrackingDomain",
         "tags": [
@@ -12392,8 +12392,8 @@
           "methodNameCamel": "checkTrackingDomain",
           "methodNameSnake": "check_tracking_domain"
         },
-        "summary": "Check cname settings",
-        "description": "Checks the CNAME settings for a tracking domain. The domain must have been added already with the add-tracking-domain call.",
+        "summary": "Check tracking domain",
+        "description": "Checks the CNAME settings for a tracking domain. The domain must have been added already with the add-tracking-domain call",
         "operationId": "postUrlsCheckTrackingDomain",
         "tags": [
           "urls"
@@ -12512,8 +12512,8 @@
           "methodNameCamel": "info",
           "methodNameSnake": "info"
         },
-        "summary": "Get user info",
-        "description": "Return the information about the API-connected user.",
+        "summary": "Return the information about the API-connected user",
+        "description": "Returns user account information including username, reputation, quota, and historical sending stats",
         "operationId": "postUsersInfo",
         "tags": [
           "users"
@@ -12896,8 +12896,8 @@
           "methodNameCamel": "ping",
           "methodNameSnake": "ping"
         },
-        "summary": "Ping",
-        "description": "Validate an API key and respond to a ping.",
+        "summary": "Validate an API key and respond to a ping",
+        "description": "Returns 'PONG!'.",
         "operationId": "postUsersPing",
         "tags": [
           "users"
@@ -12945,8 +12945,8 @@
           "methodNameCamel": "ping2",
           "methodNameSnake": "ping2"
         },
-        "summary": "Ping 2",
-        "description": "Validate an API key and respond to a ping (JSON parser version).",
+        "summary": "Validate an API key and respond to a ping (strict JSON parser version)",
+        "description": "Validate an API key and respond to a ping (strict JSON parser version)",
         "operationId": "postUsersPing2",
         "tags": [
           "users"
@@ -12992,8 +12992,8 @@
           "methodNameCamel": "senders",
           "methodNameSnake": "senders"
         },
-        "summary": "List account senders",
-        "description": "Return the senders that have tried to use this account, both verified and unverified.",
+        "summary": "Return the senders that have tried to use this account",
+        "description": "Returns an array of sender data for each sending address used by the account, both verified and unverified",
         "operationId": "postUsersSenders",
         "tags": [
           "users"
@@ -13099,8 +13099,8 @@
           "methodNameCamel": "list",
           "methodNameSnake": "list"
         },
-        "summary": "List webhooks",
-        "description": "Get the list of all webhooks defined on the account.",
+        "summary": "Get the list of all webhooks",
+        "description": "Get the list of all webhooks defined for this account",
         "operationId": "postWebhooksList",
         "tags": [
           "webhooks"
@@ -13248,8 +13248,8 @@
           "methodNameCamel": "add",
           "methodNameSnake": "add"
         },
-        "summary": "Add webhook",
-        "description": "Add a new webhook.",
+        "summary": "Add a new webhook",
+        "description": "Create a new webhook to receive event notifications",
         "operationId": "postWebhooksAdd",
         "tags": [
           "webhooks"
@@ -13418,8 +13418,8 @@
           "methodNameCamel": "info",
           "methodNameSnake": "info"
         },
-        "summary": "Get webhook info",
-        "description": "Given the ID of an existing webhook, return the data about it.",
+        "summary": "Get webhook information",
+        "description": "Get the data about an existing webhook",
         "operationId": "postWebhooksInfo",
         "tags": [
           "webhooks"
@@ -13565,8 +13565,8 @@
           "methodNameCamel": "update",
           "methodNameSnake": "update"
         },
-        "summary": "Update webhook",
-        "description": "Update an existing webhook.",
+        "summary": "Update an existing webhook",
+        "description": "Update the configuration of an existing webhook",
         "operationId": "postWebhooksUpdate",
         "tags": [
           "webhooks"
@@ -13740,8 +13740,8 @@
           "methodNameCamel": "delete",
           "methodNameSnake": "delete"
         },
-        "summary": "Delete webhook",
-        "description": "Delete an existing webhook.",
+        "summary": "Delete an existing webhook",
+        "description": "Remove a webhook from the account",
         "operationId": "postWebhooksDelete",
         "tags": [
           "webhooks"
@@ -13887,7 +13887,7 @@
           "methodNameCamel": "add",
           "methodNameSnake": "add"
         },
-        "summary": "Add email to allowlist",
+        "summary": "Add email to whitelist",
         "description": "Adds an email to your email rejection allowlist. If the address is currently on your denylist, that denylist entry will be removed automatically.",
         "operationId": "postWhitelistsAdd",
         "tags": [
@@ -13968,7 +13968,7 @@
           "methodNameCamel": "list",
           "methodNameSnake": "list"
         },
-        "summary": "List allowlisted emails",
+        "summary": "List whitelist entries",
         "description": "Retrieves your email rejection allowlist. You can provide an email address or search prefix to limit the results. Returns up to 1000 results.",
         "operationId": "postWhitelistsList",
         "tags": [
@@ -14059,7 +14059,7 @@
           "methodNameCamel": "delete",
           "methodNameSnake": "delete"
         },
-        "summary": "Remove email from allowlist",
+        "summary": "Remove email from whitelist",
         "description": "Removes an email address from the allowlist.",
         "operationId": "postWhitelistsDelete",
         "tags": [
