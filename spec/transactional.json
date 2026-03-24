@@ -159,6 +159,16 @@
           "/mctemplates/render"
         ]
       },
+      "urls": {
+        "title": "URLs",
+        "description": "Manage your tracking domains.",
+        "paths": [
+          "/urls/add-tracking-domain",
+          "/urls/check-tracking-domain",
+          "/urls/delete-tracking-domain",
+          "/urls/tracking-domains"
+        ]
+      },
       "users": {
         "title": "Users",
         "description": "Get information about your account, or ping Transactional.",
@@ -184,7 +194,7 @@
   },
   "swagger": "2.0",
   "info": {
-    "version": "1.4.0",
+    "version": "1.4.1",
     "title": "Mailchimp Transactional API",
     "contact": {
       "name": "API Support",
