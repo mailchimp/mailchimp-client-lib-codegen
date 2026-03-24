@@ -4,7 +4,11 @@
       "allowlists": {
         "title": "Allowlists",
         "description": "Add, list, or delete from your Rejection Allowlist.",
-        "paths": ["/allowlists/add", "/allowlists/list", "/allowlists/delete"]
+        "paths": [
+          "/allowlists/add",
+          "/allowlists/list",
+          "/allowlists/delete"
+        ]
       },
       "exports": {
         "title": "Exports",
@@ -84,7 +88,11 @@
       "rejects": {
         "title": "Rejects",
         "description": "Add, list, or delete from your Rejection Denylist.",
-        "paths": ["/rejects/add", "/rejects/list", "/rejects/delete"]
+        "paths": [
+          "/rejects/add",
+          "/rejects/list",
+          "/rejects/delete"
+        ]
       },
       "senders": {
         "title": "Senders",
@@ -185,7 +193,11 @@
       "whitelists": {
         "title": "Whitelists",
         "description": "Add, list, or delete from your Rejection Allowlist. These endpoints are being replaced with a series of functionally identical endpoints called /allowlists.",
-        "paths": ["/whitelists/add", "/whitelists/list", "/whitelists/delete"]
+        "paths": [
+          "/whitelists/add",
+          "/whitelists/list",
+          "/whitelists/delete"
+        ]
       }
     }
   },
@@ -201,8 +213,12 @@
   },
   "host": "mandrillapp.com",
   "basePath": "/api/1.3",
-  "schemes": ["https"],
-  "consumes": ["application/json"],
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
   "produces": [
     "application/json",
     "application/x-php",
@@ -218,7 +234,9 @@
         "summary": "Add email to allowlist",
         "description": "Adds an email to your email rejection allowlist. If the address is currently on your denylist, that denylist entry will be removed automatically.",
         "operationId": "postAllowlistsAdd",
-        "tags": ["allowlists"],
+        "tags": [
+          "allowlists"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -227,7 +245,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "email"],
+              "required": [
+                "key",
+                "email"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -280,7 +301,9 @@
         "summary": "List allowlisted emails",
         "description": "Retrieves your email rejection allowlist. You can provide an email address or search prefix to limit the results. Returns up to 1000 results.",
         "operationId": "postAllowlistsList",
-        "tags": ["allowlists"],
+        "tags": [
+          "allowlists"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -289,7 +312,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -348,7 +373,9 @@
         "summary": "Remove email from allowlist",
         "description": "Removes an email address from the allowlist.",
         "operationId": "postAllowlistsDelete",
-        "tags": ["allowlists"],
+        "tags": [
+          "allowlists"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -357,7 +384,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "email"],
+              "required": [
+                "key",
+                "email"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -405,7 +435,9 @@
         "summary": "View export info",
         "description": "Returns information about an export job. If the export job's state is 'complete', the returned data will include a URL you can use to fetch the results. Every export job produces a zip archive, but the format of the archive is distinct for each job type. The api calls that initiate exports include more details about the output format for that job type.",
         "operationId": "postExportsInfo",
-        "tags": ["exports"],
+        "tags": [
+          "exports"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -414,7 +446,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "id"],
+              "required": [
+                "key",
+                "id"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -483,7 +518,9 @@
         "summary": "List exports",
         "description": "Returns a list of your exports.",
         "operationId": "postExportsList",
-        "tags": ["exports"],
+        "tags": [
+          "exports"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -492,7 +529,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -561,7 +600,9 @@
         "summary": "Export denylist",
         "description": "Begins an export of your rejection denylist. The denylist will be exported to a zip archive containing a single file named rejects.csv that includes the following fields: email, reason, detail, created_at, expires_at, last_event_at, expires_at.",
         "operationId": "postExportsRejects",
-        "tags": ["exports"],
+        "tags": [
+          "exports"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -570,7 +611,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -640,7 +683,9 @@
         "summary": "Export Allowlist",
         "description": "Begins an export of your rejection allowlist. The allowlist will be exported to a zip archive containing a single file named allowlist.csv that includes the following fields: email, detail, created_at.",
         "operationId": "postExportsWhitelist",
-        "tags": ["exports"],
+        "tags": [
+          "exports"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -649,7 +694,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -719,7 +766,9 @@
         "summary": "Export Allowlist",
         "description": "Begins an export of your rejection allowlist. The allowlist will be exported to a zip archive containing a single file named allowlist.csv that includes the following fields: email, detail, created_at.",
         "operationId": "postExportsAllowlist",
-        "tags": ["exports"],
+        "tags": [
+          "exports"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -728,7 +777,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -798,7 +849,9 @@
         "summary": "Export activity history",
         "description": "Begins an export of your activity history. The activity will be exported to a zip archive containing a single file named activity.csv in the same format as you would be able to export from your account's activity view. It includes the following fields: Date, Email Address, Sender, Subject, Status, Tags, Opens, Clicks, Bounce Detail. If you have configured any custom metadata fields, they will be included in the exported data.",
         "operationId": "postExportsActivity",
-        "tags": ["exports"],
+        "tags": [
+          "exports"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -807,7 +860,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -927,7 +982,9 @@
         "summary": "List inbound domains",
         "description": "List the domains that have been configured for inbound delivery.",
         "operationId": "postInboundDomains",
-        "tags": ["inbound"],
+        "tags": [
+          "inbound"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -936,7 +993,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -989,7 +1048,9 @@
         "summary": "Add inbound domain",
         "description": "Add an inbound domain to your account.",
         "operationId": "postInboundAddDomain",
-        "tags": ["inbound"],
+        "tags": [
+          "inbound"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -998,7 +1059,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "domain"],
+              "required": [
+                "key",
+                "domain"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -1022,7 +1086,7 @@
                 "domain": {
                   "type": "string",
                   "description": "the domain name that is accepting mail",
-                  "example":"https://intuit.com"
+                  "example": "https://intuit.com"
                 },
                 "created_at": {
                   "type": "string",
@@ -1051,7 +1115,9 @@
         "summary": "Check domain settings",
         "description": "Check the MX settings for an inbound domain. The domain must have already been added with the add-domain call.",
         "operationId": "postInboundCheckDomain",
-        "tags": ["inbound"],
+        "tags": [
+          "inbound"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -1060,7 +1126,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "domain"],
+              "required": [
+                "key",
+                "domain"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -1090,7 +1159,7 @@
                   "type": "string",
                   "description": "the date and time that the inbound domain was added as a UTC string in YYYY-MM-DD HH:MM:SS format",
                   "format": "date-time",
-                  "example":"2025-04-29 18:47:35"
+                  "example": "2025-04-29 18:47:35"
                 },
                 "valid_mx": {
                   "type": "boolean",
@@ -1113,7 +1182,9 @@
         "summary": "Delete inbound domain",
         "description": "Delete an inbound domain from the account. All mail will stop routing for this domain immediately.",
         "operationId": "postInboundDeleteDomain",
-        "tags": ["inbound"],
+        "tags": [
+          "inbound"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -1122,7 +1193,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "domain"],
+              "required": [
+                "key",
+                "domain"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -1175,7 +1249,9 @@
         "summary": "List routes",
         "description": "List the routes defined for an inbound domain or SMS program. Provide either domain or phone (not both).",
         "operationId": "postInboundRoutes",
-        "tags": ["inbound"],
+        "tags": [
+          "inbound"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -1184,7 +1260,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -1244,7 +1322,9 @@
         "summary": "Add route",
         "description": "Add a new route to an inbound domain or SMS program. Provide either domain or phone (not both).",
         "operationId": "postInboundAddRoute",
-        "tags": ["inbound"],
+        "tags": [
+          "inbound"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -1253,7 +1333,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "url"],
+              "required": [
+                "key",
+                "url"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -1264,8 +1347,8 @@
                   "description": "An existing inbound domain (required if phone is not provided)"
                 },
                 "phone": {
-                    "description": "The SMS program phone number - the TO number that receives inbound SMS (required if domain is not provided)",
-                    "type": "string"
+                  "description": "The SMS program phone number - the TO number that receives inbound SMS (required if domain is not provided)",
+                  "type": "string"
                 },
                 "pattern": {
                   "type": "string",
@@ -1317,7 +1400,9 @@
         "summary": "Update mailbox route",
         "description": "Update the pattern or webhook of an existing inbound mailbox route. If null is provided for any fields, the values will remain unchanged.",
         "operationId": "postInboundUpdateRoute",
-        "tags": ["inbound"],
+        "tags": [
+          "inbound"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -1326,7 +1411,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "id"],
+              "required": [
+                "key",
+                "id"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -1386,7 +1474,9 @@
         "summary": "Delete mailbox route",
         "description": "Delete an existing inbound mailbox route.",
         "operationId": "postInboundDeleteRoute",
-        "tags": ["inbound"],
+        "tags": [
+          "inbound"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -1395,7 +1485,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "id"],
+              "required": [
+                "key",
+                "id"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -1447,7 +1540,9 @@
         "summary": "Send mime document",
         "description": "Take a raw MIME document destined for a domain with inbound domains set up, and send it to the inbound hook exactly as if it had been sent over SMTP.",
         "operationId": "postInboundSendRaw",
-        "tags": ["inbound"],
+        "tags": [
+          "inbound"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -1456,7 +1551,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "raw_message"],
+              "required": [
+                "key",
+                "raw_message"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -1534,7 +1632,9 @@
         "summary": "List ip addresses",
         "description": "Lists your dedicated IPs.",
         "operationId": "postIpsList",
-        "tags": ["ips"],
+        "tags": [
+          "ips"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -1543,7 +1643,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -1645,7 +1747,9 @@
         "summary": "Get ip info",
         "description": "Retrieves information about a single dedicated IP.",
         "operationId": "postIpsInfo",
-        "tags": ["ips"],
+        "tags": [
+          "ips"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -1654,7 +1758,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -1756,7 +1862,9 @@
         "summary": "Request additional ip",
         "description": "Requests an additional dedicated IP for your account. Accounts may have one outstanding request at any time, and provisioning requests are processed within 24 hours.",
         "operationId": "postIpsProvision",
-        "tags": ["ips"],
+        "tags": [
+          "ips"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -1765,7 +1873,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -1812,7 +1922,9 @@
         "summary": "Start ip warmup",
         "description": "Begins the warmup process for a dedicated IP. During the warmup process, the Transactional API will gradually increase the percentage of your mail that is sent over the warming-up IP, over a period of roughly 30 days. The rest of your mail will be sent over shared IPs or other dedicated IPs in the same pool.",
         "operationId": "postIpsStartWarmup",
-        "tags": ["ips"],
+        "tags": [
+          "ips"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -1821,7 +1933,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "ip"],
+              "required": [
+                "key",
+                "ip"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -1923,7 +2038,9 @@
         "summary": "Cancel ip warmup",
         "description": "Cancels the warmup process for a dedicated IP.",
         "operationId": "postIpsCancelWarmup",
-        "tags": ["ips"],
+        "tags": [
+          "ips"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -1932,7 +2049,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "ip"],
+              "required": [
+                "key",
+                "ip"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -2034,7 +2154,9 @@
         "summary": "Move ip to different pool",
         "description": "Moves a dedicated IP to a different pool.",
         "operationId": "postIpsSetPool",
-        "tags": ["ips"],
+        "tags": [
+          "ips"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -2043,7 +2165,11 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "ip", "pool"],
+              "required": [
+                "key",
+                "ip",
+                "pool"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -2153,7 +2279,9 @@
         "summary": "Delete ip address",
         "description": "Deletes a dedicated IP. This is permanent and cannot be undone.",
         "operationId": "postIpsDelete",
-        "tags": ["ips"],
+        "tags": [
+          "ips"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -2162,7 +2290,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "ip"],
+              "required": [
+                "key",
+                "ip"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -2209,7 +2340,9 @@
         "summary": "List ip pools",
         "description": "Lists your dedicated IP pools.",
         "operationId": "postIpsListPools",
-        "tags": ["ips"],
+        "tags": [
+          "ips"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -2218,7 +2351,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -2341,7 +2476,9 @@
         "summary": "Get ip pool info",
         "description": "Describes a single dedicated IP pool.",
         "operationId": "postIpsPoolInfo",
-        "tags": ["ips"],
+        "tags": [
+          "ips"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -2350,7 +2487,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "pool"],
+              "required": [
+                "key",
+                "pool"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -2473,7 +2613,9 @@
         "summary": "Add ip pool",
         "description": "Creates a pool and returns it. If a pool already exists with this name, no action will be performed.",
         "operationId": "postIpsCreatePool",
-        "tags": ["ips"],
+        "tags": [
+          "ips"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -2482,7 +2624,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "pool"],
+              "required": [
+                "key",
+                "pool"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -2605,7 +2750,9 @@
         "summary": "Delete ip pool",
         "description": "Deletes a pool. A pool must be empty before you can delete it, and you cannot delete your default pool.",
         "operationId": "postIpsDeletePool",
-        "tags": ["ips"],
+        "tags": [
+          "ips"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -2614,7 +2761,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "pool"],
+              "required": [
+                "key",
+                "pool"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -2661,7 +2811,9 @@
         "summary": "Test custom dns",
         "description": "Tests whether a domain name is valid for use as the custom reverse DNS for a dedicated IP.",
         "operationId": "postIpsCheckCustomDns",
-        "tags": ["ips"],
+        "tags": [
+          "ips"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -2670,7 +2822,11 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "ip", "domain"],
+              "required": [
+                "key",
+                "ip",
+                "domain"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -2721,7 +2877,9 @@
         "summary": "Set custom dns",
         "description": "Configures the custom DNS name for a dedicated IP.",
         "operationId": "postIpsSetCustomDns",
-        "tags": ["ips"],
+        "tags": [
+          "ips"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -2730,7 +2888,11 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "ip", "domain"],
+              "required": [
+                "key",
+                "ip",
+                "domain"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -2836,7 +2998,9 @@
         "summary": "Get Mailchimp Template info",
         "description": "Get information about a Mailchimp Transactional template in your account.",
         "operationId": "postMcTemplatesInfo",
-        "tags": ["mctemplates"],
+        "tags": [
+          "mctemplates"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -2845,7 +3009,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "mc_template_id"],
+              "required": [
+                "key",
+                "mc_template_id"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -2867,86 +3034,86 @@
               "description": "Information about the Mailchimp Transactional template",
               "properties": {
                 "mc_template_id": {
-                    "description": "Mailchimp template ID",
-                    "type": "integer",
-                    "example": 12345
+                  "description": "Mailchimp template ID",
+                  "type": "integer",
+                  "example": 12345
                 },
                 "mc_template_name": {
-                    "description": "Template name",
-                    "type": "string",
-                    "example": "Welcome Email"
+                  "description": "Template name",
+                  "type": "string",
+                  "example": "Welcome Email"
                 },
                 "labels": {
-                    "description": "Array of labels (always empty for transactional templates)",
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "example": []
+                  "description": "Array of labels (always empty for transactional templates)",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": []
                 },
                 "code": {
-                    "description": "Template HTML (draft version)",
-                    "type": "string",
-                    "example": "<div>Welcome!</div>"
+                  "description": "Template HTML (draft version)",
+                  "type": "string",
+                  "example": "<div>Welcome!</div>"
                 },
                 "subject": {
-                    "description": "Default subject line",
-                    "type": "string",
-                    "example": "Welcome to our service"
+                  "description": "Default subject line",
+                  "type": "string",
+                  "example": "Welcome to our service"
                 },
                 "from_email": {
-                    "description": "Default sending address",
-                    "type": "string",
-                    "example": "support@example.com"
+                  "description": "Default sending address",
+                  "type": "string",
+                  "example": "support@example.com"
                 },
                 "from_name": {
-                    "description": "Default from name",
-                    "type": "string",
-                    "example": "Support Team"
+                  "description": "Default from name",
+                  "type": "string",
+                  "example": "Support Team"
                 },
                 "text": {
-                    "description": "Template text (draft version)",
-                    "type": "string",
-                    "example": "Welcome to our service!"
+                  "description": "Template text (draft version)",
+                  "type": "string",
+                  "example": "Welcome to our service!"
                 },
                 "publish_code": {
-                    "description": "Template HTML (published version)",
-                    "type": "string",
-                    "example": "<div>Welcome!</div>"
+                  "description": "Template HTML (published version)",
+                  "type": "string",
+                  "example": "<div>Welcome!</div>"
                 },
                 "publish_text": {
-                    "description": "Template text (published version)",
-                    "type": "string",
-                    "example": "Welcome to our service!"
+                  "description": "Template text (published version)",
+                  "type": "string",
+                  "example": "Welcome to our service!"
                 },
                 "published_at": {
-                    "description": "Date and time when template was published in UTC YYYY-MM-DD HH:MM:SS format",
-                    "type": "string",
-                    "format": "date-time",
-                    "example": "2025-08-29 18:47:40"
+                  "description": "Date and time when template was published in UTC YYYY-MM-DD HH:MM:SS format",
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "2025-08-29 18:47:40"
                 },
                 "created_at": {
-                    "description": "Date and time when template was created in UTC YYYY-MM-DD HH:MM:SS format",
-                    "type": "string",
-                    "format": "date-time",
-                    "example": "2025-08-29 18:47:40.26276"
+                  "description": "Date and time when template was created in UTC YYYY-MM-DD HH:MM:SS format",
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "2025-08-29 18:47:40.26276"
                 },
                 "updated_at": {
-                    "description": "Date and time when template was last updated in UTC YYYY-MM-DD HH:MM:SS format",
-                    "type": "string",
-                    "format": "date-time",
-                    "example": "2025-08-29 18:47:40.26277"
+                  "description": "Date and time when template was last updated in UTC YYYY-MM-DD HH:MM:SS format",
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "2025-08-29 18:47:40.26277"
                 },
                 "draft_updated_at": {
-                    "description": "Date and time when template draft was last updated in UTC YYYY-MM-DD HH:MM:SS format",
-                    "type": "string",
-                    "format": "date-time",
-                    "example": "2025-08-29 18:47:40"
+                  "description": "Date and time when template draft was last updated in UTC YYYY-MM-DD HH:MM:SS format",
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "2025-08-29 18:47:40"
                 },
                 "is_broken_template": {
-                    "description": "Whether template has rendering errors",
-                    "type": "boolean",
-                    "example": false
+                  "description": "Whether template has rendering errors",
+                  "type": "boolean",
+                  "example": false
                 }
               }
             }
@@ -2964,7 +3131,9 @@
         "summary": "List Mailchimp Transactional Templates",
         "description": "Return a list of all Mailchimp Transactional templates available to this user.",
         "operationId": "postMcTemplatesList",
-        "tags": ["mctemplates"],
+        "tags": [
+          "mctemplates"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -2973,7 +3142,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -2982,8 +3153,8 @@
                 "search_query": {
                   "description": "Optional search query to filter templates",
                   "type": [
-                      "string",
-                      "null"
+                    "string",
+                    "null"
                   ],
                   "example": "\"\""
                 }
@@ -3002,86 +3173,86 @@
                 "description": "Information about the Mailchimp Transactional template",
                 "properties": {
                   "mc_template_id": {
-                      "description": "Mailchimp template ID",
-                      "type": "integer",
-                      "example": 12345
+                    "description": "Mailchimp template ID",
+                    "type": "integer",
+                    "example": 12345
                   },
                   "mc_template_name": {
-                      "description": "Template name",
-                      "type": "string",
-                      "example": "Welcome Email"
+                    "description": "Template name",
+                    "type": "string",
+                    "example": "Welcome Email"
                   },
                   "labels": {
-                      "description": "Array of labels (always empty for transactional templates)",
-                      "type": "array",
-                      "items": {
-                          "type": "string"
-                      },
-                      "example": []
+                    "description": "Array of labels (always empty for transactional templates)",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": []
                   },
                   "code": {
-                      "description": "Template HTML (draft version)",
-                      "type": "string",
-                      "example": "<div>Welcome!</div>"
+                    "description": "Template HTML (draft version)",
+                    "type": "string",
+                    "example": "<div>Welcome!</div>"
                   },
                   "subject": {
-                      "description": "Default subject line",
-                      "type": "string",
-                      "example": "Welcome to our service"
+                    "description": "Default subject line",
+                    "type": "string",
+                    "example": "Welcome to our service"
                   },
                   "from_email": {
-                      "description": "Default sending address",
-                      "type": "string",
-                      "example": "support@example.com"
+                    "description": "Default sending address",
+                    "type": "string",
+                    "example": "support@example.com"
                   },
                   "from_name": {
-                      "description": "Default from name",
-                      "type": "string",
-                      "example": "Support Team"
+                    "description": "Default from name",
+                    "type": "string",
+                    "example": "Support Team"
                   },
                   "text": {
-                      "description": "Template text (draft version)",
-                      "type": "string",
-                      "example": "Welcome to our service!"
+                    "description": "Template text (draft version)",
+                    "type": "string",
+                    "example": "Welcome to our service!"
                   },
                   "publish_code": {
-                      "description": "Template HTML (published version)",
-                      "type": "string",
-                      "example": "<div>Welcome!</div>"
+                    "description": "Template HTML (published version)",
+                    "type": "string",
+                    "example": "<div>Welcome!</div>"
                   },
                   "publish_text": {
-                      "description": "Template text (published version)",
-                      "type": "string",
-                      "example": "Welcome to our service!"
+                    "description": "Template text (published version)",
+                    "type": "string",
+                    "example": "Welcome to our service!"
                   },
                   "published_at": {
-                      "description": "Date and time when template was published in UTC YYYY-MM-DD HH:MM:SS format",
-                      "type": "string",
-                      "format": "date-time",
-                      "example": "2025-08-29 18:47:40"
+                    "description": "Date and time when template was published in UTC YYYY-MM-DD HH:MM:SS format",
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2025-08-29 18:47:40"
                   },
                   "created_at": {
-                      "description": "Date and time when template was created in UTC YYYY-MM-DD HH:MM:SS format",
-                      "type": "string",
-                      "format": "date-time",
-                      "example": "2025-08-29 18:47:40.26276"
+                    "description": "Date and time when template was created in UTC YYYY-MM-DD HH:MM:SS format",
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2025-08-29 18:47:40.26276"
                   },
                   "updated_at": {
-                      "description": "Date and time when template was last updated in UTC YYYY-MM-DD HH:MM:SS format",
-                      "type": "string",
-                      "format": "date-time",
-                      "example": "2025-08-29 18:47:40.26277"
+                    "description": "Date and time when template was last updated in UTC YYYY-MM-DD HH:MM:SS format",
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2025-08-29 18:47:40.26277"
                   },
                   "draft_updated_at": {
-                      "description": "Date and time when template draft was last updated in UTC YYYY-MM-DD HH:MM:SS format",
-                      "type": "string",
-                      "format": "date-time",
-                      "example": "2025-08-29 18:47:40"
+                    "description": "Date and time when template draft was last updated in UTC YYYY-MM-DD HH:MM:SS format",
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2025-08-29 18:47:40"
                   },
                   "is_broken_template": {
-                      "description": "Whether template has rendering errors",
-                      "type": "boolean",
-                      "example": false
+                    "description": "Whether template has rendering errors",
+                    "type": "boolean",
+                    "example": false
                   }
                 }
               }
@@ -3100,7 +3271,9 @@
         "summary": "Render Mailchimp Transactional Template",
         "description": "Render a Mailchimp Transactional template with optional merge variables.",
         "operationId": "postMcTemplatesRender",
-        "tags": ["mctemplates"],
+        "tags": [
+          "mctemplates"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -3109,7 +3282,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "mc_template_id"],
+              "required": [
+                "key",
+                "mc_template_id"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -3120,14 +3296,14 @@
                   "description": "the id of the Mailchimp template to render"
                 },
                 "mc_template_version": {
-                    "description": "Template version - \"published\" or \"draft\". Note: requesting \"published\" when the template has not been published will return a 404 error.",
-                    "type": "string",
-                    "default": "published",
-                    "enum": [
-                        "published",
-                        "draft"
-                    ],
-                    "example": "published"
+                  "description": "Template version - \"published\" or \"draft\". Note: requesting \"published\" when the template has not been published will return a 404 error.",
+                  "type": "string",
+                  "default": "published",
+                  "enum": [
+                    "published",
+                    "draft"
+                  ],
+                  "example": "published"
                 },
                 "merge_vars": {
                   "type": "array",
@@ -3178,7 +3354,9 @@
         "summary": "Get Mailchimp Transactional Template Time Series",
         "description": "Return the recent history (hourly stats for the last 30 days) for a Mailchimp Transactional template. Returns an empty array if the template exists but has never been used to send messages.",
         "operationId": "postMcTemplatesTimeSeries",
-        "tags": ["mctemplates"],
+        "tags": [
+          "mctemplates"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -3187,7 +3365,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "mc_template_id"],
+              "required": [
+                "key",
+                "mc_template_id"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -3283,7 +3464,9 @@
         "summary": "Send SMS message",
         "description": "Send a new SMS message through Mandrill",
         "operationId": "postMessagesSendSms",
-        "tags": ["messages"],
+        "tags": [
+          "messages"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -3292,7 +3475,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "message"],
+              "required": [
+                "key",
+                "message"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -3303,7 +3489,12 @@
                   "properties": {
                     "sms": {
                       "type": "object",
-                      "required": ["text", "to", "consent", "from"],
+                      "required": [
+                        "text",
+                        "to",
+                        "consent",
+                        "from"
+                      ],
                       "properties": {
                         "text": {
                           "type": "string",
@@ -3325,7 +3516,11 @@
                         "consent": {
                           "type": "string",
                           "description": "The consent type for the message",
-                          "enum": ["onetime", "recurring", "recurring-no-confirm"]
+                          "enum": [
+                            "onetime",
+                            "recurring",
+                            "recurring-no-confirm"
+                          ]
                         },
                         "track_clicks": {
                           "type": "boolean",
@@ -3366,7 +3561,13 @@
                   "status": {
                     "type": "string",
                     "description": "the sending status of the message",
-                    "enum": ["sent", "queued", "scheduled", "rejected", "invalid"],
+                    "enum": [
+                      "sent",
+                      "queued",
+                      "scheduled",
+                      "rejected",
+                      "invalid"
+                    ],
                     "example": "sent"
                   },
                   "reject_reason": {
@@ -3416,7 +3617,9 @@
         "summary": "Send new message",
         "description": "Send a new transactional message through the Transactional API.",
         "operationId": "postMessagesSend",
-        "tags": ["messages"],
+        "tags": [
+          "messages"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -3425,7 +3628,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "message"],
+              "required": [
+                "key",
+                "message"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -3462,7 +3668,9 @@
                       "items": {
                         "type": "object",
                         "description": "a single recipient's information",
-                        "required": ["email"],
+                        "required": [
+                          "email"
+                        ],
                         "properties": {
                           "email": {
                             "type": "string",
@@ -3476,7 +3684,11 @@
                           "type": {
                             "type": "string",
                             "description": "the header type to use for the recipient, defaults to \"to\" if not provided",
-                            "enum": ["to", "cc", "bcc"]
+                            "enum": [
+                              "to",
+                              "cc",
+                              "bcc"
+                            ]
                           }
                         }
                       }
@@ -3545,7 +3757,10 @@
                     "merge_language": {
                       "type": "string",
                       "description": "the merge tag language to use when evaluating merge tags, either mailchimp or handlebars",
-                      "enum": ["mailchimp", "handlebars"]
+                      "enum": [
+                        "mailchimp",
+                        "handlebars"
+                      ]
                     },
                     "global_merge_vars": {
                       "type": "array",
@@ -3571,7 +3786,9 @@
                       "items": {
                         "type": "object",
                         "description": "per-recipient merge variables",
-                        "required": ["rcpt"],
+                        "required": [
+                          "rcpt"
+                        ],
                         "properties": {
                           "rcpt": {
                             "type": "string",
@@ -3803,7 +4020,9 @@
         "summary": "Send using message template",
         "description": "Send a new transactional message through the Transactional API using a template.",
         "operationId": "postMessagesSendTemplate",
-        "tags": ["messages"],
+        "tags": [
+          "messages"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -3876,7 +4095,9 @@
                       "items": {
                         "type": "object",
                         "description": "a single recipient's information",
-                        "required": ["email"],
+                        "required": [
+                          "email"
+                        ],
                         "properties": {
                           "email": {
                             "type": "string",
@@ -3890,7 +4111,11 @@
                           "type": {
                             "type": "string",
                             "description": "the header type to use for the recipient, defaults to \"to\" if not provided",
-                            "enum": ["to", "cc", "bcc"]
+                            "enum": [
+                              "to",
+                              "cc",
+                              "bcc"
+                            ]
                           }
                         }
                       }
@@ -3959,7 +4184,10 @@
                     "merge_language": {
                       "type": "string",
                       "description": "the merge tag language to use when evaluating merge tags, either mailchimp or handlebars",
-                      "enum": ["mailchimp", "handlebars"]
+                      "enum": [
+                        "mailchimp",
+                        "handlebars"
+                      ]
                     },
                     "global_merge_vars": {
                       "type": "array",
@@ -3985,7 +4213,9 @@
                       "items": {
                         "type": "object",
                         "description": "per-recipient merge variables",
-                        "required": ["rcpt"],
+                        "required": [
+                          "rcpt"
+                        ],
                         "properties": {
                           "rcpt": {
                             "type": "string",
@@ -4153,7 +4383,12 @@
                   "status": {
                     "type": "string",
                     "description": "the sending status of the recipient",
-                    "enum": ["sent", "queued", "rejected", "invalid"],
+                    "enum": [
+                      "sent",
+                      "queued",
+                      "rejected",
+                      "invalid"
+                    ],
                     "example": "sent"
                   },
                   "reject_reason": {
@@ -4211,7 +4446,9 @@
         "summary": "Send using Mailchimp template",
         "description": "Send a new transactional message through Mandrill using a Mailchimp Transactional template.",
         "operationId": "postMessagesSendMcTemplate",
-        "tags": ["messages"],
+        "tags": [
+          "messages"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -4235,13 +4472,13 @@
                   "description": "the id of the Mailchimp template to send"
                 },
                 "mc_template_version": {
-                    "description": "which version of the template to use - \"draft\" for draft content or \"published\" for published content. Defaults to \"published\". Note: requesting \"published\" when the template has not been published will return a 404 error.",
-                    "type": "string",
-                    "enum": [
-                        "draft",
-                        "published"
-                    ],
-                    "example": "published"
+                  "description": "which version of the template to use - \"draft\" for draft content or \"published\" for published content. Defaults to \"published\". Note: requesting \"published\" when the template has not been published will return a 404 error.",
+                  "type": "string",
+                  "enum": [
+                    "draft",
+                    "published"
+                  ],
+                  "example": "published"
                 },
                 "message": {
                   "type": "object",
@@ -4274,7 +4511,9 @@
                       "items": {
                         "type": "object",
                         "description": "a single recipient's information",
-                        "required": ["email"],
+                        "required": [
+                          "email"
+                        ],
                         "properties": {
                           "email": {
                             "type": "string",
@@ -4288,7 +4527,11 @@
                           "type": {
                             "type": "string",
                             "description": "the header type to use for the recipient, defaults to \"to\" if not provided",
-                            "enum": ["to", "cc", "bcc"]
+                            "enum": [
+                              "to",
+                              "cc",
+                              "bcc"
+                            ]
                           }
                         }
                       }
@@ -4357,7 +4600,10 @@
                     "merge_language": {
                       "type": "string",
                       "description": "the merge tag language to use when evaluating merge tags, either mailchimp or handlebars",
-                      "enum": ["mailchimp", "handlebars"]
+                      "enum": [
+                        "mailchimp",
+                        "handlebars"
+                      ]
                     },
                     "global_merge_vars": {
                       "type": "array",
@@ -4383,7 +4629,9 @@
                       "items": {
                         "type": "object",
                         "description": "per-recipient merge variables",
-                        "required": ["rcpt"],
+                        "required": [
+                          "rcpt"
+                        ],
                         "properties": {
                           "rcpt": {
                             "type": "string",
@@ -4551,7 +4799,12 @@
                   "status": {
                     "type": "string",
                     "description": "the sending status of the recipient",
-                    "enum": ["sent", "queued", "rejected", "invalid"],
+                    "enum": [
+                      "sent",
+                      "queued",
+                      "rejected",
+                      "invalid"
+                    ],
                     "example": "sent"
                   },
                   "reject_reason": {
@@ -4609,7 +4862,9 @@
         "summary": "Search messages by date",
         "description": "Search recently sent messages and optionally narrow by date range, tags, senders, and API keys. If no date range is specified, results within the last 7 days are returned. This method may be called up to 20 times per minute. If you need the data more often, you can use /messages/info.json to get the information for a single message, or webhooks to push activity to your own application for querying.",
         "operationId": "postMessagesSearch",
-        "tags": ["messages"],
+        "tags": [
+          "messages"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -4618,7 +4873,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -4801,13 +5058,19 @@
                   "state": {
                     "type": "string",
                     "description": "sending status of this message",
-                    "enum": ["sent", "bounced", "rejected"],
+                    "enum": [
+                      "sent",
+                      "bounced",
+                      "rejected"
+                    ],
                     "example": "sent"
                   },
                   "metadata": {
                     "type": "object",
                     "description": "any custom metadata provided when the message was sent",
-                    "example": {"website": "www.example.com"}
+                    "example": {
+                      "website": "www.example.com"
+                    }
                   }
                 }
               }
@@ -4826,7 +5089,9 @@
         "summary": "Search messages by hour",
         "description": "Search the content of recently sent messages and return the aggregated hourly stats for matching messages.",
         "operationId": "postMessagesSearchTimeSeries",
-        "tags": ["messages"],
+        "tags": [
+          "messages"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -4835,7 +5100,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -4958,7 +5225,9 @@
         "summary": "Get message info",
         "description": "Get the information for a single recently sent message.",
         "operationId": "postMessagesInfo",
-        "tags": ["messages"],
+        "tags": [
+          "messages"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -4967,7 +5236,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "id"],
+              "required": [
+                "key",
+                "id"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -5106,7 +5378,11 @@
                 "state": {
                   "type": "string",
                   "description": "sending status of this message",
-                  "enum": ["sent", "bounced", "rejected"]
+                  "enum": [
+                    "sent",
+                    "bounced",
+                    "rejected"
+                  ]
                 },
                 "metadata": {
                   "type": "object",
@@ -5153,7 +5429,9 @@
         "summary": "Get message content",
         "description": "Get the full content of a recently sent message.",
         "operationId": "postMessagesContent",
-        "tags": ["messages"],
+        "tags": [
+          "messages"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -5162,7 +5440,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "id"],
+              "required": [
+                "key",
+                "id"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -5294,7 +5575,9 @@
         "summary": "Parse mime document",
         "description": "Parse the full MIME document for an email message, returning the content of the message broken into its constituent pieces.",
         "operationId": "postMessagesParse",
-        "tags": ["messages"],
+        "tags": [
+          "messages"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -5303,7 +5586,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "raw_message"],
+              "required": [
+                "key",
+                "raw_message"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -5448,7 +5734,9 @@
         "summary": "Send mime document",
         "description": "Take a raw MIME document for a message, and send it exactly as if it were sent through the Transactional API's SMTP servers.",
         "operationId": "postMessagesSendRaw",
-        "tags": ["messages"],
+        "tags": [
+          "messages"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -5457,7 +5745,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "raw_message"],
+              "required": [
+                "key",
+                "raw_message"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -5588,7 +5879,9 @@
         "summary": "List scheduled emails",
         "description": "Queries your scheduled emails.",
         "operationId": "postMessagesListScheduled",
-        "tags": ["messages"],
+        "tags": [
+          "messages"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -5597,7 +5890,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -5673,7 +5968,9 @@
         "summary": "Cancel scheduled email",
         "description": "Cancels a scheduled email.",
         "operationId": "postMessagesCancelScheduled",
-        "tags": ["messages"],
+        "tags": [
+          "messages"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -5682,7 +5979,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "id"],
+              "required": [
+                "key",
+                "id"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -5757,7 +6057,9 @@
         "summary": "Reschedule email",
         "description": "Reschedules a scheduled email.",
         "operationId": "postMessagesReschedule",
-        "tags": ["messages"],
+        "tags": [
+          "messages"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -5766,7 +6068,11 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "id", "send_at"],
+              "required": [
+                "key",
+                "id",
+                "send_at"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -5846,7 +6152,9 @@
         "summary": "List metadata fields",
         "description": "Get the list of custom metadata fields indexed for the account.",
         "operationId": "postMetadataList",
-        "tags": ["metadata"],
+        "tags": [
+          "metadata"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -5855,7 +6163,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -5883,7 +6193,11 @@
                   "state": {
                     "type": "string",
                     "description": "the current state of the metadata field",
-                    "enum": ["active", "delete", "index"],
+                    "enum": [
+                      "active",
+                      "delete",
+                      "index"
+                    ],
                     "example": "active"
                   },
                   "view_template": {
@@ -5908,7 +6222,9 @@
         "summary": "Add metadata field",
         "description": "Add a new custom metadata field to be indexed for the account.",
         "operationId": "postMetadataAdd",
-        "tags": ["metadata"],
+        "tags": [
+          "metadata"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -5917,7 +6233,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "name"],
+              "required": [
+                "key",
+                "name"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -5952,7 +6271,11 @@
                 "state": {
                   "type": "string",
                   "description": "the current state of the metadata field",
-                  "enum": ["active", "delete", "index"],
+                  "enum": [
+                    "active",
+                    "delete",
+                    "index"
+                  ],
                   "example": "active"
                 },
                 "view_template": {
@@ -5976,7 +6299,9 @@
         "summary": "Update metadata field",
         "description": "Update an existing custom metadata field.",
         "operationId": "postMetadataUpdate",
-        "tags": ["metadata"],
+        "tags": [
+          "metadata"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -5985,7 +6310,11 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "name", "view_template"],
+              "required": [
+                "key",
+                "name",
+                "view_template"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -6019,7 +6348,11 @@
                 "state": {
                   "type": "string",
                   "description": "the current state of the metadata field",
-                  "enum": ["active", "delete", "index"],
+                  "enum": [
+                    "active",
+                    "delete",
+                    "index"
+                  ],
                   "example": "active"
                 },
                 "view_template": {
@@ -6043,7 +6376,9 @@
         "summary": "Delete metadata field",
         "description": "Delete an existing custom metadata field. Deletion isn't instataneous, and /metadata/list will continue to return the field until the asynchronous deletion process is complete.",
         "operationId": "postMetadataDelete",
-        "tags": ["metadata"],
+        "tags": [
+          "metadata"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -6052,7 +6387,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "name"],
+              "required": [
+                "key",
+                "name"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -6081,7 +6419,11 @@
                 "state": {
                   "type": "string",
                   "description": "the current state of the metadata field",
-                  "enum": ["active", "delete", "index"],
+                  "enum": [
+                    "active",
+                    "delete",
+                    "index"
+                  ],
                   "example": "active"
                 },
                 "view_template": {
@@ -6105,7 +6447,9 @@
         "summary": "Add email to denylist",
         "description": "Adds an email to your email rejection denylist. Addresses that you add manually will never expire and there is no reputation penalty for removing them from your denylist. Attempting to denylist an address that has been added to the allowlist will have no effect.",
         "operationId": "postRejectsAdd",
-        "tags": ["rejects"],
+        "tags": [
+          "rejects"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -6114,7 +6458,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "email"],
+              "required": [
+                "key",
+                "email"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -6172,7 +6519,9 @@
         "summary": "List denylisted emails",
         "description": "Retrieves your email rejection denylist. You can provide an email address to limit the results. Returns up to 1000 results. By default, entries that have expired are excluded from the results; set include_expired to true to include them.",
         "operationId": "postRejectsList",
-        "tags": ["rejects"],
+        "tags": [
+          "rejects"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -6181,7 +6530,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -6344,7 +6695,9 @@
         "summary": "Delete email from denylist",
         "description": "Deletes an email rejection. There is no limit to how many rejections you can remove from your denylist, but keep in mind that each deletion has an affect on your reputation.",
         "operationId": "postRejectsDelete",
-        "tags": ["rejects"],
+        "tags": [
+          "rejects"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -6353,7 +6706,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "email"],
+              "required": [
+                "key",
+                "email"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -6412,7 +6768,9 @@
         "summary": "List account senders",
         "description": "Return the senders that have tried to use this account.",
         "operationId": "postSendersList",
-        "tags": ["senders"],
+        "tags": [
+          "senders"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -6421,7 +6779,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -6520,7 +6880,9 @@
         "summary": "List sender domains",
         "description": "Returns the sender domains that have been added to this account.",
         "operationId": "postSendersDomains",
-        "tags": ["senders"],
+        "tags": [
+          "senders"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -6529,7 +6891,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -6681,7 +7045,9 @@
         "summary": "Add sender domain",
         "description": "Adds a sender domain to your account. Sender domains are added automatically as you send, but you can use this call to add them ahead of time.",
         "operationId": "postSendersAddDomain",
-        "tags": ["senders"],
+        "tags": [
+          "senders"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -6690,7 +7056,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "domain"],
+              "required": [
+                "key",
+                "domain"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -6804,7 +7173,9 @@
         "summary": "Delete sender domain",
         "description": "Deletes an unverified sender domain from your account. Verified domains cannot be deleted via API and require login confirmation.",
         "operationId": "postSendersDeleteDomain",
-        "tags": ["senders"],
+        "tags": [
+          "senders"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -6813,7 +7184,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "domain"],
+              "required": [
+                "key",
+                "domain"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -6835,35 +7209,35 @@
               "description": "Information about the deleted domain",
               "properties": {
                 "domain": {
-                    "type": "string",
-                    "format": "hostname",
-                    "example": "example.com"
+                  "type": "string",
+                  "format": "hostname",
+                  "example": "example.com"
                 },
                 "created_at": {
-                    "description": "The date and time that the sending domain was first seen.",
-                    "type": "string",
-                    "format": "date-time"
+                  "description": "The date and time that the sending domain was first seen.",
+                  "type": "string",
+                  "format": "date-time"
                 },
                 "last_tested_at": {
-                    "description": "The date and time that the sending domain was last tested.",
-                    "type": "string",
-                    "format": "date-time"
+                  "description": "The date and time that the sending domain was last tested.",
+                  "type": "string",
+                  "format": "date-time"
                 },
                 "spf": {
                   "description": "Details about the domain's SPF record.",
-                    "properties": {
+                  "properties": {
                     "valid": {
-                        "description": "Whether this verification is valid.",
-                        "type": "boolean"
+                      "description": "Whether this verification is valid.",
+                      "type": "boolean"
                     },
                     "valid_after": {
-                        "description": "The date and time that this verification was last tested.",
-                        "type": "string",
-                        "format": "date-time"
+                      "description": "The date and time that this verification was last tested.",
+                      "type": "string",
+                      "format": "date-time"
                     },
                     "error": {
-                        "description": "An error message indicating why the verification failed.",
-                        "type": "string"
+                      "description": "An error message indicating why the verification failed.",
+                      "type": "string"
                     }
                   },
                   "type": "object"
@@ -6872,17 +7246,17 @@
                   "description": "Details about the domain's DKIM record.",
                   "properties": {
                     "valid": {
-                        "description": "Whether this verification is valid.",
-                        "type": "boolean"
+                      "description": "Whether this verification is valid.",
+                      "type": "boolean"
                     },
                     "valid_after": {
-                        "description": "The date and time that this verification was last tested.",
-                        "type": "string",
-                        "format": "date-time"
+                      "description": "The date and time that this verification was last tested.",
+                      "type": "string",
+                      "format": "date-time"
                     },
                     "error": {
-                        "description": "An error message indicating why the verification failed.",
-                        "type": "string"
+                      "description": "An error message indicating why the verification failed.",
+                      "type": "string"
                     }
                   },
                   "type": "object"
@@ -6910,28 +7284,28 @@
                   "description": "Details about the domain's DMARC record.",
                   "properties": {
                     "valid": {
-                        "description": "Whether this verification is valid.",
-                        "type": "boolean"
+                      "description": "Whether this verification is valid.",
+                      "type": "boolean"
                     },
                     "error": {
-                        "description": "An error message indicating why the verification failed.",
-                        "type": "string"
+                      "description": "An error message indicating why the verification failed.",
+                      "type": "string"
                     }
                   },
                   "type": "object"
                 },
                 "verified_at": {
-                    "description": "The date and time that the sending domain was verified.",
-                    "type": "string",
-                    "format": "date-time"
+                  "description": "The date and time that the sending domain was verified.",
+                  "type": "string",
+                  "format": "date-time"
                 },
                 "valid_signing": {
-                    "description": "Whether this domain can be used to sign messages.",
-                    "type": "boolean"
+                  "description": "Whether this domain can be used to sign messages.",
+                  "type": "boolean"
                 },
                 "verify_txt_key": {
-                    "description": "The key for the TXT record used to verify the domain.",
-                    "type": "string"
+                  "description": "The key for the TXT record used to verify the domain.",
+                  "type": "string"
                 }
               }
             }
@@ -6949,7 +7323,9 @@
         "summary": "Check domain settings",
         "description": "Checks the SPF and DKIM settings for a domain, as well the domain verification. If you haven't already added this domain to your account, it will be added automatically.",
         "operationId": "postSendersCheckDomain",
-        "tags": ["senders"],
+        "tags": [
+          "senders"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -6958,7 +7334,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "domain"],
+              "required": [
+                "key",
+                "domain"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -7110,7 +7489,9 @@
         "summary": "Verify domain",
         "description": "Sends a verification email in order to verify ownership of a domain. Domain verification is a required step to confirm ownership of a domain. Once a domain has been verified in a Transactional API account, other accounts may not have their messages signed by that domain unless they also verify the domain. This prevents other Transactional API accounts from sending mail signed by your domain.",
         "operationId": "postSendersVerifyDomain",
-        "tags": ["senders"],
+        "tags": [
+          "senders"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -7119,7 +7500,11 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "domain", "mailbox"],
+              "required": [
+                "key",
+                "domain",
+                "mailbox"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -7176,7 +7561,9 @@
         "summary": "Get sender info",
         "description": "Return more detailed information about a single sender, including aggregates of recent stats.",
         "operationId": "postSendersInfo",
-        "tags": ["senders"],
+        "tags": [
+          "senders"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -7185,7 +7572,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "address"],
+              "required": [
+                "key",
+                "address"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -7561,7 +7951,9 @@
         "summary": "View sender history",
         "description": "Return the recent history (hourly stats for the last 30 days) for a sender.",
         "operationId": "postSendersTimeSeries",
-        "tags": ["senders"],
+        "tags": [
+          "senders"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -7570,7 +7962,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "address"],
+              "required": [
+                "key",
+                "address"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -7663,7 +8058,9 @@
         "summary": "List subaccounts",
         "description": "Get the list of subaccounts defined for the account, optionally filtered by a prefix.",
         "operationId": "postSubaccountsList",
-        "tags": ["subaccounts"],
+        "tags": [
+          "subaccounts"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -7672,7 +8069,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -7714,7 +8113,10 @@
                   "status": {
                     "type": "string",
                     "description": "the current sending status of the subaccount",
-                    "enum": ["active", "paused"],
+                    "enum": [
+                      "active",
+                      "paused"
+                    ],
                     "example": "active"
                   },
                   "reputation": {
@@ -7768,7 +8170,9 @@
         "summary": "Add subaccount",
         "description": "Add a new subaccount.",
         "operationId": "postSubaccountsAdd",
-        "tags": ["subaccounts"],
+        "tags": [
+          "subaccounts"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -7777,7 +8181,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "id"],
+              "required": [
+                "key",
+                "id"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -7831,7 +8238,10 @@
                 "status": {
                   "type": "string",
                   "description": "the current sending status of the subaccount",
-                  "enum": ["active", "paused"],
+                  "enum": [
+                    "active",
+                    "paused"
+                  ],
                   "example": "active"
                 },
                 "reputation": {
@@ -7884,7 +8294,9 @@
         "summary": "Get subaccount info",
         "description": "Given the ID of an existing subaccount, return the data about it.",
         "operationId": "postSubaccountsInfo",
-        "tags": ["subaccounts"],
+        "tags": [
+          "subaccounts"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -7893,7 +8305,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "id"],
+              "required": [
+                "key",
+                "id"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -7937,7 +8352,10 @@
                 "status": {
                   "type": "string",
                   "description": "the current sending status of the subaccount",
-                  "enum": ["active", "paused"],
+                  "enum": [
+                    "active",
+                    "paused"
+                  ],
                   "example": "active"
                 },
                 "reputation": {
@@ -8056,7 +8474,9 @@
         "summary": "Update subaccount",
         "description": "Update an existing subaccount.",
         "operationId": "postSubaccountsUpdate",
-        "tags": ["subaccounts"],
+        "tags": [
+          "subaccounts"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -8065,7 +8485,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "id"],
+              "required": [
+                "key",
+                "id"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -8118,7 +8541,10 @@
                 "status": {
                   "type": "string",
                   "description": "the current sending status of the subaccount",
-                  "enum": ["active", "paused"],
+                  "enum": [
+                    "active",
+                    "paused"
+                  ],
                   "example": "active"
                 },
                 "reputation": {
@@ -8171,7 +8597,9 @@
         "summary": "Delete subaccount",
         "description": "Delete an existing subaccount. Any email related to the subaccount will be saved, but stats will be removed and any future sending calls to this subaccount will fail.",
         "operationId": "postSubaccountsDelete",
-        "tags": ["subaccounts"],
+        "tags": [
+          "subaccounts"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -8180,7 +8608,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "id"],
+              "required": [
+                "key",
+                "id"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -8219,7 +8650,10 @@
                 "status": {
                   "type": "string",
                   "description": "the current sending status of the subaccount",
-                  "enum": ["active", "paused"],
+                  "enum": [
+                    "active",
+                    "paused"
+                  ],
                   "example": "active"
                 },
                 "reputation": {
@@ -8272,7 +8706,9 @@
         "summary": "Pause subaccount",
         "description": "Pause a subaccount's sending. Any future emails delivered to this subaccount will be queued for a maximum of 3 days until the subaccount is resumed.",
         "operationId": "postSubaccountsPause",
-        "tags": ["subaccounts"],
+        "tags": [
+          "subaccounts"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -8281,7 +8717,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "id"],
+              "required": [
+                "key",
+                "id"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -8320,7 +8759,10 @@
                 "status": {
                   "type": "string",
                   "description": "the current sending status of the subaccount",
-                  "enum": ["active", "paused"],
+                  "enum": [
+                    "active",
+                    "paused"
+                  ],
                   "example": "paused"
                 },
                 "reputation": {
@@ -8373,7 +8815,9 @@
         "summary": "Resume subaccount",
         "description": "Resume a paused subaccount's sending.",
         "operationId": "postSubaccountsResume",
-        "tags": ["subaccounts"],
+        "tags": [
+          "subaccounts"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -8382,7 +8826,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "id"],
+              "required": [
+                "key",
+                "id"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -8421,7 +8868,10 @@
                 "status": {
                   "type": "string",
                   "description": "the current sending status of the subaccount",
-                  "enum": ["active", "paused"],
+                  "enum": [
+                    "active",
+                    "paused"
+                  ],
                   "example": "active"
                 },
                 "reputation": {
@@ -8474,7 +8924,9 @@
         "summary": "List tags",
         "description": "Return all of the user-defined tag information.",
         "operationId": "postTagsList",
-        "tags": ["tags"],
+        "tags": [
+          "tags"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -8483,7 +8935,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -8582,7 +9036,9 @@
         "summary": "Delete tag",
         "description": "Deletes a tag permanently. Deleting a tag removes the tag from any messages that have been sent, and also deletes the tag's stats. There is no way to undo this operation, so use it carefully.",
         "operationId": "postTagsDelete",
-        "tags": ["tags"],
+        "tags": [
+          "tags"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -8591,7 +9047,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "tag"],
+              "required": [
+                "key",
+                "tag"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -8690,7 +9149,9 @@
         "summary": "Get tag info",
         "description": "Return more detailed information about a single tag, including aggregates of recent stats.",
         "operationId": "postTagsInfo",
-        "tags": ["tags"],
+        "tags": [
+          "tags"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -8699,7 +9160,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "tag"],
+              "required": [
+                "key",
+                "tag"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -9067,7 +9531,9 @@
         "summary": "View tag history",
         "description": "Return the recent history (hourly stats for the last 30 days) for a tag.",
         "operationId": "postTagsTimeSeries",
-        "tags": ["tags"],
+        "tags": [
+          "tags"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -9076,7 +9542,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "tag"],
+              "required": [
+                "key",
+                "tag"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -9173,7 +9642,9 @@
         "summary": "View all tags history",
         "description": "Return the recent history (hourly stats for the last 30 days) for all tags.",
         "operationId": "postTagsAllTimeSeries",
-        "tags": ["tags"],
+        "tags": [
+          "tags"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -9182,7 +9653,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -9275,7 +9748,9 @@
         "summary": "Add template",
         "description": "Add a new template.",
         "operationId": "postTemplatesAdd",
-        "tags": ["templates"],
+        "tags": [
+          "templates"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -9284,7 +9759,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "name"],
+              "required": [
+                "key",
+                "name"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -9454,7 +9932,9 @@
         "summary": "Get template info",
         "description": "Get the information for an existing template.",
         "operationId": "postTemplatesInfo",
-        "tags": ["templates"],
+        "tags": [
+          "templates"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -9463,7 +9943,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "name"],
+              "required": [
+                "key",
+                "name"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -9598,7 +10081,9 @@
         "summary": "Update template",
         "description": "Update the code for an existing template. If null is provided for any fields, the values will remain unchanged.",
         "operationId": "postTemplatesUpdate",
-        "tags": ["templates"],
+        "tags": [
+          "templates"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -9607,7 +10092,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "name"],
+              "required": [
+                "key",
+                "name"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -9777,7 +10265,9 @@
         "summary": "Publish template content",
         "description": "Publish the content for the template. Any new messages sent using this template will start using the content that was previously in draft.",
         "operationId": "postTemplatesPublish",
-        "tags": ["templates"],
+        "tags": [
+          "templates"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -9786,7 +10276,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "name"],
+              "required": [
+                "key",
+                "name"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -9921,7 +10414,9 @@
         "summary": "Delete template",
         "description": "Delete a template.",
         "operationId": "postTemplatesDelete",
-        "tags": ["templates"],
+        "tags": [
+          "templates"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -9930,7 +10425,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "name"],
+              "required": [
+                "key",
+                "name"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -10065,7 +10563,9 @@
         "summary": "List templates",
         "description": "Return a list of all the templates available to this user.",
         "operationId": "postTemplatesList",
-        "tags": ["templates"],
+        "tags": [
+          "templates"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -10074,7 +10574,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -10213,7 +10715,9 @@
         "summary": "Get template history",
         "description": "Return the recent history (hourly stats for the last 30 days) for a template.",
         "operationId": "postTemplatesTimeSeries",
-        "tags": ["templates"],
+        "tags": [
+          "templates"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -10222,7 +10726,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "name"],
+              "required": [
+                "key",
+                "name"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -10314,7 +10821,9 @@
         "summary": "Render html template",
         "description": "Inject content and optionally merge fields into a template, returning the HTML that results.",
         "operationId": "postTemplatesRender",
-        "tags": ["templates"],
+        "tags": [
+          "templates"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -10323,7 +10832,11 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "template_name", "template_content"],
+              "required": [
+                "key",
+                "template_name",
+                "template_content"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -10339,7 +10852,10 @@
                   "items": {
                     "type": "object",
                     "description": "the injection of a single piece of content into a single editable region",
-                    "required": ["name", "content"],
+                    "required": [
+                      "name",
+                      "content"
+                    ],
                     "properties": {
                       "name": {
                         "type": "string",
@@ -10402,7 +10918,9 @@
         "summary": "List most clicked urls",
         "description": "Get the 100 most clicked URLs.",
         "operationId": "postUrlsList",
-        "tags": ["urls"],
+        "tags": [
+          "urls"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -10411,7 +10929,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -10464,7 +10984,9 @@
         "summary": "Search most clicked urls",
         "description": "Return the 100 most clicked URLs that match the search query given.",
         "operationId": "postUrlsSearchDeprecated",
-        "tags": ["urls"],
+        "tags": [
+          "urls"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -10473,7 +10995,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "q"],
+              "required": [
+                "key",
+                "q"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -10530,7 +11055,9 @@
         "summary": "Get url history",
         "description": "Return the recent history (hourly stats for the last 30 days) for a URL",
         "operationId": "postUrlsTimeSeries",
-        "tags": ["urls"],
+        "tags": [
+          "urls"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -10539,7 +11066,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "url"],
+              "required": [
+                "key",
+                "url"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -10597,7 +11127,9 @@
         "summary": "List tracking domains",
         "description": "Get the list of tracking domains set up for this account.",
         "operationId": "postUrlsTrackingDomains",
-        "tags": ["urls"],
+        "tags": [
+          "urls"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -10606,7 +11138,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -10686,7 +11220,9 @@
         "summary": "Add tracking domains",
         "description": "Add a tracking domain to your account.",
         "operationId": "postUrlsAddTrackingDomain",
-        "tags": ["urls"],
+        "tags": [
+          "urls"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -10695,7 +11231,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "domain"],
+              "required": [
+                "key",
+                "domain"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -10775,7 +11314,9 @@
         "summary": "Delete tracking domain",
         "description": "Deletes an unverified tracking domain from your account. Valid tracking domains cannot be deleted via API and require login confirmation.",
         "operationId": "postUrlsDeleteTrackingDomain",
-        "tags": ["urls"],
+        "tags": [
+          "urls"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -10784,7 +11325,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "domain"],
+              "required": [
+                "key",
+                "domain"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -10806,52 +11350,52 @@
               "description": "Information about the deleted tracking domain",
               "properties": {
                 "domain": {
-                    "description": "The tracking domain name",
-                    "type": "string",
-                    "format": "hostname",
-                    "example": "track.example.com"
+                  "description": "The tracking domain name",
+                  "type": "string",
+                  "format": "hostname",
+                  "example": "track.example.com"
                 },
                 "created_at": {
-                    "description": "When the domain was added to the account (UTC YYYY-MM-DD HH:MM:SS.microseconds)",
-                    "type": "string",
-                    "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d+$",
-                    "example": "2025-08-15 17:01:12.34214"
+                  "description": "When the domain was added to the account (UTC YYYY-MM-DD HH:MM:SS.microseconds)",
+                  "type": "string",
+                  "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d+$",
+                  "example": "2025-08-15 17:01:12.34214"
                 },
                 "last_tested_at": {
-                    "description": "When the domain was last tested for CNAME configuration (UTC YYYY-MM-DD HH:MM:SS.microseconds)",
-                    "type": "string",
-                    "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d+$",
-                    "example": "2025-08-15 17:01:12.39638"
+                  "description": "When the domain was last tested for CNAME configuration (UTC YYYY-MM-DD HH:MM:SS.microseconds)",
+                  "type": "string",
+                  "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d+$",
+                  "example": "2025-08-15 17:01:12.39638"
                 },
                 "cname": {
-                    "description": "CNAME record verification status and details",
-                    "required": [
-                        "valid",
-                        "valid_after",
-                        "error"
-                    ],
-                    "properties": {
-                        "valid": {
-                            "description": "Whether the CNAME record is properly configured",
-                            "type": "boolean",
-                            "example": false
-                        },
-                        "valid_after": {
-                            "description": "When the CNAME will be valid (if applicable)",
-                            "type": "string",
-                            "example": null
-                        },
-                        "error": {
-                            "description": "an error describing the CNAME record, or null if the record is correct",
-                            "example": " does not match the required CNAME target of mandrillapp.com. Please verify that the target was entered exactly as requested and try again."
-                        }
+                  "description": "CNAME record verification status and details",
+                  "required": [
+                    "valid",
+                    "valid_after",
+                    "error"
+                  ],
+                  "properties": {
+                    "valid": {
+                      "description": "Whether the CNAME record is properly configured",
+                      "type": "boolean",
+                      "example": false
                     },
-                    "type": "object"
+                    "valid_after": {
+                      "description": "When the CNAME will be valid (if applicable)",
+                      "type": "string",
+                      "example": null
+                    },
+                    "error": {
+                      "description": "an error describing the CNAME record, or null if the record is correct",
+                      "example": " does not match the required CNAME target of mandrillapp.com. Please verify that the target was entered exactly as requested and try again."
+                    }
+                  },
+                  "type": "object"
                 },
                 "valid_tracking": {
-                    "description": "Whether this domain is ready to be used for tracking",
-                    "type": "boolean",
-                    "example": false
+                  "description": "Whether this domain is ready to be used for tracking",
+                  "type": "boolean",
+                  "example": false
                 }
               }
             }
@@ -10869,7 +11413,9 @@
         "summary": "Check cname settings",
         "description": "Checks the CNAME settings for a tracking domain. The domain must have been added already with the add-tracking-domain call.",
         "operationId": "postUrlsCheckTrackingDomain",
-        "tags": ["urls"],
+        "tags": [
+          "urls"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -10878,7 +11424,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "domain"],
+              "required": [
+                "key",
+                "domain"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -10958,7 +11507,9 @@
         "summary": "Get user info",
         "description": "Return the information about the API-connected user.",
         "operationId": "postUsersInfo",
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -10967,7 +11518,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -11372,7 +11925,9 @@
         "summary": "Ping",
         "description": "Validate an API key and respond to a ping.",
         "operationId": "postUsersPing",
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -11381,7 +11936,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -11413,7 +11970,9 @@
         "summary": "Ping 2",
         "description": "Validate an API key and respond to a ping (JSON parser version).",
         "operationId": "postUsersPing2",
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -11422,7 +11981,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -11460,7 +12021,9 @@
         "summary": "List account senders",
         "description": "Return the senders that have tried to use this account, both verified and unverified.",
         "operationId": "postUsersSenders",
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -11469,7 +12032,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -11568,7 +12133,9 @@
         "summary": "List webhooks",
         "description": "Get the list of all webhooks defined on the account.",
         "operationId": "postWebhooksList",
-        "tags": ["webhooks"],
+        "tags": [
+          "webhooks"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -11577,7 +12144,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -11680,7 +12249,9 @@
         "summary": "Add webhook",
         "description": "Add a new webhook.",
         "operationId": "postWebhooksAdd",
-        "tags": ["webhooks"],
+        "tags": [
+          "webhooks"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -11689,7 +12260,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "url"],
+              "required": [
+                "key",
+                "url"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -11816,7 +12390,9 @@
         "summary": "Get webhook info",
         "description": "Given the ID of an existing webhook, return the data about it.",
         "operationId": "postWebhooksInfo",
-        "tags": ["webhooks"],
+        "tags": [
+          "webhooks"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -11825,7 +12401,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "id"],
+              "required": [
+                "key",
+                "id"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -11928,7 +12507,9 @@
         "summary": "Update webhook",
         "description": "Update an existing webhook.",
         "operationId": "postWebhooksUpdate",
-        "tags": ["webhooks"],
+        "tags": [
+          "webhooks"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -11937,7 +12518,11 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "id", "url"],
+              "required": [
+                "key",
+                "id",
+                "url"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -12068,7 +12653,9 @@
         "summary": "Delete webhook",
         "description": "Delete an existing webhook.",
         "operationId": "postWebhooksDelete",
-        "tags": ["webhooks"],
+        "tags": [
+          "webhooks"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -12077,7 +12664,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "id"],
+              "required": [
+                "key",
+                "id"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -12180,7 +12770,9 @@
         "summary": "Add email to allowlist",
         "description": "Adds an email to your email rejection allowlist. If the address is currently on your denylist, that denylist entry will be removed automatically.",
         "operationId": "postWhitelistsAdd",
-        "tags": ["whitelists"],
+        "tags": [
+          "whitelists"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -12189,7 +12781,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "email"],
+              "required": [
+                "key",
+                "email"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -12242,7 +12837,9 @@
         "summary": "List allowlisted emails",
         "description": "Retrieves your email rejection allowlist. You can provide an email address or search prefix to limit the results. Returns up to 1000 results.",
         "operationId": "postWhitelistsList",
-        "tags": ["whitelists"],
+        "tags": [
+          "whitelists"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -12251,7 +12848,9 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key"],
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
@@ -12310,7 +12909,9 @@
         "summary": "Remove email from allowlist",
         "description": "Removes an email address from the allowlist.",
         "operationId": "postWhitelistsDelete",
-        "tags": ["whitelists"],
+        "tags": [
+          "whitelists"
+        ],
         "parameters": [
           {
             "name": "body",
@@ -12319,7 +12920,10 @@
             "required": true,
             "schema": {
               "type": "object",
-              "required": ["key", "email"],
+              "required": [
+                "key",
+                "email"
+              ],
               "properties": {
                 "key": {
                   "type": "string",
