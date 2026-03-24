@@ -1519,6 +1519,51 @@
                 "x-readonly": true
             }
         },
+        "/messages/send-mc-template": {
+            "post": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Send using Mailchimp template",
+                "description": "Send a new transactional message through Mandrill using a Mailchimp Transactional template.",
+                "operationId": "messages/send-mc-template",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MessagesSendMcTemplateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "402": {
+                        "$ref": "#/components/responses/PaymentRequired"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/MessageTemplateOrSubaccountNotFound"
+                    },
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessagesSendMcTemplateResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-readonly": true
+            }
+        },
         "/messages/search": {
             "post": {
                 "tags": [
@@ -2637,6 +2682,50 @@
                     }
                 },
                 "x-readonly": true
+            }
+        },
+        "/senders/delete-domain": {
+            "post": {
+                "tags": [
+                    "Senders"
+                ],
+                "summary": "Delete a sender domain",
+                "description": "Deletes an unverified sender domain from your account. Verified domains cannot be deleted via API and require login confirmation.",
+                "operationId": "senders/delete-domain",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendersDeleteDomainRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/SenderDomainNotFound"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/SenderCannotDeleteVerified"
+                    },
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SendersDeleteDomainResponse"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/subaccounts/list": {
@@ -4408,6 +4497,34 @@
                             }
                         },
                         "type": "object"
+                    }
+                ]
+            },
+            "SenderCannotDeleteVerifiedError": {
+                "description": "Cannot delete verified sender domain",
+                "example": {
+                    "status": "error",
+                    "code": 28,
+                    "name": "Invalid_Verified_Domain",
+                    "message": "Cannot delete verified domain \"example.com\" via API - please login to confirm deletion"
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Error"
+                    }
+                ]
+            },
+            "SenderDomainNotFoundError": {
+                "description": "Unknown sender domain",
+                "example": {
+                    "status": "error",
+                    "code": 8,
+                    "name": "Unknown_Domain",
+                    "message": "No such domain \"example.com\""
+                },
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Error"
                     }
                 ]
             },
@@ -7770,6 +7887,61 @@
                     "$ref": "#/components/schemas/MessagesSearchTimeSeries"
                 }
             },
+            "MessagesSendMcTemplateRequest": {
+                "description": "Request body for messages/send-mc-template",
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ApiKey"
+                    },
+                    {
+                        "required": [
+                            "mc_template_id",
+                            "message"
+                        ],
+                        "properties": {
+                            "mc_template_id": {
+                                "description": "the Mailchimp Transactional template ID from the user's account",
+                                "type": "integer",
+                                "example": 12345
+                            },
+                            "mc_template_version": {
+                                "description": "which version of the template to use - \"draft\" for draft content or \"published\" for published content. Defaults to \"published\". Note: requesting \"published\" when the template has not been published will return a 404 error.",
+                                "type": "string",
+                                "enum": [
+                                    "draft",
+                                    "published"
+                                ],
+                                "example": "published"
+                            },
+                            "message": {
+                                "$ref": "#/components/schemas/MessagesRequestComponent",
+                                "description": "the other information on the message to send - same as /messages/send"
+                            },
+                            "async": {
+                                "description": "enable a background sending mode that is optimized for bulk sending. In async mode, messages/send will immediately return a status of \"queued\" for every recipient. To handle rejections when sending in async mode, set up a webhook for the 'reject' event. Defaults to false for messages with no more than 10 recipients; messages with more than 10 recipients are always sent asynchronously, regardless of the value of async.",
+                                "type": [
+                                    "boolean",
+                                    "null"
+                                ]
+                            },
+                            "ip_pool": {
+                                "description": "the name of the dedicated ip pool that should be used to send the message. If you do not have any dedicated IPs, this parameter has no effect. If you specify a pool that does not exist, your default pool will be used instead.",
+                                "type": "string"
+                            },
+                            "send_at": {
+                                "description": "when this message should be sent as a UTC timestamp in YYYY-MM-DD HH:MM:SS format. If you specify a time in the past, the message will be sent immediately; for future dates, you're limited to one year from the date of scheduling.",
+                                "type": "string",
+                                "format": "date-time"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "MessagesSendMcTemplateResponse": {
+                "$ref": "#/components/schemas/MessagesSendResponse"
+            },
             "MessagesSendRawRequest": {
                 "description": "Request body for messages/send-raw",
                 "type": "object",
@@ -9243,6 +9415,33 @@
                 ]
             },
             "SendersCheckDomainResponse": {
+                "$ref": "#/components/schemas/SendersSenderDomain"
+            },
+            "SendersDeleteDomainRequest": {
+                "description": "Request body for deleting a sender domain.",
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ApiKey"
+                    },
+                    {
+                        "required": [
+                            "domain"
+                        ],
+                        "properties": {
+                            "domain": {
+                                "description": "the domain name to delete",
+                                "type": "string",
+                                "format": "hostname",
+                                "maxLength": 255,
+                                "example": "example.com"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "SendersDeleteDomainResponse": {
                 "$ref": "#/components/schemas/SendersSenderDomain"
             },
             "DmarcDetail": {
@@ -12005,6 +12204,26 @@
                     "application/json": {
                         "schema": {
                             "$ref": "#/components/schemas/RequestLimitExceededError"
+                        }
+                    }
+                }
+            },
+            "SenderCannotDeleteVerified": {
+                "description": "Cannot delete verified sender domain — please login to confirm deletion",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/SenderCannotDeleteVerifiedError"
+                        }
+                    }
+                }
+            },
+            "SenderDomainNotFound": {
+                "description": "Unknown sender domain",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/SenderDomainNotFoundError"
                         }
                     }
                 }

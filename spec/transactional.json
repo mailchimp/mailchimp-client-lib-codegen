@@ -90,8 +90,11 @@
         "description": "Add, list, or delete from your Rejection Denylist.",
         "paths": [
           "/rejects/add",
+          "/rejects/add-sms",
+          "/rejects/delete",
+          "/rejects/delete-sms",
           "/rejects/list",
-          "/rejects/delete"
+          "/rejects/list-sms"
         ]
       },
       "senders": {
@@ -156,19 +159,6 @@
           "/mctemplates/render"
         ]
       },
-      "urls": {
-        "title": "URLs",
-        "description": "Manage your tracking domains. Some of these endpoints may be deprecated.",
-        "paths": [
-          "/urls/list",
-          "/urls/search",
-          "/urls/time-series",
-          "/urls/tracking-domains",
-          "/urls/add-tracking-domain",
-          "/urls/delete-tracking-domain",
-          "/urls/check-tracking-domain"
-        ]
-      },
       "users": {
         "title": "Users",
         "description": "Get information about your account, or ping Transactional.",
@@ -188,15 +178,6 @@
           "/webhooks/info",
           "/webhooks/update",
           "/webhooks/delete"
-        ]
-      },
-      "whitelists": {
-        "title": "Whitelists",
-        "description": "Add, list, or delete from your Rejection Allowlist. These endpoints are being replaced with a series of functionally identical endpoints called /allowlists.",
-        "paths": [
-          "/whitelists/add",
-          "/whitelists/list",
-          "/whitelists/delete"
         ]
       }
     }
@@ -10909,215 +10890,6 @@
         "deprecated": false
       }
     },
-    "/urls/list": {
-      "post": {
-        "x-custom-config": {
-          "methodNameCamel": "list",
-          "methodNameSnake": "list"
-        },
-        "summary": "List most clicked urls",
-        "description": "Get the 100 most clicked URLs.",
-        "operationId": "postUrlsList",
-        "tags": [
-          "urls"
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "required": [
-                "key"
-              ],
-              "properties": {
-                "key": {
-                  "type": "string",
-                  "description": "a valid api key"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "type": "array",
-              "description": "the 100 most clicked URLs and their stats",
-              "items": {
-                "type": "object",
-                "description": "the individual URL stats",
-                "properties": {
-                  "url": {
-                    "type": "string",
-                    "description": "the URL to be tracked"
-                  },
-                  "sent": {
-                    "type": "integer",
-                    "description": "the number of emails that contained the URL"
-                  },
-                  "clicks": {
-                    "type": "integer",
-                    "description": "the number of times the URL has been clicked from a tracked email"
-                  },
-                  "unique_clicks": {
-                    "type": "integer",
-                    "description": "the number of unique emails that have generated clicks for this URL"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "deprecated": true
-      }
-    },
-    "/urls/search": {
-      "post": {
-        "x-custom-config": {
-          "methodNameCamel": "search",
-          "methodNameSnake": "search"
-        },
-        "summary": "Search most clicked urls",
-        "description": "Return the 100 most clicked URLs that match the search query given.",
-        "operationId": "postUrlsSearchDeprecated",
-        "tags": [
-          "urls"
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "required": [
-                "key",
-                "q"
-              ],
-              "properties": {
-                "key": {
-                  "type": "string",
-                  "description": "a valid api key"
-                },
-                "q": {
-                  "type": "string",
-                  "description": "a search query"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "type": "array",
-              "description": "the 100 most clicked URLs matching the search query",
-              "items": {
-                "type": "object",
-                "description": "the URL matching the query",
-                "properties": {
-                  "url": {
-                    "type": "string",
-                    "description": "the URL to be tracked"
-                  },
-                  "sent": {
-                    "type": "integer",
-                    "description": "the number of emails that contained the URL"
-                  },
-                  "clicks": {
-                    "type": "integer",
-                    "description": "the number of times the URL has been clicked from a tracked email"
-                  },
-                  "unique_clicks": {
-                    "type": "integer",
-                    "description": "the number of unique emails that have generated clicks for this URL"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "deprecated": true
-      }
-    },
-    "/urls/time-series": {
-      "post": {
-        "x-custom-config": {
-          "methodNameCamel": "timeSeries",
-          "methodNameSnake": "time_series"
-        },
-        "summary": "Get url history",
-        "description": "Return the recent history (hourly stats for the last 30 days) for a URL",
-        "operationId": "postUrlsTimeSeries",
-        "tags": [
-          "urls"
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "required": [
-                "key",
-                "url"
-              ],
-              "properties": {
-                "key": {
-                  "type": "string",
-                  "description": "a valid api key"
-                },
-                "url": {
-                  "type": "string",
-                  "description": "an existing URL"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "type": "array",
-              "description": "the array of history information",
-              "items": {
-                "type": "object",
-                "description": "the information for a single hour",
-                "properties": {
-                  "time": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "the hour as a UTC date string in YYYY-MM-DD HH:MM:SS format"
-                  },
-                  "sent": {
-                    "type": "integer",
-                    "description": "the number of emails that were sent with the URL during the hour"
-                  },
-                  "clicks": {
-                    "type": "integer",
-                    "description": "the number of times the URL was clicked during the hour"
-                  },
-                  "unique_clicks": {
-                    "type": "integer",
-                    "description": "the number of unique clicks generated for emails sent with this URL during the hour"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "deprecated": true
-      }
-    },
     "/urls/tracking-domains": {
       "post": {
         "x-custom-config": {
@@ -12761,17 +12533,17 @@
         "deprecated": false
       }
     },
-    "/whitelists/add": {
+    "/rejects/add-sms": {
       "post": {
         "x-custom-config": {
-          "methodNameCamel": "add",
-          "methodNameSnake": "add"
+          "methodNameCamel": "addSms",
+          "methodNameSnake": "add_sms"
         },
-        "summary": "Add email to allowlist",
-        "description": "Adds an email to your email rejection allowlist. If the address is currently on your denylist, that denylist entry will be removed automatically.",
-        "operationId": "postWhitelistsAdd",
+        "summary": "Add phone number to SMS denylist",
+        "description": "Adds a phone number to your SMS rejection denylist. Phone numbers that you add manually will never expire and there is no reputation penalty for removing them from your denylist.",
+        "operationId": "postRejectsAddSms",
         "tags": [
-          "whitelists"
+          "rejects"
         ],
         "parameters": [
           {
@@ -12783,22 +12555,28 @@
               "type": "object",
               "required": [
                 "key",
-                "email"
+                "phone"
               ],
               "properties": {
                 "key": {
                   "type": "string",
                   "description": "a valid api key"
                 },
-                "email": {
+                "phone": {
                   "type": "string",
-                  "description": "an email address to add to the allowlist",
-                  "format": "email"
+                  "description": "a phone number to block in E.164 format",
+                  "example": "+12025551234"
                 },
                 "comment": {
                   "type": "string",
-                  "description": "an optional description of why the email was added to the allowlist",
-                  "maxLength": 255
+                  "description": "an optional comment describing the rejection",
+                  "example": "Manually blocked due to spam"
+                },
+                "subaccount": {
+                  "type": "string",
+                  "description": "an optional unique identifier for the subaccount to limit the denylist entry",
+                  "maxLength": 255,
+                  "example": "cust-123"
                 }
               }
             }
@@ -12809,17 +12587,21 @@
             "description": "",
             "schema": {
               "type": "object",
-              "description": "a status object containing the address and the result of the operation",
+              "description": "a status object containing the phone number and the result of the operation",
               "properties": {
-                "email": {
+                "phone": {
                   "type": "string",
-                  "description": "the email address you provided",
-                  "example": "user@example.com"
+                  "description": "the phone number you provided",
+                  "example": "+12025551234"
                 },
                 "added": {
                   "type": "boolean",
-                  "description": "whether the operation succeeded",
-                  "example": true
+                  "description": "whether the operation succeeded"
+                },
+                "subaccount": {
+                  "type": "string",
+                  "description": "the subaccount denylist the phone number was added to, if any",
+                  "example": "cust-123"
                 }
               }
             }
@@ -12828,17 +12610,17 @@
         "deprecated": false
       }
     },
-    "/whitelists/list": {
+    "/rejects/list-sms": {
       "post": {
         "x-custom-config": {
-          "methodNameCamel": "list",
-          "methodNameSnake": "list"
+          "methodNameCamel": "listSms",
+          "methodNameSnake": "list_sms"
         },
-        "summary": "List allowlisted emails",
-        "description": "Retrieves your email rejection allowlist. You can provide an email address or search prefix to limit the results. Returns up to 1000 results.",
-        "operationId": "postWhitelistsList",
+        "summary": "List SMS denylist entries",
+        "description": "Retrieves your SMS rejection denylist. You can provide a phone number to limit the results. Returns up to 1000 results. By default, entries that have expired are excluded from the results; set include_expired to true to include them.",
+        "operationId": "postRejectsListSms",
         "tags": [
-          "whitelists"
+          "rejects"
         ],
         "parameters": [
           {
@@ -12856,10 +12638,21 @@
                   "type": "string",
                   "description": "a valid api key"
                 },
-                "email": {
+                "phone": {
                   "type": "string",
-                  "description": "an optional email address or prefix to search by",
-                  "format": "email"
+                  "description": "an optional phone number to search by in E.164 format",
+                  "example": "+12025551234"
+                },
+                "include_expired": {
+                  "type": "boolean",
+                  "description": "whether to include rejections that have already expired",
+                  "example": false
+                },
+                "subaccount": {
+                  "type": "string",
+                  "description": "an optional unique identifier for the subaccount to limit the denylist",
+                  "maxLength": 255,
+                  "example": "cust-123"
                 }
               }
             }
@@ -12870,27 +12663,34 @@
             "description": "",
             "schema": {
               "type": "array",
-              "description": "up to 1000 allowlist entries",
+              "description": "up to 1000 SMS denylist entries",
               "items": {
                 "type": "object",
-                "description": "the information for each allowlist entry",
                 "properties": {
-                  "email": {
+                  "phone": {
                     "type": "string",
-                    "format": "email",
-                    "description": "the email that is allowlisted",
-                    "example": "user@example.com"
-                  },
-                  "detail": {
-                    "type": "string",
-                    "description": "a description of why the email was allowlisted",
-                    "example": "Added manually via the API"
+                    "description": "the phone number on the denylist",
+                    "example": "+12025551234"
                   },
                   "created_at": {
                     "type": "string",
-                    "format": "date-time",
-                    "description": "when the email was added to the allowlist",
-                    "example": "2025-04-29 12:00:00"
+                    "description": "the date and time that the entry was created",
+                    "example": "2023-01-15 10:30:00"
+                  },
+                  "expires_at": {
+                    "type": "string",
+                    "description": "the date and time that the entry expires",
+                    "example": "2023-02-15 10:30:00"
+                  },
+                  "expired": {
+                    "type": "boolean",
+                    "description": "whether the entry has expired",
+                    "example": false
+                  },
+                  "subaccount": {
+                    "type": "string",
+                    "description": "the subaccount that the entry belongs to",
+                    "example": "cust-123"
                   }
                 }
               }
@@ -12900,17 +12700,17 @@
         "deprecated": false
       }
     },
-    "/whitelists/delete": {
+    "/rejects/delete-sms": {
       "post": {
         "x-custom-config": {
-          "methodNameCamel": "delete",
-          "methodNameSnake": "delete"
+          "methodNameCamel": "deleteSms",
+          "methodNameSnake": "delete_sms"
         },
-        "summary": "Remove email from allowlist",
-        "description": "Removes an email address from the allowlist.",
-        "operationId": "postWhitelistsDelete",
+        "summary": "Delete phone number from SMS denylist",
+        "description": "Deletes an SMS rejection. There is no limit to how many rejections you can remove from your denylist, but keep in mind that each deletion has an affect on your reputation.",
+        "operationId": "postRejectsDeleteSms",
         "tags": [
-          "whitelists"
+          "rejects"
         ],
         "parameters": [
           {
@@ -12922,17 +12722,23 @@
               "type": "object",
               "required": [
                 "key",
-                "email"
+                "phone"
               ],
               "properties": {
                 "key": {
                   "type": "string",
                   "description": "a valid api key"
                 },
-                "email": {
+                "phone": {
                   "type": "string",
-                  "description": "the email address to remove from the allowlist",
-                  "format": "email"
+                  "description": "a phone number in E.164 format",
+                  "example": "+12025551234"
+                },
+                "subaccount": {
+                  "type": "string",
+                  "description": "an optional unique identifier for the subaccount to limit the denylist deletion",
+                  "maxLength": 255,
+                  "example": "cust-123"
                 }
               }
             }
@@ -12943,17 +12749,21 @@
             "description": "",
             "schema": {
               "type": "object",
-              "description": "a status object containing the address and whether the deletion succeeded",
+              "description": "a status object containing the phone number and whether the deletion succeeded",
               "properties": {
-                "email": {
+                "phone": {
                   "type": "string",
-                  "description": "the email address that was removed from the allowlist",
-                  "example": "user@example.com"
+                  "description": "the phone number you provided",
+                  "example": "+12025551234"
                 },
                 "deleted": {
                   "type": "boolean",
-                  "description": "whether the address was deleted successfully",
-                  "example": true
+                  "description": "whether the operation succeeded"
+                },
+                "subaccount": {
+                  "type": "string",
+                  "description": "the subaccount denylist the phone number was deleted from, if any",
+                  "example": "cust-123"
                 }
               }
             }
