@@ -56,7 +56,7 @@ npm run generate
 | PHP            | [Packagist](https://packagist.org/packages/mailchimp/marketing)     |
 | Ruby           | [RubyGems](https://rubygems.org/gems/MailchimpMarketing)            |
 | Python (Dist)  | [PyPI](https://pypi.org/project/mailchimp-marketing/)               |
-| Python (Test)) | [PyPI](https://test.pypi.org/project/mailchimp-marketing/)          |
+| Python (Test) | [PyPI](https://test.pypi.org/project/mailchimp-marketing/)          |
 
 | Transactional |                                                                         |
 | ------------- | ----------------------------------------------------------------------- |
