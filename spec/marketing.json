@@ -192,7 +192,9 @@
                 "paths": [
                     "/connected-sites",
                     "/connected-sites/{connected_site_id}",
-                    "/connected-sites/{connected_site_id}/actions/verify-script-installation"
+                    "/connected-sites/{connected_site_id}/actions/verify-script-installation",
+                    "/connected-sites/{connected_site_id}/actions/enable-pixel",
+                    "/connected-sites/{connected_site_id}/actions/disable-pixel"
                 ]
             },
             "conversations": {
@@ -2665,6 +2667,13 @@
                                                                     "unknown"
                                                                 ]
                                                             },
+                                                            "captured_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "title": "Captured At",
+                                                                "description": "The ISO 8601 timestamp when the email marketing consent state was recorded; accepted and returned only when status is `confirmed` or `consented`; defaults to the current time if omitted; ignored if older than an existing stored timestamp (staleness guard).",
+                                                                "example": "2024-01-15T10:30:00Z"
+                                                            },
                                                             "source": {
                                                                 "type": "object",
                                                                 "title": "Source",
@@ -2733,11 +2742,20 @@
                                                             "status": {
                                                                 "type": "string",
                                                                 "title": "Marketing Consent Status",
+                                                                "description": "The contact's SMS marketing consent status. Use `confirmed` for double opt-in audiences, `consented` for single opt-in audiences. `denied` is accepted on PATCH/PUT only (not POST) and drives an API-initiated unsubscribe; it cannot be used when creating a new contact.",
                                                                 "enum": [
                                                                     "consented",
                                                                     "confirmed",
+                                                                    "denied",
                                                                     "unknown"
                                                                 ]
+                                                            },
+                                                            "captured_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "title": "Captured At",
+                                                                "description": "The timestamp when SMS marketing consent was captured (ISO 8601). Only accepted and returned when status is `confirmed`. The timestamp of the consent state change being recorded. Defaults to the current time if not provided. If the contact already has a newer consent timestamp on record, the supplied value is ignored (staleness guard); to update the consent timestamp supply a value equal to or newer than the stored one.",
+                                                                "example": "2024-01-15T10:30:00Z"
                                                             },
                                                             "source": {
                                                                 "type": "object",
@@ -2963,21 +2981,37 @@
                                             "example": "example@freddiemail.com"
                                         },
                                         "marketing_consent": {
-                                            "type": "object",
-                                            "title": "Marketing Consent Details",
                                             "description": "A contact's current consent status for email marketing communications. See the [Audiences (BETA) documentation](https://mailchimp.com/developer/marketing/docs/audiences-introduction) to learn about supported values.",
+                                            "type": "object",
                                             "properties": {
                                                 "status": {
                                                     "type": "string",
                                                     "title": "Marketing Consent Status",
-                                                    "description": "Status of a contacts Marketing Consent",
                                                     "enum": [
-                                                        "confirmed",
                                                         "consented",
                                                         "denied",
+                                                        "confirmed",
                                                         "unknown"
-                                                    ],
-                                                    "example": "confirmed"
+                                                    ]
+                                                },
+                                                "captured_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "title": "Captured At",
+                                                    "description": "The ISO 8601 timestamp when the email marketing consent state was recorded; accepted and returned only when status is `confirmed` or `consented`; defaults to the current time if omitted; ignored if older than an existing stored timestamp (staleness guard).",
+                                                    "example": "2024-01-15T10:30:00Z"
+                                                },
+                                                "source": {
+                                                    "type": "object",
+                                                    "title": "Source",
+                                                    "description": "The source from which the parent's entity was created from.",
+                                                    "properties": {
+                                                        "name": {
+                                                            "type": "string",
+                                                            "title": "Entity source name",
+                                                            "description": "The name of the entity's source"
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
@@ -2994,20 +3028,38 @@
                                             "example": "+16155550128"
                                         },
                                         "marketing_consent": {
-                                            "type": "object",
-                                            "title": "Marketing Consent Details",
                                             "description": "A contact's current consent status for SMS marketing communications. See the [Audiences (BETA) documentation](https://mailchimp.com/developer/marketing/docs/audiences-introduction) to learn about supported values.",
+                                            "type": "object",
                                             "properties": {
+                                                "source": {
+                                                    "type": "object",
+                                                    "title": "Source",
+                                                    "description": "The source from which the parent's entity was created from.",
+                                                    "properties": {
+                                                        "name": {
+                                                            "type": "string",
+                                                            "title": "Entity source name",
+                                                            "description": "The name of the entity's source"
+                                                        }
+                                                    }
+                                                },
                                                 "status": {
-                                                    "type": "string",
-                                                    "title": "Marketing Consent Status",
-                                                    "description": "The current consent status captured for a contact\u2019s marketing communications.",
                                                     "enum": [
-                                                        "confirmed",
                                                         "consented",
+                                                        "confirmed",
                                                         "unknown"
                                                     ],
+                                                    "title": "Marketing Consent Status",
+                                                    "description": "The contact's SMS marketing consent status. Use `confirmed` for double opt-in audiences, `consented` for single opt-in audiences.",
+                                                    "type": "string",
                                                     "example": "confirmed"
+                                                },
+                                                "captured_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "title": "Captured At",
+                                                    "description": "The timestamp when SMS marketing consent was captured (ISO 8601). Only accepted and returned when status is `confirmed`. The timestamp of the consent state change being recorded. Defaults to the current time if not provided. If the contact already has a newer consent timestamp on record, the supplied value is ignored (staleness guard); to update the consent timestamp supply a value equal to or newer than the stored one.",
+                                                    "example": "2024-01-15T10:30:00Z"
                                                 }
                                             }
                                         }
@@ -3033,6 +3085,12 @@
                                         "new_tag",
                                         "another_tag"
                                     ]
+                                },
+                                "update_existing": {
+                                    "type": "boolean",
+                                    "title": "Update Existing",
+                                    "description": "If a contact already exists, update them instead of returning a conflict error. When `true` and a matching contact is found (by email or phone), the existing contact is updated with the provided channel data. Defaults to `false`.",
+                                    "example": true
                                 }
                             }
                         }
@@ -3209,6 +3267,13 @@
                                                         "unknown"
                                                     ]
                                                 },
+                                                "captured_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "title": "Captured At",
+                                                    "description": "The ISO 8601 timestamp when the email marketing consent state was recorded; accepted and returned only when status is `confirmed` or `consented`; defaults to the current time if omitted; ignored if older than an existing stored timestamp (staleness guard).",
+                                                    "example": "2024-01-15T10:30:00Z"
+                                                },
                                                 "source": {
                                                     "type": "object",
                                                     "title": "Source",
@@ -3277,11 +3342,20 @@
                                                 "status": {
                                                     "type": "string",
                                                     "title": "Marketing Consent Status",
+                                                    "description": "The contact's SMS marketing consent status. Use `confirmed` for double opt-in audiences, `consented` for single opt-in audiences. `denied` is accepted on PATCH/PUT only (not POST) and drives an API-initiated unsubscribe; it cannot be used when creating a new contact.",
                                                     "enum": [
                                                         "consented",
                                                         "confirmed",
+                                                        "denied",
                                                         "unknown"
                                                     ]
+                                                },
+                                                "captured_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "title": "Captured At",
+                                                    "description": "The timestamp when SMS marketing consent was captured (ISO 8601). Only accepted and returned when status is `confirmed`. The timestamp of the consent state change being recorded. Defaults to the current time if not provided. If the contact already has a newer consent timestamp on record, the supplied value is ignored (staleness guard); to update the consent timestamp supply a value equal to or newer than the stored one.",
+                                                    "example": "2024-01-15T10:30:00Z"
                                                 },
                                                 "source": {
                                                     "type": "object",
@@ -3603,6 +3677,13 @@
                                                         "unknown"
                                                     ]
                                                 },
+                                                "captured_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "title": "Captured At",
+                                                    "description": "The ISO 8601 timestamp when the email marketing consent state was recorded; accepted and returned only when status is `confirmed` or `consented`; defaults to the current time if omitted; ignored if older than an existing stored timestamp (staleness guard).",
+                                                    "example": "2024-01-15T10:30:00Z"
+                                                },
                                                 "source": {
                                                     "type": "object",
                                                     "title": "Source",
@@ -3671,11 +3752,20 @@
                                                 "status": {
                                                     "type": "string",
                                                     "title": "Marketing Consent Status",
+                                                    "description": "The contact's SMS marketing consent status. Use `confirmed` for double opt-in audiences, `consented` for single opt-in audiences. `denied` is accepted on PATCH/PUT only (not POST) and drives an API-initiated unsubscribe; it cannot be used when creating a new contact.",
                                                     "enum": [
                                                         "consented",
                                                         "confirmed",
+                                                        "denied",
                                                         "unknown"
                                                     ]
+                                                },
+                                                "captured_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "title": "Captured At",
+                                                    "description": "The timestamp when SMS marketing consent was captured (ISO 8601). Only accepted and returned when status is `confirmed`. The timestamp of the consent state change being recorded. Defaults to the current time if not provided. If the contact already has a newer consent timestamp on record, the supplied value is ignored (staleness guard); to update the consent timestamp supply a value equal to or newer than the stored one.",
+                                                    "example": "2024-01-15T10:30:00Z"
                                                 },
                                                 "source": {
                                                     "type": "object",
@@ -3852,6 +3942,13 @@
                                                         "unknown"
                                                     ]
                                                 },
+                                                "captured_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "title": "Captured At",
+                                                    "description": "The ISO 8601 timestamp when the email marketing consent state was recorded; accepted and returned only when status is `confirmed` or `consented`; defaults to the current time if omitted; ignored if older than an existing stored timestamp (staleness guard).",
+                                                    "example": "2024-01-15T10:30:00Z"
+                                                },
                                                 "source": {
                                                     "type": "object",
                                                     "title": "Source",
@@ -3885,11 +3982,20 @@
                                                 "status": {
                                                     "type": "string",
                                                     "title": "Marketing Consent Status",
+                                                    "description": "The contact's SMS marketing consent status. Use `confirmed` for double opt-in audiences, `consented` for single opt-in audiences. `denied` is accepted on PATCH/PUT only (not POST) and drives an API-initiated unsubscribe; it cannot be used when creating a new contact.",
                                                     "enum": [
                                                         "consented",
                                                         "confirmed",
+                                                        "denied",
                                                         "unknown"
                                                     ]
+                                                },
+                                                "captured_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "title": "Captured At",
+                                                    "description": "The timestamp when SMS marketing consent was captured (ISO 8601). Only accepted and returned when status is `confirmed`. The timestamp of the consent state change being recorded. Defaults to the current time if not provided. If the contact already has a newer consent timestamp on record, the supplied value is ignored (staleness guard); to update the consent timestamp supply a value equal to or newer than the stored one.",
+                                                    "example": "2024-01-15T10:30:00Z"
                                                 },
                                                 "source": {
                                                     "type": "object",
@@ -4111,6 +4217,13 @@
                                                         "unknown"
                                                     ]
                                                 },
+                                                "captured_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "title": "Captured At",
+                                                    "description": "The ISO 8601 timestamp when the email marketing consent state was recorded; accepted and returned only when status is `confirmed` or `consented`; defaults to the current time if omitted; ignored if older than an existing stored timestamp (staleness guard).",
+                                                    "example": "2024-01-15T10:30:00Z"
+                                                },
                                                 "source": {
                                                     "type": "object",
                                                     "title": "Source",
@@ -4179,11 +4292,20 @@
                                                 "status": {
                                                     "type": "string",
                                                     "title": "Marketing Consent Status",
+                                                    "description": "The contact's SMS marketing consent status. Use `confirmed` for double opt-in audiences, `consented` for single opt-in audiences. `denied` is accepted on PATCH/PUT only (not POST) and drives an API-initiated unsubscribe; it cannot be used when creating a new contact.",
                                                     "enum": [
                                                         "consented",
                                                         "confirmed",
+                                                        "denied",
                                                         "unknown"
                                                     ]
+                                                },
+                                                "captured_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "title": "Captured At",
+                                                    "description": "The timestamp when SMS marketing consent was captured (ISO 8601). Only accepted and returned when status is `confirmed`. The timestamp of the consent state change being recorded. Defaults to the current time if not provided. If the contact already has a newer consent timestamp on record, the supplied value is ignored (staleness guard); to update the consent timestamp supply a value equal to or newer than the stored one.",
+                                                    "example": "2024-01-15T10:30:00Z"
                                                 },
                                                 "source": {
                                                     "type": "object",
@@ -50287,6 +50409,13 @@
                                                     }
                                                 }
                                             },
+                                            "is_pixel_enabled": {
+                                                "type": "boolean",
+                                                "title": "Is Pixel Enabled",
+                                                "description": "Whether the Mailchimp tracking pixel is enabled for this connected site.",
+                                                "readOnly": true,
+                                                "example": false
+                                            },
                                             "created_at": {
                                                 "type": "string",
                                                 "title": "Creation Time",
@@ -50569,6 +50698,13 @@
                                         }
                                     }
                                 },
+                                "is_pixel_enabled": {
+                                    "type": "boolean",
+                                    "title": "Is Pixel Enabled",
+                                    "description": "Whether the Mailchimp tracking pixel is enabled for this connected site.",
+                                    "readOnly": true,
+                                    "example": false
+                                },
                                 "created_at": {
                                     "type": "string",
                                     "title": "Creation Time",
@@ -50792,6 +50928,13 @@
                                             "example": "<script id=\"mcjs\">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,\"script\",\"https://chimpstatic.com/mcjs-connected/js/users/{user-hash}/{site-hash}.js\");</script>"
                                         }
                                     }
+                                },
+                                "is_pixel_enabled": {
+                                    "type": "boolean",
+                                    "title": "Is Pixel Enabled",
+                                    "description": "Whether the Mailchimp tracking pixel is enabled for this connected site.",
+                                    "readOnly": true,
+                                    "example": false
                                 },
                                 "created_at": {
                                     "type": "string",
@@ -51075,6 +51218,8 @@
                 }
             }
         },
+        "/connected-sites/{connected_site_id}/actions/enable-pixel": {},
+        "/connected-sites/{connected_site_id}/actions/disable-pixel": {},
         "/conversations": {
             "get": {
                 "summary": "List conversations",
