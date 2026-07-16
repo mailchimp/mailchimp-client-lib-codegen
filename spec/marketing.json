@@ -378,7 +378,8 @@
                     "/lists/{list_id}/surveys/{survey_id}",
                     "/lists/{list_id}/surveys/{survey_id}/actions/publish",
                     "/lists/{list_id}/surveys/{survey_id}/actions/unpublish",
-                    "/lists/{list_id}/surveys/{survey_id}/actions/create-email"
+                    "/lists/{list_id}/surveys/{survey_id}/actions/create-email",
+                    "/lists/{list_id}/surveys/{survey_id}/actions/replicate"
                 ]
             },
             "interest-categories": {
@@ -55194,7 +55195,7 @@
                         "name": "include_total_contacts",
                         "x-title": "Include Total Contacts",
                         "in": "query",
-                        "description": "Return the total_contacts field in the stats response, which contains an approximate count of all contacts in any state.",
+                        "description": "Deprecated. Return the total_contacts field in the stats response, which contains an approximate count of subscribed, unsubscribed, and transactional contacts. For a complete audience contact count, use the /audiences endpoint instead.",
                         "required": false,
                         "type": "boolean"
                     }
@@ -55416,7 +55417,7 @@
                                                     "total_contacts": {
                                                         "type": "integer",
                                                         "title": "Total Contacts",
-                                                        "description": "The number of contacts in the list, including subscribed, unsubscribed, pending, cleaned, deleted, transactional, and those that need to be reconfirmed. Requires include_total_contacts query parameter to be included.",
+                                                        "description": "An approximate count of subscribed, unsubscribed, and transactional contacts in the list. Does not include cleaned, archived, pending, or contacts that need to be reconfirmed. Requires the (deprecated) include_total_contacts query parameter to be included; for a complete audience contact count, use the /audiences endpoint instead.",
                                                         "readOnly": true
                                                     },
                                                     "unsubscribe_count": {
@@ -56084,7 +56085,7 @@
                                         "total_contacts": {
                                             "type": "integer",
                                             "title": "Total Contacts",
-                                            "description": "The number of contacts in the list, including subscribed, unsubscribed, pending, cleaned, deleted, transactional, and those that need to be reconfirmed. Requires include_total_contacts query parameter to be included.",
+                                            "description": "An approximate count of subscribed, unsubscribed, and transactional contacts in the list. Does not include cleaned, archived, pending, or contacts that need to be reconfirmed. Requires the (deprecated) include_total_contacts query parameter to be included; for a complete audience contact count, use the /audiences endpoint instead.",
                                             "readOnly": true
                                         },
                                         "unsubscribe_count": {
@@ -56337,7 +56338,7 @@
                         "name": "include_total_contacts",
                         "x-title": "Include Total Contacts",
                         "in": "query",
-                        "description": "Return the total_contacts field in the stats response, which contains an approximate count of all contacts in any state.",
+                        "description": "Deprecated. Return the total_contacts field in the stats response, which contains an approximate count of subscribed, unsubscribed, and transactional contacts. For a complete audience contact count, use the /audiences endpoint instead.",
                         "required": false,
                         "type": "boolean"
                     }
@@ -56552,7 +56553,7 @@
                                         "total_contacts": {
                                             "type": "integer",
                                             "title": "Total Contacts",
-                                            "description": "The number of contacts in the list, including subscribed, unsubscribed, pending, cleaned, deleted, transactional, and those that need to be reconfirmed. Requires include_total_contacts query parameter to be included.",
+                                            "description": "An approximate count of subscribed, unsubscribed, and transactional contacts in the list. Does not include cleaned, archived, pending, or contacts that need to be reconfirmed. Requires the (deprecated) include_total_contacts query parameter to be included; for a complete audience contact count, use the /audiences endpoint instead.",
                                             "readOnly": true
                                         },
                                         "unsubscribe_count": {
@@ -57138,7 +57139,7 @@
                                         "total_contacts": {
                                             "type": "integer",
                                             "title": "Total Contacts",
-                                            "description": "The number of contacts in the list, including subscribed, unsubscribed, pending, cleaned, deleted, transactional, and those that need to be reconfirmed. Requires include_total_contacts query parameter to be included.",
+                                            "description": "An approximate count of subscribed, unsubscribed, and transactional contacts in the list. Does not include cleaned, archived, pending, or contacts that need to be reconfirmed. Requires the (deprecated) include_total_contacts query parameter to be included; for a complete audience contact count, use the /audiences endpoint instead.",
                                             "readOnly": true
                                         },
                                         "unsubscribe_count": {
@@ -80051,7 +80052,13 @@
                                 "inbox_thread",
                                 "qbo_payment_link",
                                 "video_call_transcripts",
-                                "whatsapp_delivered"
+                                "whatsapp_bulk_sent",
+                                "whatsapp_delivered",
+                                "whatsapp_link_click",
+                                "whatsapp_subscribe",
+                                "whatsapp_subscription_phone_updated",
+                                "whatsapp_unsubscribe",
+                                "whatsapp_used_keyword"
                             ]
                         },
                         "collectionFormat": "csv",
@@ -87323,6 +87330,259 @@
                     "methodNameSnake": "get_all_surveys_for_list",
                     "methodNameCamel": "getAllSurveysForList"
                 }
+            },
+            "post": {
+                "summary": "Create survey",
+                "description": "Create a draft survey for an audience.",
+                "operationId": "postListsIdSurveys",
+                "parameters": [
+                    {
+                        "name": "list_id",
+                        "x-title": "List ID",
+                        "in": "path",
+                        "description": "The unique ID for the list.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Survey create request.",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "title": "Survey Create Request",
+                            "description": "Create a draft survey for an audience.",
+                            "properties": {
+                                "title": {
+                                    "type": "string",
+                                    "title": "Title",
+                                    "description": "The title of the survey."
+                                },
+                                "sections": {
+                                    "type": "array",
+                                    "title": "Sections",
+                                    "description": "Initial survey sections.",
+                                    "items": {
+                                        "type": "object",
+                                        "title": "Survey Section Request",
+                                        "description": "A survey section. On PATCH, include the section id to update it; omit the section from the sections array to delete it (and any question it contains).",
+                                        "required": [
+                                            "type"
+                                        ],
+                                        "properties": {
+                                            "id": {
+                                                "type": "string",
+                                                "title": "Section ID",
+                                                "description": "The section ID. On PATCH, include to update an existing section; omit to add a new section."
+                                            },
+                                            "type": {
+                                                "type": "string",
+                                                "title": "Section Type",
+                                                "description": "The section type.",
+                                                "enum": [
+                                                    "introduction",
+                                                    "context",
+                                                    "question"
+                                                ]
+                                            },
+                                            "text": {
+                                                "type": "string",
+                                                "title": "Text",
+                                                "description": "Rich text content for introduction or context sections."
+                                            },
+                                            "options": {
+                                                "type": "object",
+                                                "title": "Section Options",
+                                                "description": "Additional section options."
+                                            },
+                                            "question": {
+                                                "type": "object",
+                                                "title": "Survey Question Request",
+                                                "description": "A survey question. On PATCH, include the question id to update it. Omitting question id creates a new question; it does not delete an existing one. To delete a question, omit its section from the sections array.",
+                                                "required": [
+                                                    "query",
+                                                    "type"
+                                                ],
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "title": "Question ID",
+                                                        "description": "The question ID. On PATCH, include to update an existing question; omit to add a new question."
+                                                    },
+                                                    "query": {
+                                                        "type": "string",
+                                                        "title": "Query",
+                                                        "description": "The question text."
+                                                    },
+                                                    "type": {
+                                                        "type": "string",
+                                                        "title": "Response Type",
+                                                        "description": "The response type of the survey question.",
+                                                        "enum": [
+                                                            "pickOne",
+                                                            "pickMany",
+                                                            "range",
+                                                            "text",
+                                                            "email",
+                                                            "contactInformation",
+                                                            "dropdown"
+                                                        ]
+                                                    },
+                                                    "is_required": {
+                                                        "type": "boolean",
+                                                        "title": "Is Required",
+                                                        "description": "Whether this question is required."
+                                                    },
+                                                    "has_other": {
+                                                        "type": "boolean",
+                                                        "title": "Has Other",
+                                                        "description": "Whether this question has an 'other' option."
+                                                    },
+                                                    "other_label": {
+                                                        "type": "string",
+                                                        "title": "Other Label",
+                                                        "description": "Label for the 'other' option."
+                                                    },
+                                                    "range_low_label": {
+                                                        "type": "string",
+                                                        "title": "Range Low Label",
+                                                        "description": "Label for the low end of a range question."
+                                                    },
+                                                    "range_high_label": {
+                                                        "type": "string",
+                                                        "title": "Range High Label",
+                                                        "description": "Label for the high end of a range question."
+                                                    },
+                                                    "range_low_value": {
+                                                        "type": "integer",
+                                                        "title": "Range Low Value",
+                                                        "description": "Low value for a range question."
+                                                    },
+                                                    "range_high_value": {
+                                                        "type": "integer",
+                                                        "title": "Range High Value",
+                                                        "description": "High value for a range question."
+                                                    },
+                                                    "range_presentation": {
+                                                        "type": "string",
+                                                        "title": "Range Presentation",
+                                                        "description": "How a range question is presented."
+                                                    },
+                                                    "placeholder_label": {
+                                                        "type": "string",
+                                                        "title": "Placeholder Label",
+                                                        "description": "Placeholder text for text or email questions."
+                                                    },
+                                                    "subscribe_checkbox_enabled": {
+                                                        "type": "boolean",
+                                                        "title": "Subscribe Checkbox Enabled",
+                                                        "description": "Whether the subscribe checkbox is enabled."
+                                                    },
+                                                    "subscribe_checkbox_label": {
+                                                        "type": "string",
+                                                        "title": "Subscribe Checkbox Label",
+                                                        "description": "Label for the subscribe checkbox."
+                                                    },
+                                                    "should_auto_tag": {
+                                                        "type": "boolean",
+                                                        "title": "Should Auto Tag",
+                                                        "description": "Whether responses should automatically apply tags."
+                                                    },
+                                                    "options": {
+                                                        "type": "array",
+                                                        "title": "Answer Options",
+                                                        "description": "Answer options for pickOne, pickMany, or dropdown questions.",
+                                                        "items": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "label",
+                                                                "value"
+                                                            ],
+                                                            "properties": {
+                                                                "label": {
+                                                                    "type": "string"
+                                                                },
+                                                                "value": {
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "merge_field": {
+                                                        "type": "object",
+                                                        "title": "Merge Field",
+                                                        "description": "Merge field mapping for contact information questions."
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Survey created."
+                    },
+                    "default": {
+                        "description": "An error generated by the Mailchimp API.",
+                        "schema": {
+                            "type": "object",
+                            "title": "Problem Detail Document",
+                            "description": "An error generated by the Mailchimp API. Conforms to IETF draft 'draft-nottingham-http-problem-06'.",
+                            "required": [
+                                "type",
+                                "title",
+                                "status",
+                                "detail",
+                                "instance"
+                            ],
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "title": "Problem Type",
+                                    "description": "An absolute URI that identifies the problem type. When dereferenced, it should provide human-readable documentation for the problem type.",
+                                    "example": "https://mailchimp.com/developer/marketing/docs/errors/"
+                                },
+                                "title": {
+                                    "type": "string",
+                                    "title": "Error Title",
+                                    "description": "A short, human-readable summary of the problem type. It shouldn't change based on the occurrence of the problem, except for purposes of localization.",
+                                    "example": "Resource Not Found"
+                                },
+                                "status": {
+                                    "type": "integer",
+                                    "title": "HTTP Status Code",
+                                    "description": "The HTTP status code (RFC2616, Section 6) generated by the origin server for this occurrence of the problem.",
+                                    "example": 404
+                                },
+                                "detail": {
+                                    "type": "string",
+                                    "title": "Error Message",
+                                    "description": "A human-readable explanation specific to this occurrence of the problem. [Learn more about errors](/developer/guides/get-started-with-mailchimp-api-3/#Errors).",
+                                    "example": "The requested resource could not be found."
+                                },
+                                "instance": {
+                                    "type": "string",
+                                    "title": "Instance ID",
+                                    "description": "A string that identifies this specific occurrence of the problem. Please provide this ID when contacting support.",
+                                    "example": "995c5cb0-3280-4a6e-808b-3b096d0bb219"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "tags": [
+                    "lists"
+                ],
+                "x-custom-config": {
+                    "methodNameSnake": "create_survey",
+                    "methodNameCamel": "createSurvey"
+                }
             }
         },
         "/lists/{list_id}/surveys/{survey_id}": {
@@ -87407,6 +87667,355 @@
                 "x-custom-config": {
                     "methodNameSnake": "get_survey",
                     "methodNameCamel": "getSurvey"
+                }
+            },
+            "patch": {
+                "summary": "Update survey",
+                "description": "Update a survey. When sections is provided, send the complete section list in display order. Any existing section not included is deleted.",
+                "operationId": "patchListsIdSurveysId",
+                "parameters": [
+                    {
+                        "name": "list_id",
+                        "x-title": "List ID",
+                        "in": "path",
+                        "description": "The unique ID for the list.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "survey_id",
+                        "x-title": "Survey ID",
+                        "type": "string",
+                        "required": true,
+                        "description": "The ID of the survey."
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Survey update request.",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "title": "Survey Update Request",
+                            "description": "Update a survey. When sections is provided, send the complete section list in display order. Any existing section not included is deleted.",
+                            "properties": {
+                                "title": {
+                                    "type": "string",
+                                    "title": "Title",
+                                    "description": "The title of the survey."
+                                },
+                                "is_piped_to_inbox": {
+                                    "type": "boolean",
+                                    "title": "Pipe to Inbox",
+                                    "description": "Whether responses are sent to Mailchimp Inbox."
+                                },
+                                "sections": {
+                                    "type": "array",
+                                    "title": "Sections",
+                                    "description": "The complete survey section list in display order. On update, sections omitted from this array are deleted. Include section id to update an existing section; omit section id to add a new section.",
+                                    "items": {
+                                        "type": "object",
+                                        "title": "Survey Section Request",
+                                        "description": "A survey section. On PATCH, include the section id to update it; omit the section from the sections array to delete it (and any question it contains).",
+                                        "required": [
+                                            "type"
+                                        ],
+                                        "properties": {
+                                            "id": {
+                                                "type": "string",
+                                                "title": "Section ID",
+                                                "description": "The section ID. On PATCH, include to update an existing section; omit to add a new section."
+                                            },
+                                            "type": {
+                                                "type": "string",
+                                                "title": "Section Type",
+                                                "description": "The section type.",
+                                                "enum": [
+                                                    "introduction",
+                                                    "context",
+                                                    "question"
+                                                ]
+                                            },
+                                            "text": {
+                                                "type": "string",
+                                                "title": "Text",
+                                                "description": "Rich text content for introduction or context sections."
+                                            },
+                                            "options": {
+                                                "type": "object",
+                                                "title": "Section Options",
+                                                "description": "Additional section options."
+                                            },
+                                            "question": {
+                                                "type": "object",
+                                                "title": "Survey Question Request",
+                                                "description": "A survey question. On PATCH, include the question id to update it. Omitting question id creates a new question; it does not delete an existing one. To delete a question, omit its section from the sections array.",
+                                                "required": [
+                                                    "query",
+                                                    "type"
+                                                ],
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "title": "Question ID",
+                                                        "description": "The question ID. On PATCH, include to update an existing question; omit to add a new question."
+                                                    },
+                                                    "query": {
+                                                        "type": "string",
+                                                        "title": "Query",
+                                                        "description": "The question text."
+                                                    },
+                                                    "type": {
+                                                        "type": "string",
+                                                        "title": "Response Type",
+                                                        "description": "The response type of the survey question.",
+                                                        "enum": [
+                                                            "pickOne",
+                                                            "pickMany",
+                                                            "range",
+                                                            "text",
+                                                            "email",
+                                                            "contactInformation",
+                                                            "dropdown"
+                                                        ]
+                                                    },
+                                                    "is_required": {
+                                                        "type": "boolean",
+                                                        "title": "Is Required",
+                                                        "description": "Whether this question is required."
+                                                    },
+                                                    "has_other": {
+                                                        "type": "boolean",
+                                                        "title": "Has Other",
+                                                        "description": "Whether this question has an 'other' option."
+                                                    },
+                                                    "other_label": {
+                                                        "type": "string",
+                                                        "title": "Other Label",
+                                                        "description": "Label for the 'other' option."
+                                                    },
+                                                    "range_low_label": {
+                                                        "type": "string",
+                                                        "title": "Range Low Label",
+                                                        "description": "Label for the low end of a range question."
+                                                    },
+                                                    "range_high_label": {
+                                                        "type": "string",
+                                                        "title": "Range High Label",
+                                                        "description": "Label for the high end of a range question."
+                                                    },
+                                                    "range_low_value": {
+                                                        "type": "integer",
+                                                        "title": "Range Low Value",
+                                                        "description": "Low value for a range question."
+                                                    },
+                                                    "range_high_value": {
+                                                        "type": "integer",
+                                                        "title": "Range High Value",
+                                                        "description": "High value for a range question."
+                                                    },
+                                                    "range_presentation": {
+                                                        "type": "string",
+                                                        "title": "Range Presentation",
+                                                        "description": "How a range question is presented."
+                                                    },
+                                                    "placeholder_label": {
+                                                        "type": "string",
+                                                        "title": "Placeholder Label",
+                                                        "description": "Placeholder text for text or email questions."
+                                                    },
+                                                    "subscribe_checkbox_enabled": {
+                                                        "type": "boolean",
+                                                        "title": "Subscribe Checkbox Enabled",
+                                                        "description": "Whether the subscribe checkbox is enabled."
+                                                    },
+                                                    "subscribe_checkbox_label": {
+                                                        "type": "string",
+                                                        "title": "Subscribe Checkbox Label",
+                                                        "description": "Label for the subscribe checkbox."
+                                                    },
+                                                    "should_auto_tag": {
+                                                        "type": "boolean",
+                                                        "title": "Should Auto Tag",
+                                                        "description": "Whether responses should automatically apply tags."
+                                                    },
+                                                    "options": {
+                                                        "type": "array",
+                                                        "title": "Answer Options",
+                                                        "description": "Answer options for pickOne, pickMany, or dropdown questions.",
+                                                        "items": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "label",
+                                                                "value"
+                                                            ],
+                                                            "properties": {
+                                                                "label": {
+                                                                    "type": "string"
+                                                                },
+                                                                "value": {
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "merge_field": {
+                                                        "type": "object",
+                                                        "title": "Merge Field",
+                                                        "description": "Merge field mapping for contact information questions."
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Survey updated."
+                    },
+                    "default": {
+                        "description": "An error generated by the Mailchimp API.",
+                        "schema": {
+                            "type": "object",
+                            "title": "Problem Detail Document",
+                            "description": "An error generated by the Mailchimp API. Conforms to IETF draft 'draft-nottingham-http-problem-06'.",
+                            "required": [
+                                "type",
+                                "title",
+                                "status",
+                                "detail",
+                                "instance"
+                            ],
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "title": "Problem Type",
+                                    "description": "An absolute URI that identifies the problem type. When dereferenced, it should provide human-readable documentation for the problem type.",
+                                    "example": "https://mailchimp.com/developer/marketing/docs/errors/"
+                                },
+                                "title": {
+                                    "type": "string",
+                                    "title": "Error Title",
+                                    "description": "A short, human-readable summary of the problem type. It shouldn't change based on the occurrence of the problem, except for purposes of localization.",
+                                    "example": "Resource Not Found"
+                                },
+                                "status": {
+                                    "type": "integer",
+                                    "title": "HTTP Status Code",
+                                    "description": "The HTTP status code (RFC2616, Section 6) generated by the origin server for this occurrence of the problem.",
+                                    "example": 404
+                                },
+                                "detail": {
+                                    "type": "string",
+                                    "title": "Error Message",
+                                    "description": "A human-readable explanation specific to this occurrence of the problem. [Learn more about errors](/developer/guides/get-started-with-mailchimp-api-3/#Errors).",
+                                    "example": "The requested resource could not be found."
+                                },
+                                "instance": {
+                                    "type": "string",
+                                    "title": "Instance ID",
+                                    "description": "A string that identifies this specific occurrence of the problem. Please provide this ID when contacting support.",
+                                    "example": "995c5cb0-3280-4a6e-808b-3b096d0bb219"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "tags": [
+                    "lists"
+                ],
+                "x-custom-config": {
+                    "methodNameSnake": "update_survey",
+                    "methodNameCamel": "updateSurvey"
+                }
+            },
+            "delete": {
+                "summary": "Delete survey",
+                "description": "Delete a survey.",
+                "operationId": "deleteListsIdSurveysId",
+                "parameters": [
+                    {
+                        "name": "list_id",
+                        "x-title": "List ID",
+                        "in": "path",
+                        "description": "The unique ID for the list.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "survey_id",
+                        "x-title": "Survey ID",
+                        "type": "string",
+                        "required": true,
+                        "description": "The ID of the survey."
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Survey deleted."
+                    },
+                    "default": {
+                        "description": "An error generated by the Mailchimp API.",
+                        "schema": {
+                            "type": "object",
+                            "title": "Problem Detail Document",
+                            "description": "An error generated by the Mailchimp API. Conforms to IETF draft 'draft-nottingham-http-problem-06'.",
+                            "required": [
+                                "type",
+                                "title",
+                                "status",
+                                "detail",
+                                "instance"
+                            ],
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "title": "Problem Type",
+                                    "description": "An absolute URI that identifies the problem type. When dereferenced, it should provide human-readable documentation for the problem type.",
+                                    "example": "https://mailchimp.com/developer/marketing/docs/errors/"
+                                },
+                                "title": {
+                                    "type": "string",
+                                    "title": "Error Title",
+                                    "description": "A short, human-readable summary of the problem type. It shouldn't change based on the occurrence of the problem, except for purposes of localization.",
+                                    "example": "Resource Not Found"
+                                },
+                                "status": {
+                                    "type": "integer",
+                                    "title": "HTTP Status Code",
+                                    "description": "The HTTP status code (RFC2616, Section 6) generated by the origin server for this occurrence of the problem.",
+                                    "example": 404
+                                },
+                                "detail": {
+                                    "type": "string",
+                                    "title": "Error Message",
+                                    "description": "A human-readable explanation specific to this occurrence of the problem. [Learn more about errors](/developer/guides/get-started-with-mailchimp-api-3/#Errors).",
+                                    "example": "The requested resource could not be found."
+                                },
+                                "instance": {
+                                    "type": "string",
+                                    "title": "Instance ID",
+                                    "description": "A string that identifies this specific occurrence of the problem. Please provide this ID when contacting support.",
+                                    "example": "995c5cb0-3280-4a6e-808b-3b096d0bb219"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "tags": [
+                    "lists"
+                ],
+                "x-custom-config": {
+                    "methodNameSnake": "delete_survey",
+                    "methodNameCamel": "deleteSurvey"
                 }
             }
         },
@@ -90401,6 +91010,114 @@
                     "methodNameCamel": "createEmail"
                 },
                 "operationId": "postListsIdSurveysIdActionsCreateEmail"
+            }
+        },
+        "/lists/{list_id}/surveys/{survey_id}/actions/replicate": {
+            "post": {
+                "summary": "Replicate survey",
+                "description": "Replicate a survey.",
+                "operationId": "postListsIdSurveysIdActionsReplicate",
+                "parameters": [
+                    {
+                        "name": "list_id",
+                        "x-title": "List ID",
+                        "in": "path",
+                        "description": "The unique ID for the list.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "survey_id",
+                        "x-title": "Survey ID",
+                        "type": "string",
+                        "required": true,
+                        "description": "The ID of the survey."
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Survey replicate request.",
+                        "required": false,
+                        "schema": {
+                            "type": "object",
+                            "title": "Survey Replicate Request",
+                            "description": "Replicate a survey.",
+                            "properties": {
+                                "title": {
+                                    "type": "string",
+                                    "title": "Title",
+                                    "description": "The title for the replicated survey."
+                                },
+                                "list_id": {
+                                    "type": "string",
+                                    "title": "List ID",
+                                    "description": "The unique ID of the audience for the replicated survey. Defaults to the source survey audience."
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Survey replicated."
+                    },
+                    "default": {
+                        "description": "An error generated by the Mailchimp API.",
+                        "schema": {
+                            "type": "object",
+                            "title": "Problem Detail Document",
+                            "description": "An error generated by the Mailchimp API. Conforms to IETF draft 'draft-nottingham-http-problem-06'.",
+                            "required": [
+                                "type",
+                                "title",
+                                "status",
+                                "detail",
+                                "instance"
+                            ],
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "title": "Problem Type",
+                                    "description": "An absolute URI that identifies the problem type. When dereferenced, it should provide human-readable documentation for the problem type.",
+                                    "example": "https://mailchimp.com/developer/marketing/docs/errors/"
+                                },
+                                "title": {
+                                    "type": "string",
+                                    "title": "Error Title",
+                                    "description": "A short, human-readable summary of the problem type. It shouldn't change based on the occurrence of the problem, except for purposes of localization.",
+                                    "example": "Resource Not Found"
+                                },
+                                "status": {
+                                    "type": "integer",
+                                    "title": "HTTP Status Code",
+                                    "description": "The HTTP status code (RFC2616, Section 6) generated by the origin server for this occurrence of the problem.",
+                                    "example": 404
+                                },
+                                "detail": {
+                                    "type": "string",
+                                    "title": "Error Message",
+                                    "description": "A human-readable explanation specific to this occurrence of the problem. [Learn more about errors](/developer/guides/get-started-with-mailchimp-api-3/#Errors).",
+                                    "example": "The requested resource could not be found."
+                                },
+                                "instance": {
+                                    "type": "string",
+                                    "title": "Instance ID",
+                                    "description": "A string that identifies this specific occurrence of the problem. Please provide this ID when contacting support.",
+                                    "example": "995c5cb0-3280-4a6e-808b-3b096d0bb219"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "tags": [
+                    "lists"
+                ],
+                "x-custom-config": {
+                    "methodNameSnake": "replicate_survey",
+                    "methodNameCamel": "replicateSurvey"
+                }
             }
         },
         "/landing-pages": {
@@ -132780,11 +133497,6 @@
                                                                 }
                                                             }
                                                         }
-                                                    },
-                                                    "thumbnail": {
-                                                        "type": "string",
-                                                        "title": "Thumbnail",
-                                                        "description": "The URL of the thumbnail for this outreach."
                                                     }
                                                 }
                                             },
@@ -132815,6 +133527,11 @@
                                                     "was_canceled_by_facebook": {
                                                         "type": "boolean",
                                                         "title": "Ad: Was Canceled By Facebook"
+                                                    },
+                                                    "thumbnail": {
+                                                        "type": "string",
+                                                        "title": "Ad: Thumbnail",
+                                                        "description": "The URL of the thumbnail for this outreach."
                                                     }
                                                 }
                                             },
@@ -135420,11 +136137,6 @@
                                                     }
                                                 }
                                             }
-                                        },
-                                        "thumbnail": {
-                                            "type": "string",
-                                            "title": "Thumbnail",
-                                            "description": "The URL of the thumbnail for this outreach."
                                         }
                                     }
                                 },
@@ -135455,6 +136167,11 @@
                                         "was_canceled_by_facebook": {
                                             "type": "boolean",
                                             "title": "Ad: Was Canceled By Facebook"
+                                        },
+                                        "thumbnail": {
+                                            "type": "string",
+                                            "title": "Ad: Thumbnail",
+                                            "description": "The URL of the thumbnail for this outreach."
                                         }
                                     }
                                 },
@@ -138041,11 +138758,6 @@
                                                                 }
                                                             }
                                                         }
-                                                    },
-                                                    "thumbnail": {
-                                                        "type": "string",
-                                                        "title": "Thumbnail",
-                                                        "description": "The URL of the thumbnail for this outreach."
                                                     }
                                                 }
                                             },
@@ -138076,6 +138788,11 @@
                                                     "was_canceled_by_facebook": {
                                                         "type": "boolean",
                                                         "title": "Ad: Was Canceled By Facebook"
+                                                    },
+                                                    "thumbnail": {
+                                                        "type": "string",
+                                                        "title": "Ad: Thumbnail",
+                                                        "description": "The URL of the thumbnail for this outreach."
                                                     }
                                                 }
                                             },
@@ -140726,11 +141443,6 @@
                                                     }
                                                 }
                                             }
-                                        },
-                                        "thumbnail": {
-                                            "type": "string",
-                                            "title": "Thumbnail",
-                                            "description": "The URL of the thumbnail for this outreach."
                                         }
                                     }
                                 },
@@ -140761,6 +141473,11 @@
                                         "was_canceled_by_facebook": {
                                             "type": "boolean",
                                             "title": "Ad: Was Canceled By Facebook"
+                                        },
+                                        "thumbnail": {
+                                            "type": "string",
+                                            "title": "Ad: Thumbnail",
+                                            "description": "The URL of the thumbnail for this outreach."
                                         }
                                     }
                                 },
@@ -142945,7 +143662,9 @@
                                                     "pickMany",
                                                     "range",
                                                     "text",
-                                                    "email"
+                                                    "email",
+                                                    "contactInformation",
+                                                    "dropdown"
                                                 ],
                                                 "readOnly": true
                                             },
@@ -143302,7 +144021,9 @@
                                         "pickMany",
                                         "range",
                                         "text",
-                                        "email"
+                                        "email",
+                                        "contactInformation",
+                                        "dropdown"
                                     ],
                                     "readOnly": true
                                 },
@@ -144228,7 +144949,9 @@
                                                     "pickMany",
                                                     "range",
                                                     "text",
-                                                    "email"
+                                                    "email",
+                                                    "contactInformation",
+                                                    "dropdown"
                                                 ]
                                             },
                                             "query": {
