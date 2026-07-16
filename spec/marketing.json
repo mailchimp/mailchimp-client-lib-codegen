@@ -2944,7 +2944,6 @@
                 },
                 "deprecated": false,
                 "tags": [
-                    "audiences",
                     "contacts"
                 ],
                 "x-custom-config": {
@@ -3483,7 +3482,6 @@
                 },
                 "deprecated": false,
                 "tags": [
-                    "audiences",
                     "contacts"
                 ],
                 "x-custom-config": {
@@ -3892,7 +3890,6 @@
                     }
                 },
                 "tags": [
-                    "audiences",
                     "contacts"
                 ],
                 "x-custom-config": {
@@ -4433,7 +4430,6 @@
                 },
                 "deprecated": false,
                 "tags": [
-                    "audiences",
                     "contacts"
                 ],
                 "x-custom-config": {
