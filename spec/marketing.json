@@ -76342,6 +76342,25 @@
                         "description": "The search query used to filter tags.  The search query will be compared to each tag as a prefix, so all tags that have a name starting with this field will be returned.",
                         "required": false,
                         "type": "string"
+                    },
+                    {
+                        "name": "count",
+                        "x-title": "Count",
+                        "in": "query",
+                        "description": "The number of records to return. Default value is 10. Maximum value is 1000",
+                        "required": false,
+                        "default": 10,
+                        "maximum": 1000,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "x-title": "Offset",
+                        "in": "query",
+                        "description": "Used for [pagination](https://mailchimp.com/developer/marketing/docs/methods-parameters/#pagination), this it the number of records from a collection to skip. Default value is 0.",
+                        "required": false,
+                        "default": 0,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
