@@ -2257,7 +2257,7 @@
                 },
                 "deprecated": false,
                 "tags": [
-                    "contacts"
+                    "audiences"
                 ],
                 "x-custom-config": {
                     "methodNameSnake": "list_audiences",
@@ -2396,7 +2396,7 @@
                 },
                 "deprecated": false,
                 "tags": [
-                    "contacts"
+                    "audiences"
                 ],
                 "x-custom-config": {
                     "methodNameSnake": "get_audience_id",
@@ -2944,8 +2944,7 @@
                 },
                 "deprecated": false,
                 "tags": [
-                    "audiences",
-                    "contacts"
+                    "audiences"
                 ],
                 "x-custom-config": {
                     "methodNameSnake": "list_audience_contact_list",
@@ -3483,8 +3482,7 @@
                 },
                 "deprecated": false,
                 "tags": [
-                    "audiences",
-                    "contacts"
+                    "audiences"
                 ],
                 "x-custom-config": {
                     "methodNameSnake": "create_audience_contact",
@@ -3892,8 +3890,7 @@
                     }
                 },
                 "tags": [
-                    "audiences",
-                    "contacts"
+                    "audiences"
                 ],
                 "x-custom-config": {
                     "methodNameSnake": "get_audience_contact_id",
@@ -4433,8 +4430,7 @@
                 },
                 "deprecated": false,
                 "tags": [
-                    "audiences",
-                    "contacts"
+                    "audiences"
                 ],
                 "x-custom-config": {
                     "methodNameSnake": "patch_audience_contact",
@@ -4518,7 +4514,7 @@
                 },
                 "deprecated": false,
                 "tags": [
-                    "contacts"
+                    "audiences"
                 ],
                 "x-custom-config": {
                     "methodNameSnake": "archive_contact",
@@ -4603,7 +4599,7 @@
                 },
                 "deprecated": false,
                 "tags": [
-                    "contacts"
+                    "audiences"
                 ],
                 "x-custom-config": {
                     "methodNameSnake": "forget_contact",
