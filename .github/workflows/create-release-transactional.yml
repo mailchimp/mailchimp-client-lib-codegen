@@ -336,10 +336,10 @@ jobs:
           mkdir -p swagger-out/transactional-ruby
           unzip zip/mailchimp-transactional-ruby.zip -d swagger-out/transactional-ruby
 
-      - name: Set up Ruby 2.7
+      - name: Set up Ruby 3.1
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7'
+          ruby-version: '3.1'
 
       - name: Install client dependencies
         run: gem install rspec
